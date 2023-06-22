@@ -1,51 +1,13 @@
 import 'package:flutter/material.dart';
-//import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter_new/flutter.dart' as charts;
-import 'package:charts_flutter_new/flutter.dart' as charts_flutter_new;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:skillmaestro/admin/view/cancelled_jobs_list.dart';
 import 'package:skillmaestro/admin/view/experts_list.dart';
 import 'package:skillmaestro/admin/view/jobs_list.dart';
 import 'package:skillmaestro/admin/view/users_list.dart';
-
-import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
+import 'package:skillmaestro/core/theme/access_token/token.dart';
 import 'package:skillmaestro/user/view/login.dart';
 
 class AdminHome extends StatelessWidget {
-  AdminHome({Key? key}) : super(key: key);
-
-  final List<User> users = [
-    User(name: 'User 1', email: 'user1@example.com'),
-    User(name: 'User 2', email: 'user2@example.com'),
-    User(name: 'User 3', email: 'user3@example.com'),
-  ];
-
-  final List<Worker> workers = [
-    Worker(name: 'Worker 1', specialization: 'Specialization 1'),
-    Worker(name: 'Worker 2', specialization: 'Specialization 2'),
-    Worker(name: 'Worker 3', specialization: 'Specialization 3'),
-  ];
-
-  final List<Job> jobs = [
-    Job(title: 'Job 1', description: 'Description 1', workerCount: 10),
-    Job(title: 'Job 2', description: 'Description 2', workerCount: 5),
-    Job(title: 'Job 3', description: 'Description 3', workerCount: 7),
-  ];
-
-  final List<Job> cancelledJobs = [
-    Job(
-        title: 'Cancelled Job 1',
-        description: 'Cancelled Description 1',
-        workerCount: 3),
-    Job(
-        title: 'Cancelled Job 2',
-        description: 'Cancelled Description 2',
-        workerCount: 2),
-    Job(
-        title: 'Cancelled Job 3',
-        description: 'Cancelled Description 3',
-        workerCount: 1),
-  ];
+  const AdminHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +22,7 @@ class AdminHome extends StatelessWidget {
                   icon: const Icon(Icons.menu),
                   onSelected: (value) {
                     if (value == 'logout') {
-                      FlutterSecureStorage storage =
-                          const FlutterSecureStorage();
-                      storage.delete(key: 'admin_access_token');
+                      deleteAdminAccesToken();
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -98,16 +58,16 @@ class AdminHome extends StatelessWidget {
                 switch (index) {
                   case 0:
                     return buildCard(
-                        'Users', users.length, const UsersList(), context);
+                        'Users', UsersList(), context, Colors.green);
                   case 1:
-                    return buildCard(
-                        'Workers', workers.length, ExpertList(), context);
+                    return buildCard('Experts', const AllExpertForAdmin(),
+                        context, Colors.grey);
                   case 2:
                     return buildCard(
-                        'Jobs', jobs.length, const JobsList(), context);
+                        'Jobs', const JobsList(), context, Colors.lime);
                   case 3:
-                    return buildCard('Cancelled Jobs', cancelledJobs.length,
-                        const CancelledJobs(), context);
+                    return buildCard('Cancelled Jobs', const CancelledJobs(),
+                        context, Colors.cyan);
                   default:
                     return Container(
                       color: Colors.amberAccent,
@@ -127,30 +87,10 @@ class AdminHome extends StatelessWidget {
           ],
         ),
       ),
-      //bottomNavigationBar: BottomNavBar(),
-      /* floatingActionButton: FloatingActionButton.small(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: Colors.amber,
-      ), */
-      /* bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Color(0xFF02D1AC)),
-          child: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.amber,
-                  ),
-                  label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-              BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Info'),
-            ],
-          )), */
     );
   }
 
-  Widget buildPieChart() {
+  /* Widget buildPieChart() {
     List<charts_flutter_new.Series<Job, String>> seriesList = [
       charts_flutter_new.Series(
         id: 'Workers',
@@ -176,20 +116,27 @@ class AdminHome extends StatelessWidget {
         ),
       ),
     );
-  }
+  } */
 
   Widget buildCard(
-      String title, int count, dynamic pageroute, BuildContext context) {
+      String title, dynamic pageroute, BuildContext context, Color colors) {
     return GestureDetector(
       child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), // Add rounded corners
+        ),
+        color: colors,
+        // ignore: avoid_unnecessary_containers
         child: Container(
           //height: 100, // Set a fixed height for the card item
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 8.0),
               Text(title),
-              SizedBox(height: 8.0),
-              Text('Count: $count'),
+              const SizedBox(height: 8.0),
+              //Text('Count: $count'),
             ],
           ),
         ),
@@ -200,29 +147,4 @@ class AdminHome extends StatelessWidget {
       },
     );
   }
-}
-
-class User {
-  final String name;
-  final String email;
-
-  User({required this.name, required this.email});
-}
-
-class Worker {
-  final String name;
-  final String specialization;
-
-  Worker({required this.name, required this.specialization});
-}
-
-class Job {
-  final String title;
-  final String description;
-  final int workerCount;
-
-  Job(
-      {required this.title,
-      required this.description,
-      required this.workerCount});
 }

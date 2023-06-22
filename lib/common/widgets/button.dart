@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skillmaestro/core/constants.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class onBoradingButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class onBoradingButton extends StatelessWidget {
         ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFF02D1AC)),
+                  MaterialStateProperty.all<Color>(const Color(0xFF26A69A)),
             ),
             onPressed: () {
               Navigator.of(context)
@@ -27,7 +28,7 @@ class onBoradingButton extends StatelessWidget {
         ElevatedButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xFF02D1AC)),
+                  MaterialStateProperty.all<Color>(const Color(0xFF26A69A)),
             ),
             onPressed: () {
               Navigator.of(context)
@@ -60,11 +61,12 @@ class loginSignupButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             elevation: 5,
             shadowColor: Colors.black,
-            backgroundColor: const Color(0xFF02D1AC),
+            backgroundColor: Colors.teal[400],
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20))),
         onPressed: () {
-          functionName?.call();
+          //functionName?.call();
+          functionName;
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => pageroute));
         },

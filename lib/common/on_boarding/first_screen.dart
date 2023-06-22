@@ -1,10 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-//import 'package:skillmaestro/features/presentation/pages/on_boarding/second_screen.dart';
-import 'package:http/http.dart' as http;
+/* import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/on_boarding/second_screen.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -23,8 +17,8 @@ class _FirstScreenState extends State<FirstScreen> {
         Center(
           child: Image.asset('assets/polar-mechanic.gif'),
         ),
-        SizedBox(height: 40),
-        Text(
+        const SizedBox(height: 40),
+        const Text(
           'Skill \n    Maestro',
           style: TextStyle(fontSize: 50),
         ),
@@ -33,12 +27,13 @@ class _FirstScreenState extends State<FirstScreen> {
           width: 20,
           child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SecondScreen()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SecondScreen()));
               },
-              child: SecondScreen()),
+              child: const SecondScreen()),
         )
       ],
     ));
   }
 }
+ */

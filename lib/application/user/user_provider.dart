@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skillmaestro/user/view/login.dart';
 import 'package:skillmaestro/user/view/otp_verification.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 
+import '../../core/constants.dart';
 import '../../user/controller/authentication/otp_verification_api_service.dart';
 import '../../user/controller/authentication/sign_in/sign_in_api_service.dart';
 import '../../user/controller/sign_up/user_signup_api_service.dart';
@@ -34,16 +36,18 @@ class UserProvider with ChangeNotifier {
 
     if (tokenData?.token != null) {
       log(tokenData!.token.toString(), name: "signInTokennnnnnnn");
+      final sharedPref = await SharedPreferences.getInstance();
+      await sharedPref.setBool(SAVE_KEY_NAME, true);
       await storage.write(
           key: "user_access_token", value: jsonEncode(tokenData.token));
-
+      log("${tokenData.token}");
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return const UserHome();
+          return UserHome();
         },
       ), (route) => false);
-      const UserLogin();
+      UserLogin();
     }
     isLoading = false;
     notifyListeners();
@@ -73,7 +77,7 @@ class UserProvider with ChangeNotifier {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserOtpScreen(),
+            builder: (context) => UserOtpScreen(mobile: mobile),
           ));
     }
     isLoadingsignUp = false;
@@ -86,6 +90,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     final otp = UserOtpVerifyModel(mobile: mobile, otp: int.parse(otpNumber));
     log("otp:$otp");
+    log("otp+mobile${otp.mobile}");
     UserSignUpResModel? tokenData =
         await UserOtpVerifyApiService().userOtpVerification(otp, context);
 
@@ -95,7 +100,7 @@ class UserProvider with ChangeNotifier {
           key: 'user_access_token', value: jsonEncode(tokenData.token));
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return const UserLogin();
+          return UserLogin();
         },
       ), (route) => false);
     }

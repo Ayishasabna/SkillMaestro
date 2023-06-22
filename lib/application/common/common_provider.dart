@@ -6,6 +6,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 class CommonProvider extends ChangeNotifier {
   bool clickLoading = false;
   bool loading = false;
+  bool shimmerLoading = false;
   //bool get isLoading => clickLoading;
 
   void showSuccessSnackBar(context) {
@@ -52,7 +53,7 @@ class CommonProvider extends ChangeNotifier {
     showTopSnackBar(
       Overlay.of(context),
       const CustomSnackBar.error(
-        message: 'User With This Email Already Exist',
+        message: 'User With This Mobile Number Already Exist',
       ),
     );
   }
@@ -66,6 +67,22 @@ class CommonProvider extends ChangeNotifier {
         message: 'OTP sended',
       ),
     );
+  }
+
+  void expertOtpSend(
+    context,
+  ) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'OTP sended',
+      ),
+    );
+  }
+
+  void setShimmerLoading(value) {
+    shimmerLoading = value;
+    notifyListeners();
   }
 
   void setClickLoading(value) {

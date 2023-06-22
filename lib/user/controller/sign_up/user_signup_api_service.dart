@@ -14,13 +14,12 @@ class UserSignUpApiService {
   Dio dio = Dio();
   Future<String> userSignUp(
       UserSignUpModel userSignUpModel, BuildContext context) async {
-    //String path = ApiConfigration.baseUrl + ApiConfigration.otp;
-    //String path = 'http://10.0.12.48/signup';
-    String path = 'http://10.0.12.48:4000/signup';
+    String path = ApiConfigration.baseUrl + ApiConfigration.signUp;
+
     try {
       Response response =
           await dio.post(path, data: jsonEncode(userSignUpModel.toJson()));
-      print('context');
+
       log(response.statusCode.toString());
       if (response.statusCode == 200) {
         if (context.mounted) {
@@ -44,7 +43,7 @@ class UserSignUpApiService {
     return '';
   }
 
-  Future otpsend(String mobile) async {
+  /* Future otpsend(String mobile) async {
     String path1 =
         "https://verify.twilio.com/v2/Services/VA4207740a915c795a6960b2579a5dd25d/Verifications";
     String path2 = "/To=+919746048135";
@@ -86,7 +85,7 @@ class UserSignUpApiService {
     } catch (e) {
       log(e.toString());
     }
-  }
+  } */
 
   /* otpsend() {
   final url = 'https://api.example.com/endpoint';

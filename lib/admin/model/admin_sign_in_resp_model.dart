@@ -1,12 +1,12 @@
-class AdminSignUpResModel {
-  AdminSignUpResModel({
+class AdminSignInResModel {
+  AdminSignInResModel({
     required this.token,
   });
 
   String token;
 
-  factory AdminSignUpResModel.fromJson(Map<String, dynamic> json) =>
-      AdminSignUpResModel(
+  factory AdminSignInResModel.fromJson(Map<String, dynamic> json) =>
+      AdminSignInResModel(
         token: json["token"],
       );
 

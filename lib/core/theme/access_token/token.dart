@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 Future<String> getUserAccesToken() async {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   String? accesToken = await storage.read(key: 'user_access_token');
   String? token = accesToken!.replaceAll('"', '');
+  log('-------------useracesstoken--------------$token');
   return token;
 }
 
@@ -21,16 +24,16 @@ Future<String> getCurrentUserName() async {
   return id;
 }
 
-Future<String> getCurrentVendorId() async {
+Future<String> getCurrentExpertId() async {
   FlutterSecureStorage storage = const FlutterSecureStorage();
-  String? pId = await storage.read(key: 'currentVendorId');
+  String? pId = await storage.read(key: 'currentExpertId');
   String? id = pId!.replaceAll('"', '');
   return id;
 }
 
-Future<String?> getVendorAccesToken() async {
+Future<String?> getExpertAccesToken() async {
   FlutterSecureStorage storage = const FlutterSecureStorage();
-  String? accesToken = await storage.read(key: 'vendor_access_token');
+  String? accesToken = await storage.read(key: 'expert_access_token');
   String? token;
   if (accesToken != null) {
     token = accesToken.replaceAll('"', '');
@@ -44,4 +47,14 @@ Future<String> getAdminAccesToken() async {
   String? accesToken = await storage.read(key: 'admin_access_token');
   String? token = accesToken!.replaceAll('"', '');
   return token;
+}
+
+Future<void> deleteAdminAccesToken() async {
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+  storage.delete(key: 'admin_access_token');
+}
+
+Future<void> deleteUserAccesToken() async {
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+  storage.delete(key: 'admin_access_token');
 }

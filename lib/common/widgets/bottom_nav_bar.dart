@@ -4,6 +4,7 @@ import 'package:skillmaestro/user/view/user_home.dart';
 
 import '../../admin/view/add_jobs.dart';
 import '../../admin/view/admin_home.dart';
+import '../../core/constants.dart';
 //import '../pages/admin/add_jobs.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -16,7 +17,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int indexColor = 0;
   // ignore: non_constant_identifier_names
-  List Screen = [AdminHome(), const UserHome(), UserHome()];
+  List Screen = [AdminHome(), UserHome(), UserHome()];
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +30,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
           },
           // ignore: sort_child_properties_last
           child: const Icon(Icons.add),
-          backgroundColor: Colors.amber,
+          backgroundColor: mainColor,
+          // Colors.amber,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Color(0xFF02D1AC)),
+          data: Theme.of(context).copyWith(canvasColor: mainColor
+              //Color(0xFF02D1AC)
+              ),
           child: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             child: Padding(

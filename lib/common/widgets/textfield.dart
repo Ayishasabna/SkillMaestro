@@ -25,7 +25,7 @@ class textfield extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.grey),
+          borderRadius: BorderRadius.circular(10), color: Colors.grey[300]),
       child: TextFormField(
         controller: controllerName,
         decoration: InputDecoration(

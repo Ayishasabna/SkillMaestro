@@ -1,4 +1,4 @@
-class UserOtpModel {
+/* class UserOtpModel {
   UserOtpModel({
     required this.mobile,
     required this.channel,
@@ -15,4 +15,4 @@ class UserOtpModel {
         "To": mobile,
         "Channel": channel,
       };
-}
+} */

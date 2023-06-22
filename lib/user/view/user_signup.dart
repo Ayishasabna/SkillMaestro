@@ -7,7 +7,7 @@ import '../controller/sign_up/user_signup_api_service.dart';
 import 'validator.dart';
 import '../controller/signup_repo.dart';
 
-final SignUpRepo signuprepo = SignUpRepo();
+//final SignUpRepo signuprepo = SignUpRepo();
 final TextEditingController userNameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController mobileController = TextEditingController();
@@ -44,6 +44,17 @@ class _UserSignUpState extends State<UserSignUp> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Icon(Icons.arrow_back)),
+                          ],
+                        ),
+
                         const Text(
                           'Sign Up',
                           style: TextStyle(
@@ -52,7 +63,7 @@ class _UserSignUpState extends State<UserSignUp> {
                         const SizedBox(
                           height: 40,
                         ),
-                        widgets().sizedboxHeight10(),
+                        //widgets().sizedboxHeight10(),
 
                         textfield(
                             textFieldName: 'Username',
@@ -61,7 +72,7 @@ class _UserSignUpState extends State<UserSignUp> {
                             context: context,
                             value: userNameController.text,
                             function: checkUserName(userNameController.text)),
-                        const SizedBox(height: 16.0),
+                        const SizedBox(height: 30),
                         textfield(
                           textFieldName: 'Email',
                           controllerName: emailController,
@@ -70,7 +81,7 @@ class _UserSignUpState extends State<UserSignUp> {
                           function: checkEmail(emailController.text),
                           context: context,
                         ),
-                        const SizedBox(height: 16.0),
+                        const SizedBox(height: 30),
                         textfield(
                           textFieldName: 'Mobile',
                           controllerName: mobileController,
@@ -79,7 +90,7 @@ class _UserSignUpState extends State<UserSignUp> {
                           function: checkNumber(mobileController.text),
                           context: context,
                         ),
-                        const SizedBox(height: 12.0),
+                        const SizedBox(height: 30),
                         textfield(
                           textFieldName: 'Password',
                           controllerName: passwordController,
@@ -88,7 +99,7 @@ class _UserSignUpState extends State<UserSignUp> {
                           function: checkPass(passwordController.text),
                           context: context,
                         ),
-                        const SizedBox(height: 16.0),
+                        const SizedBox(height: 30),
                         textfield(
                           textFieldName: 'Confirm Password',
                           controllerName: confirmPasswordController,
@@ -99,8 +110,8 @@ class _UserSignUpState extends State<UserSignUp> {
                               passwordController.text),
                           context: context,
                         ),
-                        const SizedBox(height: 16.0),
-                        const SizedBox(height: 16.0),
+
+                        const SizedBox(height: 40),
                         // ignore: sized_box_for_whitespace
                         Container(
                           height: 50,

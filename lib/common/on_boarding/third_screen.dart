@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-//import '../../widgets/button.dart';
 import '../../user/view/login.dart';
 import '../widgets/button.dart';
-//import '../user/login.dart';
 
 class ThirdScreen extends StatelessWidget {
   const ThirdScreen({super.key});
@@ -13,19 +11,19 @@ class ThirdScreen extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           Image.asset('assets/Electrician-PNG-Picture.png'),
-          SizedBox(
+          const SizedBox(
             height: 60,
           ),
-          Text(
+          const Text(
             'The best result and \nyour satisfaction is our \ntop priority',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
           ),
-          SizedBox(
-            height: 40,
+          const SizedBox(
+            height: 60,
           ),
           onBoradingButton(
             firstname: UserLogin(),

@@ -12,15 +12,17 @@ class UserOtpVerifyApiService {
   Dio dio = Dio();
   FlutterSecureStorage storage = const FlutterSecureStorage();
   Future<UserSignUpResModel?> userOtpVerification(
-      UserOtpVerifyModel otp, context) async {
-    //String path = ApiConfigration.baseUrl + ApiConfigration.verifyOtp;
-    String path = 'http://10.0.12.48:4000/verify-otp';
+      UserOtpVerifyModel otpdata, context) async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.verifyOtp;
+    //String path = 'http://10.0.12.48:4000/verify-otp';
 
     try {
       log('inside try ');
-      log("${otp.otp}");
-      log("${otp.mobile}");
-      Response response = await dio.post(path, data: jsonEncode(otp.toJson()));
+      log("${otpdata.otp}");
+      log("otpdata:-------${otpdata.mobile}");
+      Response response =
+          await dio.post(path, data: jsonEncode(otpdata.toJson()));
+      log("verifyotp  ::::${response.data}");
       log(response.statusCode.toString());
       if (response.statusCode == 401) {
         Provider.of<CommonProvider>(context, listen: false).offLoading();
@@ -29,6 +31,40 @@ class UserOtpVerifyApiService {
             .showInvalidOtpSnack(context);
         return null;
       } else if (response.statusCode == 200 || response.statusCode == 201) {
+        Provider.of<CommonProvider>(context, listen: false).offLoading();
+        await storeCurrentDetails(response);
+        log('success');
+        Provider.of<CommonProvider>(context, listen: false)
+            .showSuccessSnackBar(context);
+
+        /* final ExpertSignUpResModel verificationResponse =
+            ExpertSignUpResModel.fromJson(response.data); */
+        final UserSignUpResModel returnsignUpResModel =
+            UserSignUpResModel.fromJson(response.data);
+
+        log(returnsignUpResModel.token);
+        log("responseData:::::;${response.data}");
+        return returnsignUpResModel;
+      }
+
+      /* else if (response.statusCode == 200 || response.statusCode == 201) {
+        log("ResponseData    ::::::${response.data}");
+        Provider.of<CommonProvider>(context, listen: false).offLoading();
+        await storeCurrentDetails(response);
+        if (response.data['token'] != null) {
+          Provider.of<CommonProvider>(context, listen: false)
+              .showSuccessSnackBar(context);
+          log(response.data['token']);
+          final UserSignUpResModel returnsignUpResModel =
+              UserSignUpResModel.fromJson(response.data);
+          log(returnsignUpResModel.token);
+          return returnsignUpResModel;
+        }
+
+        return null;
+      } */
+
+      /* else if (response.statusCode == 200 || response.statusCode == 201) {
         Provider.of<CommonProvider>(context, listen: false).offLoading();
         log("ResponseData    ::::::${response.data}");
         //await storeCurrentDetails(response);
@@ -65,7 +101,7 @@ class UserOtpVerifyApiService {
         }
 
         return null;
-      }
+      } */
     } on DioException catch (e) {
       Provider.of<CommonProvider>(context, listen: false).offLoading();
       Provider.of<CommonProvider>(context, listen: false)
@@ -75,15 +111,18 @@ class UserOtpVerifyApiService {
     return null;
   }
 
-  /* storeCurrentDetails(Response response) async {
-    final data = response.data['token']['result'];
-    final id = data['_id'];
-    final username = data['username'];
+  storeCurrentDetails(Response response) async {
+    final userSignUpResModel = UserSignUpResModel.fromJson(response.data);
+
+    final user = userSignUpResModel.result;
+    final id = user.id;
+    final username = user.username;
+
     await storage.write(key: 'currentUserName', value: username);
     await storage.write(key: 'currentUserId', value: id);
-  } */
+  }
 
-  storeCurrentDetails(Response response) async {
+  /*  storeCurrentDetails(Response response) async {
     final data = response.data['token'];
     if (data != null && data['result'] != null) {
       final id = data['result']['_id'];
@@ -91,5 +130,5 @@ class UserOtpVerifyApiService {
       await storage.write(key: 'currentUserName', value: username);
       await storage.write(key: 'currentUserId', value: id);
     }
-  }
+  } */
 }

@@ -1,18 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skillmaestro/admin/view/add_jobs.dart';
+import 'package:skillmaestro/expert/view/expert_home.dart';
+import 'package:skillmaestro/expert/view/expert_signin.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 import '../../admin/view/admin_login.dart';
+import '../../application/user/user_provider.dart';
 import '../../expert/view/expert_signup.dart';
 import 'user_signup.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/textfield.dart';
 
 class UserLogin extends StatelessWidget {
-  const UserLogin({super.key});
+  UserLogin({super.key});
+
+  final TextEditingController signinMobileController = TextEditingController();
+  final TextEditingController signinPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController mobileController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -31,7 +40,7 @@ class UserLogin extends StatelessWidget {
                     } else if (value == 'expert') {
                       const Text('expert');
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ExpertSignUp()));
+                          builder: (context) => ExpertLogin()));
                     }
                   },
                   itemBuilder: (BuildContext context) => [
@@ -53,7 +62,7 @@ class UserLogin extends StatelessWidget {
             ),
             textfield(
               textFieldName: 'Mobile',
-              controllerName: mobileController,
+              controllerName: signinMobileController,
               context: context,
             ),
             const SizedBox(
@@ -61,7 +70,7 @@ class UserLogin extends StatelessWidget {
             ),
             textfield(
               textFieldName: 'Password',
-              controllerName: passwordController,
+              controllerName: signinPasswordController,
               context: context,
             ),
             const SizedBox(
@@ -91,11 +100,41 @@ class UserLogin extends StatelessWidget {
             ),
             loginSignupButton(
               buttonName: 'Login',
-              pageroute: const UserHome(),
+              functionName: () => signInButtonClicked(context),
+              pageroute: UserHome(),
             )
           ],
         ),
       )),
     );
+  }
+
+  void signInButtonClicked(BuildContext context) async {
+    log('signin clicked');
+    final mobile = signinMobileController.text;
+    final password = signinPasswordController.text;
+
+    if (mobile.isEmpty || password.isEmpty) {
+      return;
+    }
+    /*  if (mobile == 'smarticoapp23@gmail.com') {
+      log('You are Admin');
+      // Provider.of<CommonProvider>(context, listen: false).onloading();
+
+      Provider.of<AdminProvider>(context, listen: false)
+          .checkAdminSignIn(context, email, password);
+
+      // Provider.of<CommonProvider>(context, listen: false)
+          // .offLoading();
+    }  */
+    else {
+      log('You are someone else');
+      // Provider.of<CommonProvider>(context, listen: false).onloading();
+
+      Provider.of<UserProvider>(context, listen: false)
+          .checkUserSignIn(context, password, mobile);
+      // Provider.of<CommonProvider>(context, listen: false)
+      //     .offLoading() ;
+    }
   }
 }
