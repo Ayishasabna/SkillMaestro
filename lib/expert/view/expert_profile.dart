@@ -7,6 +7,7 @@ import 'package:skillmaestro/application/expert/expert_profile_provider.dart';
 import 'package:skillmaestro/expert/view/add_skill.dart';
 import 'package:skillmaestro/expert/view/edit_expert_profile.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
+import 'package:skillmaestro/expert/view/expert_skills.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 
 class ExpertProfile extends StatefulWidget {
@@ -192,11 +193,33 @@ class _ExpertProfileState extends State<ExpertProfile> {
 
                             Tile(
                               storage: storage,
-                              subtitle: Text("Skills"),
+                              title: Text(" Remove Skills"),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 17,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ExpertSkills(),
+                                    ));
+                              },
                               /* title: Text(
                                 "DOB",
                                 style: normalText,
                               ), */
+                            ),
+                            Tile(
+                              storage: storage,
+                              title: Text(" Get Shedule"),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 17,
+                              ),
+                              onTap: () {
+                                _showSchedulePopup(context);
+                              },
                             ),
                             /*  Tile(
                               storage: storage,
@@ -520,4 +543,43 @@ class Tile extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showSchedulePopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Select an option"),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text("Booked Slots"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _fetchBookedSlots(); // Handle booked slots action
+            },
+          ),
+          ElevatedButton(
+            child: Text("Slots"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _fetchSlots(); // Handle slots action
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _fetchBookedSlots() {
+  // Call the API to fetch booked slots
+  // Handle the response
+  // Display the booked slots data
+}
+
+void _fetchSlots() {
+  // Call the API to fetch available slots
+  // Handle the response
+  // Display the available slots data
 }

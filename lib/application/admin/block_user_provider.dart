@@ -12,32 +12,28 @@ class BlockUserProvider with ChangeNotifier {
     blockeduser = await BlockUserService().blockUserId(id);
     log("----------------blockeduserstatusprovider---------$blockeduser");
     notifyListeners();
-    toggleButtonText();
 
-    /*  FetchAllUsersDetails().fetchAllUsersDetails().then((value) {
-      value = usersMap;
-      
-      return usersMap;
-    }); */
     return blockeduser;
   }
 
   Future<Map<String, dynamic>> unBlockUser(id) async {
     unBlockeduser = await BlockUserService().unBlockUserId(id);
-    log("----------------blockeduserstatusprovider---------$unBlockeduser['result']");
+    log("----------------unblockeduserstatusprovider---------$unBlockeduser['result']");
     notifyListeners();
-    toggleButtonText();
 
-    /*  FetchAllUsersDetails().fetchAllUsersDetails().then((value) {
-      value = usersMap;
-      
-      return usersMap;
-    }); */
     return unBlockeduser;
   }
 
-  void toggleButtonText() async {
+  Future<String> toggleButtonText(String result) async {
+    String buttonText;
     Map<String, dynamic> users = await AllUsersListProvider().fetchAllUsers();
     log("--------------blockuerprovide------------------$users");
+    if (result == "Blocked the user") {
+      buttonText = 'UnBlock';
+    } else {
+      buttonText = 'Block';
+    }
+    notifyListeners();
+    return buttonText;
   }
 }

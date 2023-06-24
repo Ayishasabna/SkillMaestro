@@ -14,7 +14,6 @@ class UserOtpVerifyApiService {
   Future<UserSignUpResModel?> userOtpVerification(
       UserOtpVerifyModel otpdata, context) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.verifyOtp;
-    //String path = 'http://10.0.12.48:4000/verify-otp';
 
     try {
       log('inside try ');

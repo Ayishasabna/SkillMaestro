@@ -21,7 +21,7 @@ class BlockUserService {
 
       if (response.statusCode == 200) {
         users = response.data;
-        log('======blockuser=======${users['result']}');
+        log('======blockuserresponse=======${users['result']}');
 
         return users;
       }

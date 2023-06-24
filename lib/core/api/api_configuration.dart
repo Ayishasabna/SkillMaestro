@@ -24,6 +24,11 @@ class ApiConfigration {
   static const expertAuth = '/expert/isExpertAuth';
   static const editProfile = '/expert/editProfile';
   static const getMyJobs = '/expert/getMyJobs';
+  static const getAllJobs = '/expert/getAllJobs';
+  static const addSkill = '/expert/addSkill';
+  static const addShedule = '/expert/addSchedule';
+  static const getSchedule = '/expert/getSchedule';
+  static const myBookings = '/expert/myBookings';
 
   // static const signUp = '/signup';
 

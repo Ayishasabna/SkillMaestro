@@ -11,7 +11,7 @@ class FetchJobs {
   Future<Map<String, dynamic>> fetch7Jobs() async {
     String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
 
-    String? token = await getAdminAccesToken();
+    //String? token = await getAdminAccesToken();
     try {
       Response response = await dio.get(
         path,

@@ -5,7 +5,6 @@ import 'package:skillmaestro/common/widgets/textfield.dart';
 import '../../application/user/user_provider.dart';
 import '../controller/sign_up/user_signup_api_service.dart';
 import 'validator.dart';
-import '../controller/signup_repo.dart';
 
 //final SignUpRepo signuprepo = SignUpRepo();
 final TextEditingController userNameController = TextEditingController();

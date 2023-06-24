@@ -38,8 +38,8 @@ class ExpertOtpVerifyApiService {
         final ExpertSignUpResModel returnsignUpResModel =
             ExpertSignUpResModel.fromJson(response.data);
 
-        log(returnsignUpResModel.expertToken);
-        log("responseData:::::;${response.data}");
+        log(returnsignUpResModel.experttoken);
+        log("-------------otpverificationapiservice:::::;${response.data}");
         return returnsignUpResModel;
       }
     } on DioException catch (e) {
@@ -53,9 +53,9 @@ class ExpertOtpVerifyApiService {
   storeCurrentDetails(Response response) async {
     final expertSignUpResModel = ExpertSignUpResModel.fromJson(response.data);
 
-    final user = expertSignUpResModel.result;
-    final id = user.id;
-    final name = user.username;
+    final expert = expertSignUpResModel.result;
+    final id = expert.id;
+    final name = expert.username;
 
     await storage.write(key: 'currentExpertName', value: name);
     await storage.write(key: 'currentExpertId', value: id);

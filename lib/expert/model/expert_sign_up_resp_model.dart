@@ -1,13 +1,13 @@
 class ExpertSignUpResModel {
   final bool auth;
-  final String expertToken;
+  final String experttoken;
   final User result;
   final String status;
   final String message;
 
   ExpertSignUpResModel({
     required this.auth,
-    required this.expertToken,
+    required this.experttoken,
     required this.result,
     required this.status,
     required this.message,
@@ -16,7 +16,7 @@ class ExpertSignUpResModel {
   factory ExpertSignUpResModel.fromJson(Map<String, dynamic> json) {
     return ExpertSignUpResModel(
       auth: json['auth'],
-      expertToken: json['experttoken'],
+      experttoken: json['experttoken'],
       result: User.fromJson(json['result']),
       status: json['status'],
       message: json['message'],
@@ -26,7 +26,7 @@ class ExpertSignUpResModel {
   Map<String, dynamic> toJson() {
     return {
       'auth': auth,
-      'experttoken': expertToken,
+      'experttoken': experttoken,
       'result': result.toJson(),
       'status': status,
       'message': message,

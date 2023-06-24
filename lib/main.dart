@@ -14,6 +14,7 @@ import 'application/admin/admin_provider.dart';
 import 'application/admin/all_users_list_provider.dart';
 import 'application/common/common_provider.dart';
 import 'application/expert/expert_profile_provider.dart';
+import 'application/expert/get_jobs_provider.dart';
 import 'application/user/get_jobs_provider.dart';
 import 'common/on_boarding/first_screen.dart';
 
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         ListenableProvider(create: (context) => ExpertProfileProvider()),
         ListenableProvider(create: (context) => ShowAllJobsProvider()),
         ListenableProvider(create: (context) => AlljobsListForUser()),
-        ListenableProvider(create: (context) => BlockUserProvider())
+        ListenableProvider(create: (context) => BlockUserProvider()),
+        ListenableProvider(create: (context) => ExpertAllJobsProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

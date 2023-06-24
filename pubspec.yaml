@@ -53,7 +53,9 @@ dependencies:
   top_snackbar_flutter: ^3.0.0+1
   customsnackbar: ^0.0.1
   email_validator: ^2.1.17
+  mongo_dart: ^0.9.1
   loading_animation_widget: ^1.2.0+4
+  moment_dart: ^0.17.4
   shared_preferences:
 
 

@@ -270,7 +270,10 @@ class UserCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => JobDetailScreen(title: map['job_role'])));
+            builder: (context) => JobDetailScreen(
+                  title: map['job_role'],
+                  //id: map['_id']
+                )));
       },
       child: Card(
         shape: RoundedRectangleBorder(

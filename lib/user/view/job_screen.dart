@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:skillmaestro/common/widgets/button.dart';
+import 'package:skillmaestro/user/view/user_get_slot.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 
 import '../../core/constants.dart';
@@ -9,6 +10,7 @@ import '../../core/constants.dart';
 class JobDetailScreen extends StatelessWidget {
   JobDetailScreen({super.key, required this.title});
   String title;
+  //String id;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +135,8 @@ class JobDetailScreen extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              loginSignupButton(buttonName: "Book Now", pageroute: UserHome()),
+              loginSignupButton(
+                  buttonName: "Book Now", pageroute: UserGetSlot()),
               SizedBox(
                 height: 20,
               ),

@@ -1,15 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/expert_provider.dart';
+import 'package:skillmaestro/core/theme/access_token/token.dart';
 import 'package:skillmaestro/expert/view/expert_home.dart';
-import 'package:skillmaestro/expert/view/expert_profile.dart';
 import 'package:skillmaestro/expert/view/expert_signup.dart';
-
 import '../../common/widgets/button.dart';
 import '../../common/widgets/textfield.dart';
-import '../../user/view/user_home.dart';
 
 class ExpertLogin extends StatelessWidget {
   ExpertLogin({super.key});
@@ -27,7 +24,9 @@ class ExpertLogin extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(70.0),
-              child: Image.asset('assets/ac1.png'),
+              child: Image.asset('assets/bouncy-gears-and-wrench.gif'
+                  //'assets/ac1.png'
+                  ),
             ),
             textfield(
               textFieldName: 'Mobile',
@@ -67,6 +66,11 @@ class ExpertLogin extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            /* ElevatedButton(
+                onPressed: () {
+                  signInButtonClicked(context);
+                },
+                child: Text('Login')) */
             loginSignupButton(
               buttonName: 'Login',
               functionName: () => signInButtonClicked(context),
@@ -78,32 +82,17 @@ class ExpertLogin extends StatelessWidget {
     );
   }
 
-  void signInButtonClicked(BuildContext context) async {
-    log('signin clicked');
+  Future<void> signInButtonClicked(BuildContext context) async {
     final mobile = signinMobileController.text;
     final password = signinPasswordController.text;
 
     if (mobile.isEmpty || password.isEmpty) {
       return;
-    }
-    /*  if (mobile == 'smarticoapp23@gmail.com') {
-      log('You are Admin');
-      // Provider.of<CommonProvider>(context, listen: false).onloading();
-
-      Provider.of<AdminProvider>(context, listen: false)
-          .checkAdminSignIn(context, email, password);
-
-      // Provider.of<CommonProvider>(context, listen: false)
-          // .offLoading();
-    }  */
-    else {
-      log('You are someone else');
-      // Provider.of<CommonProvider>(context, listen: false).onloading();
-
+    } else {
+      final token = await getExpertAccesToken();
+      log("+++++++++++++++++++++expert token+++++++++++$token");
       Provider.of<ExpertProvider>(context, listen: false)
           .checkExpertSignIn(context, password, mobile);
-      // Provider.of<CommonProvider>(context, listen: false)
-      //     .offLoading() ;
     }
   }
 }

@@ -64,4 +64,20 @@ class ExpertProfileService {
     }
     return jobList;
   }
+
+  Future expertGetShedule() async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.getSchedule;
+    Response response = await dio.get(path);
+    if (response.statusCode == 200) {
+      if (response.data is Map<String, dynamic>) {
+        final List<JobRoleModel> jobList = [
+          JobRoleModel.fromJson(response.data)
+        ];
+        log('------joblist----$jobList');
+      }
+    } else {
+      throw Exception("Invalid response data format");
+    }
+    return jobList;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:skillmaestro/expert/model/expert_sign_in_req_model.dart';
 import 'package:skillmaestro/expert/model/expert_sign_up_req_model.dart';
+import 'package:skillmaestro/expert/view/expert_home.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
 import 'package:skillmaestro/user/view/login.dart';
 
@@ -26,23 +27,21 @@ class ExpertProvider with ChangeNotifier {
   Future<void> checkExpertSignIn(
       BuildContext context, mobileData, passwordData) async {
     isLoading = true;
-    notifyListeners();
+
     final mobile = mobileData;
     final password = passwordData;
-    final signInExpertDatas =
+    /*  final signInExpertDatas =
         ExpertSignInReqModel(mobile: mobile, password: password);
     final tokenData =
-        await ExpertSignInApiService().ExpertSignIn(signInExpertDatas, context);
-
-    if (tokenData?.expertToken != null) {
-      log(tokenData!.expertToken.toString(), name: "signInTokennnnnnnn");
-      await storage.write(
-          key: "expert_access_token", value: jsonEncode(tokenData.expertToken));
-
+        await ExpertSignInApiService().ExpertSignIn(signInExpertDatas, context); */
+    final tokenData = await ExpertSignInApiService().ExpertSignIn(
+        ExpertSignInReqModel(mobile: mobile, password: password), context);
+    //log(("vgghvshgsdm+++++++++++++++++++++${tokenData['experttoken']}"));
+    if (tokenData?.experttoken != null) {
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return UserHome();
+          return ExpertHomeScreen();
         },
       ), (route) => false);
       ExpertLogin();
@@ -51,7 +50,7 @@ class ExpertProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// User Sign Up Method
+// Expert Sign Up Method
   Future<void> signUPNewExpert({
     context,
     username,
@@ -93,15 +92,15 @@ class ExpertProvider with ChangeNotifier {
 
     ExpertSignUpResModel? tokenData =
         await ExpertOtpVerifyApiService().expertOtpVerification(otp, context);
-    log(tokenData.toString());
+    log("============verifyExpertOtp tokenData.toString()=============$tokenData");
     if (tokenData != null) {
-      log(tokenData.expertToken);
+      log("++++++++++++tokenData.experttoken++++++++++++++++++${tokenData.experttoken}");
       await storage.write(
-          key: 'expert_access_token', value: jsonEncode(tokenData.expertToken));
-      await storage.write(key: 'vendorId', value: tokenData.result.id);
+          key: 'expert_access_token', value: tokenData.experttoken);
+      await storage.write(key: 'expertId', value: tokenData.result.id);
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return UserLogin();
+          return ExpertLogin();
         },
       ), (route) => false);
     }
