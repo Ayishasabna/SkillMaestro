@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/constants.dart';
+import 'package:skillmaestro/expert/view/expert_selected_job.dart';
+import 'package:skillmaestro/user/view/login.dart';
 import 'all_booking_list.dart';
 import 'expert_add_shedule.dart';
 import 'expert_profile.dart';
@@ -8,36 +9,30 @@ import 'expert_skills.dart';
 class ExpertHomeScreen extends StatelessWidget {
   final List<JobService> jobServices = [
     JobService(
-        name: "Jobs",
+        name: "My Jobs",
         //icon: Icons.book_online,
-        assetname:
-            "assets/job-hiring-vacancy-team-interview-career-recruiting.jpg",
-        pageRoute: const ExpertSkills()),
-
+        assetname: "assets/project1.png",
+        // "assets/job-1.jpg",
+        pageRoute: const ExpertSelectedJobs()),
     JobService(
-      name: "Profile",
-      //icon: Icons.usb_rounded,
-      pageRoute: const ExpertProfile(),
-      assetname:
-          "assets/delivery-concept-handsome-african-american-delivery-man-crossed-arms-isolated-grey-studio-background-copy-space.jpg",
-    ),
-
+        name: "Profile",
+        //icon: Icons.usb_rounded,
+        pageRoute: const ExpertProfile(),
+        assetname: "assets/business-3d-tech-support-1.png"),
     JobService(
       name: "Shedule",
       //icon: Icons.usb_rounded,
       pageRoute: Schedules(),
-      assetname: "assets/online-calendar.jpg",
+      assetname: "assets/shedule.png",
+      //"assets/online-calendar.jpg",
     ),
     JobService(
       name: "My Bookings",
       //icon: Icons.usb_rounded,
       pageRoute: const AllBookingTab(),
-      assetname:
-          "assets/hotel-booking-reservation-travel-reception-concept.jpg",
+      assetname: "assets/booking3.jpg",
+      //"assets/booking1.jpg",
     ),
-    //JobService(name: "Chat", icon: Icons.business, pageRoute: ChatScreen()),
-    //JobService(name: "Job", icon: Icons.camera, pageRoute: JobScreen()),
-    // Add more job services as needed
   ];
 
   ExpertHomeScreen({super.key});
@@ -45,53 +40,52 @@ class ExpertHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Info'),
-          ],
-          backgroundColor:
-              Colors.teal[300], // Set your desired background color
-          selectedItemColor:
-              Colors.white, // Set your desired selected item color
-          unselectedItemColor:
-              Colors.grey, // Set your desired unselected item color
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => ExpertSkills()));
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.amber,
         ),
-        /*  appBar: AppBar(
-          title: const Text("Home"),
-          backgroundColor: mainColor,
-        ), */
+        floatingActionButtonLocation: _CustomFABLocation(),
         body: SafeArea(
           child: Column(
             children: [
-              /* SizedBox(
-            height: 10,
-          ), */
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      20.0), // Adjust the value as desired
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 1,
-                      offset:
-                          Offset(0, 3), // changes the position of the shadow
-                    ),
-                  ],
-                ),
-                height: 270,
-                width: double.maxFinite,
-                child: Image.asset(
-                  //"assets/17973908.jpg",
-                  "assets/hand-touching-mobile-with-applications.jpg",
-                  fit: BoxFit.cover,
-                ),
-                //color: Colors.amber,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  PopupMenuButton(
+                    icon: const Icon(Icons.menu),
+                    onSelected: (value) {
+                      if (value == 'logout') {
+                        //deleteUserAccesToken();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserLogin(),
+                            ),
+                            (route) => false);
+                        const Text('logout');
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      const PopupMenuItem(
+                        value: 'logout',
+                        child: Text('Logout'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              SizedBox(
+              /* SizedBox(
+                height: 40,
+              ), */
+              Image.asset(
+                "assets/casual-life-3d-man-chatting-on-dating-site.png",
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(
                 height: 20,
               ),
               Expanded(
@@ -145,7 +139,10 @@ class JobServiceItem extends StatelessWidget {
             ),
             //Icon(jobService.icon),
             const SizedBox(height: 8.0),
-            Text(jobService.name),
+            Text(
+              jobService.name,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
@@ -164,4 +161,19 @@ class JobService {
       //required this.icon,
       required this.pageRoute,
       required this.assetname});
+}
+
+class _CustomFABLocation extends FloatingActionButtonLocation {
+  const _CustomFABLocation();
+
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    final double fabX = scaffoldGeometry.scaffoldSize.width / 2.5;
+    final double fabY =
+        scaffoldGeometry.contentTop - kToolbarHeight / 2.0 + 710.0;
+    return Offset(fabX, fabY);
+  }
+
+  @override
+  String toString() => 'FloatingActionButtonLocation.centerDocked';
 }

@@ -1,13 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skillmaestro/user/model/book_job_response_model.dart';
+import 'package:skillmaestro/user/model/book_job_request_model.dart';
+import '../../application/common/common_provider.dart';
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
-import '../model/get_jobs_model.dart';
+import '../model/add_adress_model.dart';
 
 class FetchJobs {
   Dio dio = Dio();
   Map<String, dynamic> job = {};
+  Map<String, dynamic> booking = {};
   Future<Map<String, dynamic>> fetch7Jobs() async {
     String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
 
@@ -27,203 +33,89 @@ class FetchJobs {
     } catch (e) {}
     return job;
   }
-}
 
-/* class fetchJobs {
-  Dio dio = Dio();
-  //List<GetJobModel> allServices = [];
-  Future<List<GetJobModel>> fetch7Jobs() async {
-    String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
-    Response response = await dio.get(path);
-    log(response.statusCode.toString());
-    if (response.statusCode == 200) {
-      if (response.data is Map<String, dynamic>) {
-        final List<GetJobModel> allServices = [
-          GetJobModel.fromJson(response.data)
-        ];
-        /* final List<jobProfile> alljobsList = [
-            jobProfile.fromJson(response.data)
-          ]; */
-        log("allExperts.toString()::::$allServices");
-        return allServices;
+  Future<Map<String, dynamic>> getSlots(String id) async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.getSlots + '$id';
+    log('==========usertoken=======$path');
+
+    String? token = await getUserAccesToken();
+
+    try {
+      if (token != null) {}
+      Response response = await dio.get(path,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+
+      if (response.statusCode == 200) {
+        job = response.data;
+        log('======getslotes==kkkkkk=====${job}');
+
+        return job;
       }
-    }
-    return allServices;
+    } catch (e) {}
+    return job;
   }
-} */
 
-
- /*  List<dynamic> jobList = [];
-  List<dynamic> jobRoles = [];
-  List<String> images = [];
-
-  Future<List<dynamic>> fetch7Jobs() async {
-    String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
+  Future<String> AddUserAddress(
+      AddAddressModel addAddressModel, BuildContext context) async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.addAddress;
+    String? token = await getUserAccesToken();
     try {
-   
-      log("----true");
+      Response response = await dio.post(path,
+          data: jsonEncode(addAddressModel.toJson()),
+          options: Options(headers: {"authorization": "Bearer $token"}));
 
-      //Map<String, dynamic> json = response.data;
-      //log("------------json----------${json}");
-      if (response.statusCode == 200) {
-        //List<dynamic> responseData = response.data;
-
-        Map<String, dynamic> responseData = response.data;
-        log("------responsedata-----${responseData}");
-
-        /*    responseData.values.forEach((dataList) {
-          List<Result> results = (dataList as List<dynamic>)
-              .map((item) => Result.fromJson(item))
-              .toList();
-
-          GetJobModel jobModel = GetJobModel(
-            status: responseData['status'],
-            result: results,
-          );
-          jobList.add(jobModel);
-        }); */
-        //log('-------------------joblistfetchjobs----${jobList}');
-
-        /*     List<GetJobModel> jobList = responseData.map((data) {
-          return GetJobModel.fromJson(data);
-        }).toList(); */
-        List<dynamic> jobList = responseData.values.last.toList();
-
-        log("----------jobkkkkkk----$jobList");
-        /* for (int i = 0; i < dataList.length; i++) {
-          jobRoles =
-              dataList.map((item) => item['job_role'] as String).toList();
-          jobList.add(jobRoles as GetJobModel);
-          images = dataList.map((item) => item['image'] as String).toList();
-          log("------------joblistkkkk----------${jobList}");
-        } */
-
-        //List<dynamic> job = responseData.entries.last;
-        log("------------joblistjjjjj----------${jobList}");
-        jobRoles = jobList.map((item) => item['job_role'] as String).toList();
-        log("-----------------jonbrole----------${jobRoles}");
-
-        images = jobList.map((item) => item['image'] as String).toList();
-        log("-----------------image----------${images}");
-
-        /* for (int i = 0; i < dataList.length; i++) {
-          List jobrole = dataList[i]["job_role"];
-          log("-----mapitems-----${jobrole}");
-          //List jobrole = dataList.last[i]['job_role'];
-          //log("-----------------jonbrole----------${jobrole}");
-        } */
-
-        //String? jobRole = dataList.last['job_role'];
-
-        /* for (int i = 0; i < jsonDecode(response.data).length; i++) {
-          jobList.add(
-              GetJobModel.fromJson(jsonEncode(jsonDecode(response.data)[i])));
-        } */
-        log("------returnjoblist----------$jobList");
-        return jobList;
+      log("======================================addaddressmodel======${addAddressModel.name}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return 'Success';
       }
-    } catch (e) {
-      log('$e');
+    } on DioException catch (e) {
+      Provider.of<CommonProvider>(context, listen: false).loading = false;
+      log(e.error.toString());
+      /*  Provider.of<CommonProvider>(context, listen: false)
+          .userAlreadyExist(context); */
     }
 
-    return jobList;
-  } */
+    return '';
+  }
 
-/*   Future<List<GetJobModel>> fetch7Jobs() async {
-    String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
-    List<GetJobModel> allServices = [];
-    List<Result> alllistofjobroles = [];
-
+  Future<Map<String, dynamic>> BookJob(
+      BookJobRequestModel jobModel, BuildContext context) async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.bookJob;
+    String? token = await getUserAccesToken();
+    log("======================================addaddressmodel===address======${jobModel.address}");
+    log("======================================addaddressmodel==date===========${jobModel.date}");
+    log("======================================addaddressmodel===jobid========${jobModel.jobId}");
+    log("======================================addaddressmodel===slots=========${jobModel.slots}");
     try {
-      Response response = await dio.get(path);
+      Map<String, dynamic> requestData = {
+        'jobId': jobModel.jobId,
+        'slots': jobModel.slots,
+        'date': jobModel.date,
+        'address': jobModel.address,
+      };
 
-      if (response.statusCode == 200) {
-        Map<String, dynamic> json = response.data;
-        log("-------------results ----- model${json}");
-        Result getJobModel = Result.fromJson(json['result']);
-        // Access the response data
-        // Map<String, dynamic> responseData = response.data;
+      Response response = await dio.post(
+        path,
+        data: requestData,
+        options: Options(headers: {"authorization": "Bearer $token"}),
+      );
+      log("======================================bookjobresponse======${response.data}");
+      /* Response response = await dio.post(path,
+          data: jsonEncode(jobModel.toJson()),
+          options: Options(headers: {"authorization": "Bearer $token"})); */
 
-        // Parse the JSON response
-        //GetJobModel getJobModel = GetJobModel.fromJson(responseData);
-        log("-------------results getjob model${getJobModel}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // BookJobModel newbooking = response.data;
 
-        // Access the properties from the parsed model
-        //String? status = getJobModel.status;
-        //List<Result> results = getJobModel.result;
-
-        // Process the data as needed
+        return booking;
       }
-
-      /*  Map<String, dynamic> jsonResponse = {
-        "status": "success",
-        "result": [
-          {
-            "_id": "1",
-            "job_role": "Software Engineer",
-            "image": "image_url",
-            "base_rate": 5000,
-            "add_rate": 1000,
-            "listed": true,
-            "createdAt": "2022-01-01T00:00:00Z",
-            "updatedAt": "2022-01-02T00:00:00Z",
-            "__v": 1
-          },
-          // Additional job results...
-        ]
-      }; */
-
-      /*  GetJobModel getJobModel = GetJobModel.fromJson(response);
-      String? status = getJobModel.status;
-      List<Result> results = getJobModel.result;
-
-// Accessing job result properties
-      for (Result result in results) {
-        String id = result.id;
-        String jobRole = result.jobRole;
-        String image = result.image;
-        int baseRate = result.baseRate;
-        int addRate = result.addRate;
-        bool listed = result.listed;
-        DateTime createdAt = result.createdAt;
-        DateTime updatedAt = result.updatedAt;
-        int v = result.v; */
-
-      // Process the job result as needed...
+    } on DioException catch (e) {
+      Provider.of<CommonProvider>(context, listen: false).loading = false;
+      log(e.error.toString());
+      /*  Provider.of<CommonProvider>(context, listen: false)
+          .userAlreadyExist(context); */
     }
 
-/* 
-      if (response.data is List) {
-        log("------inside fetchjobs ${allServices}");
-        allServices = List<GetJobModel>.from(
-            response.data['result'].map((item) => GetJobModel.fromJson(item)));
-      } else if (response.data is Map<String, dynamic>) {
-        allServices = [GetJobModel.fromJson(response.data['result'])];
-
-        //List<String> alllistofjobroles = allServices.map((job) => job.jobRole).toList();
-        //List<String> alllistofjobroles = allServices.map((job) =>job.result).toList();
-        log("-------hhhh----------$allServices");
-      } else {
-        throw Exception("Invalid response data format");
-      } */
-
-    /* final List<GetJobModel> allServices = [
-        GetJobModel.fromJson(response.data)
-      ];
-      log("-----------------$allServices"); */
-
-    /* if (response.data is Map<String, dynamic>) {
-        final List<GetJobModel> allServices = [
-          GetJobModel.fromJson(response.data['result'])
-        ];
-        log("-----------------$allServices");
-        return allServices;
-      } else {
-        throw Exception("Invalid response data format");
-      } */
-    on DioException catch (e) {
-      log(e.message.toString());
-    }
-    return allServices;
-  } */
-
+    return booking;
+  }
+}

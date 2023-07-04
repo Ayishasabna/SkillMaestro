@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/admin/model/all_jobs_response_model.dart';
-
 import '../../application/admin/all_jobs_list_provider.dart';
 
 class JobsList extends StatelessWidget {
@@ -25,6 +21,7 @@ class JobsList extends StatelessWidget {
         ),
         body: Consumer<AllJobsListForAdmin>(builder: (context, value, child) {
           //log('------insideconsumer------${value.usersMap}');
+          // ignore: prefer_is_empty
           return value.JobsMap.length == 0 || value.JobsMap.isEmpty
               ? const Text("No Users available")
               : ListView.builder(
@@ -32,114 +29,11 @@ class JobsList extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return UserCard(map: value.JobsMap['result'][index]);
                   });
-        })
-
-        /* Consumer<AllJobsListForAdmin>(builder: (context, value, child) {
-        if (value.allJobs == null || value.allJobs!.isEmpty) {
-          return const Text("No jobs available");
-        } else {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              //final job = value.allJobProfiles?[index].jobRole;
-
-// Extract result from each JobListModel and add it to allJobProfiles list
-
-              //final job = value.allJobs![index].result[index];
-              return ListTile(
-                onTap: () {},
-                //title: Text(job.jobRole),
-                title: Text(value.allJobProfiles![index].jobRole),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    if (value.allJobs![index].result[index].isListed == false) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Approve Expert'),
-                            content: Text(
-                                "Are You Sure You Want To Approve ${value.allJobs![index].result[index].jobRole}"),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Cancel")),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    /*  value.approveExpert(value.allExperts![index]
-                                      .result[index].isBanned);
- */
-                                    Navigator.pop(context);
-                                  },
-                                  style: const ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Colors.green)),
-                                  child: const Text(
-                                    "Approve",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                            ],
-                          );
-                        },
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Block Vendor'),
-                            content: Text(
-                                "Are You Sure You Want To Block ${value.allJobs![index].result[index].jobRole}"),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Cancel")),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    /*  Navigator.pop(context);
-                                  ExpertManagementService().blockExpert(
-                                      context,
-                                      value.allExperts![index].result[index]
-                                          .username); */
-                                  },
-                                  child: const Text("Block")),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          value.allJobs![index].result[index].isListed == true
-                              ? Colors.red
-                              : Colors.green)),
-                  child: Text(
-                    value.allJobs![index].result[index].isListed.toString(),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                //leading: value.allExperts![index].result[index].image != null
-                /*  ? CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        value.allExperts![index]!.image!,
-                      ),
-                    )
-                  : const CircleAvatar(), */
-              );
-            },
-            //itemCount: value.allJobs?.length,
-            itemCount: value.allJobs!.length,
-          );
-        }
-      }), */
-        );
+        }));
   }
 }
 
+// ignore: must_be_immutable
 class UserCard extends StatelessWidget {
   UserCard({super.key, required this.map});
   Map<String, dynamic> map = {};
@@ -152,7 +46,7 @@ class UserCard extends StatelessWidget {
       ),
       elevation: 10,
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -162,7 +56,8 @@ class UserCard extends StatelessWidget {
                 Image.network("${map['image']}"),
                 Text(
                   'Title:${map['job_role']}',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: 20),
                 ),
                 Text('Base Rate: ${map['base_rate']}'),
                 Text('Additional Rate: ${map['ad_rate']}'),
@@ -208,7 +103,7 @@ class UserCard extends StatelessWidget {
                   );
                 }
               },
-              child: Text("true"),
+              child: const Text("Listed"),
             ),
           ],
         ),

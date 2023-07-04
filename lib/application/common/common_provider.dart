@@ -18,6 +18,15 @@ class CommonProvider extends ChangeNotifier {
     );
   }
 
+  void showjobSuccessSnackBar(context) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Job Added Successfully...!!!!',
+      ),
+    );
+  }
+
   void showInvalidOtpSnack(context) {
     showTopSnackBar(
       Overlay.of(context),

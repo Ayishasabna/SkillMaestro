@@ -54,4 +54,48 @@ class ExpertAddJobService {
 
     return;
   }
+
+  Future<void> removeExpertSkill(String id) async {
+    String path =
+        ApiConfigration.baseUrl + ApiConfigration.removeSkill + "/$id";
+    log("==========removeskill=========$path");
+    log("==========removeskill===id----======$id");
+    try {
+      String? token = await getExpertAccesToken();
+
+      /*  List<String> convertedIds =
+          skillIds.map((id) => ObjectId.parse(id).toHexString()).toList();
+
+      Map<String, dynamic> requestBody = {
+        'skills': convertedIds,
+      }; */
+      /* List<dynamic> skillList = skillIds.toList();
+
+      Map<String, dynamic> requestBody = {
+        'skills': skillList,
+      }; */
+
+      Response response = await dio.get(path,
+          // data: jsonEncode(id),
+          options: Options(headers: {"authorization": "Bearer $token"}));
+      log("==========+++++++++=====00000000000000000000=========${response.data}");
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.data);
+        if (responseData['status'] == 'success') {
+          // Skill added successfully
+          log('Skill added successfully!');
+        } else {
+          // Error occurred
+          log('Error: ${responseData['message']}');
+        }
+      } else {
+        throw Exception('Failed to add skill. Please try again.');
+      }
+    } on DioException catch (e) {
+      log(e.message.toString());
+    }
+
+    return;
+  }
 }

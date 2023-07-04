@@ -1,14 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
 import 'package:skillmaestro/core/constants.dart';
-import 'package:skillmaestro/expert/controller/expert_add_job_service.dart';
-import 'package:skillmaestro/expert/model/all_booking_model.dart';
-import 'package:skillmaestro/expert/model/expert_add_job_model.dart';
-import 'package:skillmaestro/expert/model/expert_add_job_model.dart'
-    as ExpertAddJobModel;
+
+import '../../application/common/common_provider.dart';
 
 Set<String> skills = {};
 
@@ -23,15 +19,20 @@ class ExpertSkills extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor,
-        title: Center(child: Text("All Jobs")),
-        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text("Jobs Available For you"),
+        automaticallyImplyLeading: true,
       ),
       body: SafeArea(
         child:
             Consumer<ExpertAllJobsProvider>(builder: (context, value, child) {
           //log('------insideconsumer------${value.usersMap}');
+          // ignore: prefer_is_empty
           return value.expertJobs.length == 0 || value.expertJobs.isEmpty
-              ? const Text("No Users available")
+              ? const Text(
+                  "No Jobs available for you...\n  update Your Skill",
+                  style: TextStyle(fontSize: 16),
+                )
               : Expanded(
                   child: GridView.builder(
                       gridDelegate:
@@ -50,6 +51,7 @@ class ExpertSkills extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class UserCard extends StatelessWidget {
   UserCard({super.key, required this.map});
   Map<String, dynamic> map = {};
@@ -59,16 +61,12 @@ class UserCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         skills.add("${map['_id']}");
-        log('+++++++++++++skills.add++++++++++++++++$skills');
-        // skills.add("${map}");
-        //Skill skill = Skill.fromJson(map);
-        //ExpertAddJobModel.Skill expertAddJobSkill = ExpertAddJobModel.Skill();
 
-        // context.read<ExpertAddJobService>().ExpertAddSkill(skills);
         context.read<ExpertAllJobsProvider>().AddExpertSkill(skills);
+        Provider.of<CommonProvider>(context, listen: false)
+            .showjobSuccessSnackBar(context);
 
-        /* Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => JobDetailScreen(title: map['job_role']))); */
+        Navigator.of(context).pop();
       },
       child: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -81,7 +79,7 @@ class UserCard extends StatelessWidget {
               ),
               elevation: 10,
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -94,12 +92,12 @@ class UserCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               '${map['job_role']}',
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
             ),
           ],
         ),

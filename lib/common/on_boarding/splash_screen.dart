@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skillmaestro/common/on_boarding/second_screen.dart';
 import 'package:skillmaestro/user/view/login.dart';
@@ -62,3 +62,4 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 }
+ */

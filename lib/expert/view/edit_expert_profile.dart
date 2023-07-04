@@ -111,7 +111,7 @@ class _ExpertProfileEdittState extends State<ExpertProfileEdit> {
                       textFieldName: "mobile",
                       controllerName: mobileController,
                       context: context),
-                  widgets().sizedboxHeight20(),
+                  widgets().sizedboxHeight40(),
                   ElevatedButton(
                     onPressed: () {
                       updateButtonClicked();
@@ -229,10 +229,9 @@ class _ExpertProfileEdittState extends State<ExpertProfileEdit> {
 
   Future<void> updateButtonClicked() async {
     EditExpertProfileModel editedData = EditExpertProfileModel(
-        gender: genderController.text,
-        mobile: mobileController.text,
-        skill: skillsController.text,
-        userName: userNameController.text);
+      name: userNameController.text,
+      email: emailController.text,
+    );
     await Provider.of<ExpertProfileProvider>(context, listen: false)
         .editexpertProfile(editedData);
     // ignore: use_build_context_synchronously

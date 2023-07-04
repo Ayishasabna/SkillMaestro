@@ -7,12 +7,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/admin/add_job_provider.dart';
-import 'package:skillmaestro/application/expert/expert_provider.dart';
-
 import '../../admin/view/add_jobs.dart';
 import '../../common/widgets/widget.dart';
 import '../../core/constants.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class jobAddScreen extends StatefulWidget {
   jobAddScreen({super.key, required this.imagePath});
   File? imagePath;
@@ -24,6 +23,7 @@ class jobAddScreen extends StatefulWidget {
   State<jobAddScreen> createState() => _jobAddScreenState();
 }
 
+// ignore: camel_case_types
 class _jobAddScreenState extends State<jobAddScreen> {
   final titleController = TextEditingController();
   final serviceTypeController = TextEditingController();
@@ -41,7 +41,7 @@ class _jobAddScreenState extends State<jobAddScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: mainColor,
-        title: Text(
+        title: const Text(
           'Add Job',
           //style: headText,
         ),
@@ -117,72 +117,14 @@ class _jobAddScreenState extends State<jobAddScreen> {
                                   BorderRadius.all(Radius.circular(10.0))),
                         ),
                         const Text('Is Listed'),
-                        // Checkbox(
-                        //   value: values.addproductCheckBoxValue,
-                        //   onChanged: (value) {
-                        //     values.setProductCheck();
-                        //   },
-                        //   shape: const RoundedRectangleBorder(
-                        //       borderRadius:
-                        //           BorderRadius.all(Radius.circular(10.0))),
-                        // ),
-                        //const Text('Product')
                       ],
                     ),
                   ),
-                  // !Provider.of<AddJobProvider>(context, listen: false)
-                  //         .vendorSideTypeValidation
-                  //     ? Consumer(
-                  //         builder: (context, value, child) {
-                  //           return const Text(
-                  //             'Type is required',
-                  //             style: TextStyle(color: Colors.red),
-                  //           );
-                  //         },
-                  //       )
-                  //     : const SizedBox(),
-                  // TextFieldName(value: 'Category'),
-                  // Consumer2<ExpertProvider, AddJobProvider>(
-                  //     builder: (context, value, value2, child) {
-                  //   return DropdownButtonFormField<job>(
-                  //     value: value2.selectedCategory,
-                  //     items: value2.categories
-                  //         .map((category) => DropdownMenuItem<CategoryResModel>(
-                  //               value: category,
-                  //               child: Text(category!.name),
-                  //             ))
-                  //         .toList(),
-                  //     onChanged: (CategoryResModel? category) {
-                  //       value2.setCategory(category, category!.id,context);
-                  //     },
-                  //     validator: (value) {
-                  //       if (value2.selectedCategory == null) {
-                  //         return 'Category is required';
-                  //       }
-                  //       return null;
-                  //     },
-                  //     decoration: InputDecoration(
-                  //       isDense: true,
-                  //       prefixIcon: const Icon(Icons.category),
-                  //       filled: true,
-                  //       fillColor: Colors.white,
-                  //       focusedBorder: OutlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(15),
-                  //           borderSide: const BorderSide(color: Colors.black)),
-                  //       enabledBorder: OutlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(15),
-                  //           borderSide: const BorderSide(
-                  //               color: Color.fromARGB(255, 123, 230, 219))),
-                  //       hintStyle: const TextStyle(
-                  //         color: Color.fromARGB(255, 111, 111, 111),
-                  //       ),
-                  //     ),
-                  //   );
-                  // }),
                   Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
+                        // ignore: invalid_use_of_protected_member
                         child: context.watch<AddJobProvider>().hasListeners
                             ? const CircularProgressIndicator()
                             : ElevatedButton(
@@ -311,6 +253,7 @@ class _jobAddScreenState extends State<jobAddScreen> {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
+      // ignore: unused_local_variable
       final imageTemp = File(
         image.path,
       );

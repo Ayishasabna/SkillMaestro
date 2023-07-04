@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
+import '../../../common/settings/settings_screen.dart';
 import '../../../core/constants.dart';
+import '../chat/message_screen.dart';
 
 class UserBottomNavBar extends StatefulWidget {
   const UserBottomNavBar({super.key});
@@ -14,10 +16,9 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
 
   List bottomNavScreens = [
     UserHome(),
-    //AllCategroryList(),
-    //const UserChatScreen(),
-    //BookingHistory(),
-    // UserProfilePage()
+    MessageScreen(),
+    UserHome(),
+    SettingsScreen()
   ];
 
   @override
@@ -34,26 +35,33 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
         elevation: 20.0,
         currentIndex: currentIndex,
         selectedItemColor: mainColor,
-        unselectedItemColor: Colors.grey.shade600,
+        unselectedItemColor: Colors.grey,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.category,
+                Icons.home,
               ),
-              label: 'All'),
+              label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.chat_outlined,
+                Icons.message_rounded,
               ),
               label: 'Chat'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book_online), label: 'Bookings'),
+              icon: Icon(
+                Icons.payment,
+              ),
+              label: 'Payment'),
           BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+              ),
+              label: 'settings'),
+          /* BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
               ),
-              label: 'profile'),
+              label: 'Profile'), */
         ],
       ),
     );

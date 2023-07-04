@@ -24,11 +24,11 @@ class BlockUserProvider with ChangeNotifier {
     return unBlockeduser;
   }
 
-  Future<String> toggleButtonText(String result) async {
+  Future<String> toggleButtonText(bool result) async {
     String buttonText;
     Map<String, dynamic> users = await AllUsersListProvider().fetchAllUsers();
     log("--------------blockuerprovide------------------$users");
-    if (result == "Blocked the user") {
+    if (result) {
       buttonText = 'UnBlock';
     } else {
       buttonText = 'Block';

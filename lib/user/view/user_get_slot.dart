@@ -1,45 +1,47 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../../application/common/common_provider.dart';
-import '../../application/user/user_provider.dart';
-import 'package:intl/intl.dart';
+import 'package:skillmaestro/application/user/add_address_provider.dart';
+import 'package:skillmaestro/application/user/user_add_job_provider.dart';
+import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
+import 'package:skillmaestro/user/model/add_adress_model.dart';
+import 'package:skillmaestro/user/model/book_job_request_model.dart';
+import 'package:skillmaestro/user/view/user_home.dart';
+import '../../application/user/get_slots_provider.dart';
 
-String? selectedValue;
+List<String>? selectedValue;
+String? selectedTimeSlot;
+
 List<String> dropdownItems = [];
+TextEditingController nameController = TextEditingController();
+// ignore: non_constant_identifier_names
+TextEditingController HouseNameController = TextEditingController();
+TextEditingController streetController = TextEditingController();
+TextEditingController pincodeController = TextEditingController();
+TextEditingController timeslot = TextEditingController();
+TextEditingController address = TextEditingController();
+TextEditingController date = TextEditingController();
+TextEditingController jobId = TextEditingController();
 
+// ignore: must_be_immutable
 class UserGetSlot extends StatefulWidget {
-  UserGetSlot({super.key});
+  UserGetSlot({super.key, required this.id});
 
   @override
   State<UserGetSlot> createState() => _UserGetSlotState();
+  String id;
 }
 
 class _UserGetSlotState extends State<UserGetSlot> {
   //final String id;
   final field1 = TextEditingController();
+
   List result = [];
-
-  void initState() {
-    super.initState();
-    // Call the API and populate the dropdownItems list
-    getSlotsFromAPI();
-  }
-
-  void getSlotsFromAPI() {
-    // Assume you have an API call to fetch the slots
-    List<DateTime> result = []; // Replace with your API call
-
-    // Convert the DateTime list to formatted strings and populate the dropdownItems list
-    result.forEach((dateTime) {
-      String formattedDateTime =
-          DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
-      dropdownItems.add(formattedDateTime);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    context.read<GetSlotsForUserProvider>().getSlotesForUser(widget.id);
+    //context.read<AddJobProvider>().
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -77,96 +79,111 @@ class _UserGetSlotState extends State<UserGetSlot> {
                             const SizedBox(
                               height: 30,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                OtpField(field: field1),
-                              ],
-                            ),
-                            Consumer<UserProvider>(
-                                builder: (context, value, child) => SizedBox(
-                                      child: value.isOtpValidator
-                                          ? const SizedBox(
-                                              height: 20,
-                                            )
-                                          : const Center(
-                                              child: Padding(
-                                                padding: EdgeInsets.all(5.0),
-                                                child: Text(
-                                                  ' 6 Otp Number is Required',
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                    )),
-                            context.watch<UserProvider>().isLoadingOtp
-                                ? const CircularProgressIndicator()
-                                : ElevatedButton(
-                                    onPressed: () {
-                                      String otpvalidated =
-                                          otpFieldValidation(context);
-                                      if (otpvalidated == 'false') {
-                                        /* Provider.of<CommonProvider>(context,
-                                                listen: false)
-                                            .onloading();
-                                        var otp = field1.text +
-                                            field2.text +
-                                            field3.text +
-                                            field4.text +
-                                            field5.text +
-                                            field6.text;
-                                        UserProvider().verifyUserOtp(
-                                            context, otp, mobile); */
-                                      }
-                                    },
-                                    style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(5.0),
-                                      fixedSize: MaterialStateProperty.all(
-                                        const Size(185, 45),
-                                      ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                        const Color.fromARGB(
-                                            255, 123, 230, 219),
-                                      ),
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Verify',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 24),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Container(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          horizontal: 15),
+                                  width: 300,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      width: 2,
+                                      color: Colors.grey,
                                     ),
                                   ),
+                                  child: Consumer<GetSlotsForUserProvider>(
+                                    builder: (context, slots, child) {
+                                      //selectedValue = slots.userSlots['result'];
+                                      log('kkkkkkk======================${slots.userSlots['result']}=====================');
+                                      /*   .map<String>(
+                                              (item) => item as String)
+                                          .toList(); */
+
+                                      return DropdownButtonFormField<String>(
+                                        // items: dropdownitems(),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Select slots';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+
+                                        value: selectedTimeSlot,
+                                        /* slots.userSlots['result'] !=
+                                                    null &&
+                                                slots.userSlots['result']
+                                                    .isNotEmpty
+                                            ? slots.userSlots['result'][0]
+                                            : null, */
+
+                                        items: slots.userSlots['result'] !=
+                                                    null &&
+                                                slots.userSlots['result']
+                                                    .isNotEmpty
+                                            ? slots.userSlots['result']
+                                                .map<DropdownMenuItem<String>>(
+                                                    (e) {
+                                                return DropdownMenuItem<String>(
+                                                  value: e,
+                                                  child: Text(
+                                                    e.toString(),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 17,
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    selectedTimeSlot = e;
+                                                    log("======================timeslot++++++++++++$selectedTimeSlot");
+                                                    // slots.userJobs['result'] = e;
+                                                  },
+                                                );
+                                              }).toList()
+                                            : [],
+                                        onChanged: (value) {
+                                          //selectedTimeSlot = value;
+                                          //slots.userSlots['result'] = value;
+                                          selectedTimeSlot = value;
+                                          log('addTra******${slots.userSlots['result']}=======================');
+                                        },
+                                      );
+                                    },
+                                  )),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                adressdialogue(
+                                    context, widget.id, selectedTimeSlot!
+                                    //selectedValue!
+                                    );
+                              },
+                              style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(5.0),
+                                fixedSize: MaterialStateProperty.all(
+                                  const Size(185, 45),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromARGB(255, 123, 230, 219),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                'Confirm',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 24),
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "  Didn't Recieve the code?",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                TextButton(
-                                  child: const Text(
-                                    'Resend',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color:
-                                            Color.fromARGB(255, 83, 221, 207)),
-                                  ),
-                                  onPressed: () {
-                                    // Navigator.push(context,MaterialPageRoute(builder: (context) =>,));
-                                  },
-                                ),
-                              ],
                             ),
                           ],
                         ),
@@ -181,85 +198,150 @@ class _UserGetSlotState extends State<UserGetSlot> {
       ),
     );
   }
-
-  String otpFieldValidation(context) {
-    if (field1.text.isEmpty) {
-      Provider.of<UserProvider>(context, listen: false).changeValidatorState();
-      return 'true';
-    }
-    return 'false';
-  }
 }
 
-// ignore: must_be_immutable
-class OtpField extends StatefulWidget {
-  OtpField({
-    super.key,
-    required this.field,
-  });
-
-  dynamic field;
-
-  @override
-  State<OtpField> createState() => _OtpFieldState();
-}
-
-class _OtpFieldState extends State<OtpField> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      width: 350,
-      child: Stack(
-        children: [
-          TextField(
-            controller: widget.field,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            onChanged: (value) {
-              if (value.length == 1) {
-                FocusScope.of(context).nextFocus();
-              }
-              if (value.isEmpty) {
-                FocusScope.of(context).previousFocus();
-              }
-            },
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: '0',
-              focusedBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Color.fromARGB(255, 123, 230, 219)),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(180.0)),
+Future adressdialogue(context, String id, String selectedslots) async {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      context.read<AddAddressProvider>();
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        title: const Text('Add Address'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
               ),
             ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(1),
-              FilteringTextInputFormatter.digitsOnly,
-            ],
-          ),
-          Positioned.fill(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: DropdownButton<String>(
-                  value: selectedValue,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedValue = newValue;
-                    });
-                  },
-                  items: dropdownItems.map((item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(item),
-                    );
-                  }).toList(),
-                )),
+            TextField(
+              controller: HouseNameController,
+              decoration: const InputDecoration(
+                labelText: 'HouseName',
+              ),
+            ),
+            TextField(
+              controller: streetController,
+              decoration: const InputDecoration(
+                labelText: 'Street',
+              ),
+            ),
+            TextField(
+              controller: pincodeController,
+              decoration: const InputDecoration(
+                labelText: 'Pincode',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              final address1 = addAddress(context, id);
+              AddressModel view = AddressModel(
+                  house: address1.house,
+                  name: address1.name,
+                  street: address1.street,
+                  pincode: address1.pincode);
+              bookNow(context, view, id, selectedslots);
+              // Perform submit action
+              //Navigator.of(context).pop();
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>))
+            },
+            child: Text('Submit'),
           ),
         ],
-      ),
-    );
-  }
+      );
+    },
+  );
+}
+
+AddAddressModel addAddress(context, String id) {
+  final name = nameController.text;
+  final house = HouseNameController.text;
+  final street = streetController.text;
+  final pincode = pincodeController.text;
+  final model = AddAddressModel(
+      name: name, house: house, street: street, pincode: pincode);
+  Provider.of<AddAddressProvider>(context, listen: false)
+      .AddAddress(model, context);
+  //bookNow(context, model, id);
+  return model;
+}
+
+Future bookNow(
+  context,
+  AddressModel address1,
+  String id,
+  String selectedslot,
+) async {
+  timeslot.text = selectedslot.toString();
+  address.text = address1.house.toString();
+  date = TextEditingController(text: DateTime.now().toString());
+  jobId = TextEditingController(text: id.toString());
+
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      context.read<AddAddressProvider>();
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        title: const Text('Booking Details'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: timeslot,
+              decoration: const InputDecoration(
+                labelText: 'Time',
+              ),
+            ),
+            TextField(
+              controller: address,
+              decoration: const InputDecoration(
+                labelText: 'Address',
+              ),
+            ),
+            TextField(
+              controller: date,
+              decoration: const InputDecoration(
+                labelText: 'Date',
+              ),
+            ),
+            TextField(
+              controller: jobId,
+              decoration: const InputDecoration(
+                labelText: 'JobId',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              final model = BookJobRequestModel(
+                  slots: selectedslot,
+                  address: address1,
+                  date: date.text,
+                  jobId: jobId.text);
+              Provider.of<UserAddJobProvider>(context, listen: false)
+                  .AddJob(model, context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => BottomNavBar()));
+              //addAddress(context, id);
+              // Perform submit action
+            },
+            child: const Text('Confirm'),
+          ),
+        ],
+      );
+    },
+  );
 }

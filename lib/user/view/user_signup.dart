@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/common/widgets/common_widget.dart';
 import 'package:skillmaestro/common/widgets/textfield.dart';
 import '../../application/user/user_provider.dart';
-import '../controller/sign_up/user_signup_api_service.dart';
 import 'validator.dart';
 
 //final SignUpRepo signuprepo = SignUpRepo();
@@ -50,7 +48,7 @@ class _UserSignUpState extends State<UserSignUp> {
                                 onTap: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Icon(Icons.arrow_back)),
+                                child: const Icon(Icons.arrow_back)),
                           ],
                         ),
 

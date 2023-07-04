@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:skillmaestro/core/theme/access_token/token.dart';
 
 import '../../../../application/common/common_provider.dart';
 import '../../../../core/api/api_configuration.dart';
@@ -18,22 +19,33 @@ class UserSignInApiService {
       UserSignInReqModel userSignInReqModel, BuildContext context) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.signin;
     try {
-      Response response =
-          await dio.post(path, data: jsonEncode(userSignInReqModel.toJson()));
+      log('hjsjfhkdhkdjh');
+      UserSignInReqModel signInReqModel = userSignInReqModel;
+      log('-----------------------signreqmodel===========${signInReqModel.mobile}+++++++++${signInReqModel.password}');
+      Response response = await dio.post(path,
+          data: jsonEncode(userSignInReqModel.toJson()),
+          options: Options(headers: {"Content-Type": "application/json"}));
+      log('==============response=====${response.data}');
       if (response.statusCode == 200 || response.statusCode == 201) {
+        log('(((((((((((((((((((((((${response.data})))))))))))))))))))))))');
         if (context.mounted) {
           Provider.of<CommonProvider>(context, listen: false).offLoading();
         }
-        final UserSignInResModel returnsignInResModel =
+
+        /* final UserSignInResModel returnsignInResModel =
+            UserSignInResModel.fromJson(response.data); */
+        UserSignInResModel signInResModel =
             UserSignInResModel.fromJson(response.data);
 
-        final data = response.data['data']['user'];
-        final id = data['_id'];
-        final name = data['fullName'];
-        await storage.write(key: 'currentUserName', value: name);
+        //log('(((((((((((((((((((((((${signInResModel.result})))))))))))))))))))))))');
+        final data = response.data['result'];
+        //final name = data['username'];
+        log("============================id++++++++++++++++++$data");
+        //log("+++++++++++++++++++++++++++++$name");
+        //await storage.write(key: 'currentUserName', value: name);
 
-        await storage.write(key: 'currentUserId', value: id);
-        return returnsignInResModel;
+        //await storage.write(key: 'currentUserId', value: id);
+        return signInResModel;
       }
     } on DioException catch (e) {
       Provider.of<CommonProvider>(context, listen: false).userNotExist(context);
@@ -42,3 +54,38 @@ class UserSignInApiService {
     return null;
   }
 }
+
+/* class UserSignInApiService {
+  Dio dio = Dio();
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+
+  Future<UserSignInResModel?> userSignIn(
+      UserSignInReqModel userSignInReqModel, BuildContext context) async {
+    String path = ApiConfigration.baseUrl + ApiConfigration.signin;
+
+    try {
+      //String? token = await getUserAccesToken();
+      Response response = await dio.post(
+        path,
+        data: jsonEncode(userSignInReqModel.toJson()),
+        //options: Options(headers: {"authorization": "Bearer $token"})
+      );
+      log("==========+++++++++==============${response.data}");
+      /* if (context.mounted) {
+        Provider.of<CommonProvider>(context, listen: false).offLoading();
+      } */
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final UserSignInResModel responseData =
+            UserSignInResModel.fromJson(response.data);
+        log("============user responsedata controller=======${responseData}");
+        return responseData;
+      }
+    } on DioException catch (e) {
+      log(e.message.toString());
+    }
+
+    return null;
+  }
+
+
+} */

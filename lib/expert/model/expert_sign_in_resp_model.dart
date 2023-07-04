@@ -1,10 +1,3 @@
-/* import 'dart:convert';
-
-ExpertSignInResModel dataModelFromJson(String str) =>
-    ExpertSignInResModel.fromJson(json.decode(str));
-
-String dataModelToJson(ExpertSignInResModel data) => json.encode(data.toJson());
-
 class ExpertSignInResModel {
   bool auth;
   String experttoken;
@@ -120,9 +113,10 @@ class Identity {
   Map<String, dynamic> toJson() => {
         "status": status,
       };
-} */
+}
 
-class ExpertSignInResModel {
+
+/* class ExpertSignInResModel {
   final bool auth;
   final String experttoken;
   final expertModel result;
@@ -246,43 +240,4 @@ class expertModel {
       '__v': v,
     };
   }
-}
-
-
-
-
-
-
-
-/* class ExpertSignInResModel {
-  ExpertSignInResModel({
-    required this.token,
-  });
-
-  String? token;
-
-  factory ExpertSignInResModel.fromJson(Map<String, dynamic> json) =>
-      ExpertSignInResModel(
-        token: json["token"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "token": token,
-      };
-}
-
-class ExpertIdModel {
-  ExpertIdModel({
-    required this.id,
-  }); */
-
- /*  String id;
-
-  factory ExpertIdModel.fromJson(Map<String, dynamic> json) => ExpertIdModel(
-        id: json["_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-      };
 } */

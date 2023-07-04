@@ -35,6 +35,7 @@ class ExpertProfileService {
     String path = ApiConfigration.baseUrl + ApiConfigration.editProfile;
 
     String? token = await getExpertAccesToken();
+    log('------------------------inside edit controller-------${editData.name}');
     try {
       Response response = await dio.patch(path,
           data: jsonEncode(editData.toJson()),

@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/expert_profile_provider.dart';
-import 'package:skillmaestro/expert/view/add_skill.dart';
+import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/expert/view/edit_expert_profile.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
 import 'package:skillmaestro/expert/view/expert_skills.dart';
@@ -19,13 +17,6 @@ class ExpertProfile extends StatefulWidget {
 
 class _ExpertProfileState extends State<ExpertProfile> {
   String selectedJobRole = '';
-  // Variable to store the selected job role
-  List<String> jobRoles = [
-    'Job Role 1',
-    'Job Role 2',
-    'Job Role 3',
-    // Add more job roles as needed
-  ];
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
@@ -52,10 +43,11 @@ class _ExpertProfileState extends State<ExpertProfile> {
                           onTap: () {
                             Navigator.of(context).pop();
                           },
-                          child: Icon(Icons.arrow_back)),
+                          child: const Icon(Icons.arrow_back)),
                       const SizedBox(
                         height: 10,
                       ),
+                      // ignore: sized_box_for_whitespace
                       Container(
                         /* decoration: const BoxDecoration(
                           image: DecorationImage(
@@ -85,36 +77,18 @@ class _ExpertProfileState extends State<ExpertProfile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 17),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 17),
                               child: Text(
                                 'Account',
                                 //style: normalText.copyWith(color: Colors.blue),
                               ),
                             ),
-                            /*   Tile(
-                              storage: storage,
-                              /* subtitle: Text(
-                                snapshot.data!.verified ?? "",
-                                style: TextStyle(
-                                    color: snapshot.data?.status == 'Approved'
-                                        ? Colors.green
-                                        : Colors.red,
-                                    fontWeight: FontWeight.w700),
-                              ), */
-                              title: Text(
-                                "Status",
-                                //style: normalText,
-                              ),
-                              subtitle: Text(
-                                snapshot.data?.verified ?? "dkd",
-                              ),
-                            ), */
                             Tile(
-                              title: Text(
+                              title: const Text(
                                 "Username",
                                 //style: normalText,
                               ),
@@ -125,7 +99,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                             Tile(
                               storage: storage,
                               subtitle: Text("${snapshot.data?.mobile ?? ""} "),
-                              title: Text(
+                              title: const Text(
                                 "Phone",
                                 //style: normalText,
                               ),
@@ -133,67 +107,14 @@ class _ExpertProfileState extends State<ExpertProfile> {
                             Tile(
                               storage: storage,
                               subtitle: Text(snapshot.data?.email ?? ""),
-                              title: Text(
+                              title: const Text(
                                 "Email",
                                 //style: normalText,
                               ),
                             ),
-                            /* DropdownButton<String>(
-                              value: selectedJobRole,
-                              items: jobRoles.map((String jobRole) {
-                                return DropdownMenuItem<String>(
-                                  value: jobRole,
-                                  child: Text(jobRole),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedJobRole = newValue!;
-                                });
-                              },
-                            ), */
-
-                            /*                  Consumer2<ExpertProvider, JobService>(
-                      builder: (context, value, value2, child) {
-                    return DropdownButtonFormField<JobRoleModel>(
-                      value:value.
-                      items: value2.jobs
-                          .map((category) => DropdownMenuItem<JobRoleModel>(
-                                value: category,
-                                child: Text(category!.name),
-                              ))
-                          .toList(),
-                      onChanged: (JobRoleModel? category) {
-                        value2.setjob(category, category!.id,context);
-                      },
-                      validator: (value) {
-                        if (value2.selectedJob == null) {
-                          return 'Category is required';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        isDense: true,
-                        prefixIcon: const Icon(Icons.category),
-                        filled: true,
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(color: Colors.black)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 123, 230, 219))),
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 111, 111, 111),
-                        ),
-                      ),
-                    );
-                  }), */
-
-                            Tile(
+                            /* Tile(
                               storage: storage,
-                              title: Text(" Remove Skills"),
+                              title: const Text(" Remove Skills"),
                               trailing: const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 17,
@@ -209,7 +130,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                 "DOB",
                                 style: normalText,
                               ), */
-                            ),
+                            ), */
                             Tile(
                               storage: storage,
                               title: Text(" Get Shedule"),
@@ -221,97 +142,6 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                 _showSchedulePopup(context);
                               },
                             ),
-                            /*  Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.gender ?? ""),
-                              title: Text(
-                                "Gender",
-                                style: normalText,
-                              ),
-                            ), */
-                            /*  Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.about ?? ""),
-                              title: Text(
-                                "About",
-                                style: normalText,
-                              ),
-                            ), */
-                            /* Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.github ?? ""),
-                              title: Text(
-                                "Github",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.googleDrive ?? ""),
-                              title: Text(
-                                "GoogleDrive",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.linkedIn ?? ""),
-                              title: Text(
-                                "LinkedIn",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.skill ?? ""),
-                              title: Text(
-                                "Skills",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(
-                                "${snapshot.data?.address?.pincode ?? ""}",
-                              ),
-                              title: Text(
-                                "Pincode",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(
-                                  snapshot.data?.address?.currentAddress ?? ""),
-                              title: Text(
-                                "CurrentAddress",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.address?.country ?? ""),
-                              title: Text(
-                                "Country",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.address?.state ?? ""),
-                              title: Text(
-                                "State",
-                                style: normalText,
-                              ),
-                            ),
-                            Tile(
-                              storage: storage,
-                              subtitle: Text(snapshot.data?.address?.city ?? ""),
-                              title: Text(
-                                "City",
-                                style: normalText,
-                              ),
-                            ), */
                             Tile(
                               title: const Text(
                                 'Edit Profile',
@@ -344,8 +174,8 @@ class _ExpertProfileState extends State<ExpertProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //kHeight10,
-                            Padding(
-                              padding: const EdgeInsets.only(left: 17),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 17),
                               child: Text(
                                 'System',
                                 //style: normalText.copyWith(color: Colors.blue),
@@ -368,18 +198,20 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => jobAddScreen(
+                                        builder: (context) =>
+                                            const SettingsScreen()
+                                        /* jobAddScreen(
                                         imagePath: File('assets/user.png'),
-                                      ),
-                                    ));
+                                      ), */
+                                        ));
                               },
                             ),
                             Tile(
                               storage: storage,
-                              leading: CircleAvatar(
+                              leading: const CircleAvatar(
                                 child: Icon(Icons.restart_alt_rounded),
                               ),
-                              title: Text("Swich User"),
+                              title: const Text("Swich  User"),
                               onTap: () {
                                 showDialog(
                                   context: context,
@@ -550,17 +382,17 @@ void _showSchedulePopup(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Select an option"),
+        title: const Text("Select an option"),
         actions: <Widget>[
           ElevatedButton(
-            child: Text("Booked Slots"),
+            child: const Text("Booked Slots"),
             onPressed: () {
               Navigator.of(context).pop();
               _fetchBookedSlots(); // Handle booked slots action
             },
           ),
           ElevatedButton(
-            child: Text("Slots"),
+            child: const Text("Slots"),
             onPressed: () {
               Navigator.of(context).pop();
               _fetchSlots(); // Handle slots action

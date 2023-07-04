@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/expert_provider.dart';
 import 'package:skillmaestro/core/theme/access_token/token.dart';
-import 'package:skillmaestro/expert/view/expert_home.dart';
+import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
 import 'package:skillmaestro/expert/view/expert_signup.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/textfield.dart';
@@ -66,16 +66,16 @@ class ExpertLogin extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            /* ElevatedButton(
-                onPressed: () {
-                  signInButtonClicked(context);
-                },
-                child: Text('Login')) */
-            loginSignupButton(
+            /* loginSignupButton(
               buttonName: 'Login',
               functionName: () => signInButtonClicked(context),
-              pageroute: ExpertHomeScreen(),
-            )
+              pageroute: const expertBottomNavBar(),
+            ) */
+            ElevatedButton(
+                onPressed: () async {
+                  await signInButtonClicked(context);
+                },
+                child: Text('login'))
           ],
         ),
       )),
@@ -90,9 +90,12 @@ class ExpertLogin extends StatelessWidget {
       return;
     } else {
       final token = await getExpertAccesToken();
-      log("+++++++++++++++++++++expert token+++++++++++$token");
+      log('===================token:$token');
+      log('=====================mobile:$mobile+++++++++++++++password:$password');
+
+      // ignore: use_build_context_synchronously
       Provider.of<ExpertProvider>(context, listen: false)
-          .checkExpertSignIn(context, password, mobile);
+          .checkExpertSignIn(context, mobile, password);
     }
   }
 }

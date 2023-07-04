@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:skillmaestro/common/widgets/button.dart';
 import 'package:skillmaestro/user/view/user_get_slot.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
-
 import '../../core/constants.dart';
 
+// ignore: must_be_immutable
 class JobDetailScreen extends StatelessWidget {
-  JobDetailScreen({super.key, required this.title});
+  JobDetailScreen({super.key, required this.title, required this.id});
   String title;
+  String id;
   //String id;
 
   @override
@@ -26,9 +24,8 @@ class JobDetailScreen extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
             BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Info'),
           ],
-          backgroundColor: mainColor, // Set your desired background color
-          selectedItemColor:
-              Colors.white, // Set your desired selected item color
+          backgroundColor: Colors.white, // Set your desired background color
+          selectedItemColor: mainColor, // Set your desired selected item color
           unselectedItemColor:
               Colors.grey, // Set your desired unselected item color
         ),
@@ -37,10 +34,11 @@ class JobDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
               Text(
-                "$title",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                title.toUpperCase(),
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -55,14 +53,14 @@ class JobDetailScreen extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset:
-                          Offset(0, 3), // changes the position of the shadow
+                      offset: const Offset(
+                          0, 3), // changes the position of the shadow
                     ),
                   ],
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -70,7 +68,7 @@ class JobDetailScreen extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Text(
@@ -81,7 +79,7 @@ class JobDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Card(
@@ -90,7 +88,7 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: ListTile(
+                child: const ListTile(
                   leading: Text(
                     'Rate Chart',
                     style: TextStyle(fontSize: 18),
@@ -98,7 +96,7 @@ class JobDetailScreen extends StatelessWidget {
                   trailing: Icon(Icons.add),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Card(
@@ -107,7 +105,7 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: ListTile(
+                child: const ListTile(
                   leading: Text(
                     'Terms and Conditions',
                     style: TextStyle(fontSize: 18),
@@ -115,7 +113,7 @@ class JobDetailScreen extends StatelessWidget {
                   trailing: Icon(Icons.add),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Card(
@@ -124,7 +122,7 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: ListTile(
+                child: const ListTile(
                   leading: Text(
                     'How it Works',
                     style: TextStyle(fontSize: 18),
@@ -132,17 +130,20 @@ class JobDetailScreen extends StatelessWidget {
                   trailing: Icon(Icons.add),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               loginSignupButton(
-                  buttonName: "Book Now", pageroute: UserGetSlot()),
-              SizedBox(
-                height: 20,
+                  buttonName: "Book Now",
+                  pageroute: UserGetSlot(
+                    id: id,
+                  )),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     "Customer Review",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -150,12 +151,13 @@ class JobDetailScreen extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // ignore: sized_box_for_whitespace
                     Container(
-                      height: 150,
+                      height: 90,
                       width: 150,
                       child: Card(
                         color: Colors.amber,
@@ -165,10 +167,10 @@ class JobDetailScreen extends StatelessWidget {
                         ),
                         elevation: 10,
                         child: Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 'Title',
                                 style: TextStyle(
@@ -179,8 +181,9 @@ class JobDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // ignore: sized_box_for_whitespace
                     Container(
-                      height: 150,
+                      height: 90,
                       width: 150,
                       child: Card(
                         color: Colors.amber,
@@ -190,10 +193,10 @@ class JobDetailScreen extends StatelessWidget {
                         ),
                         elevation: 10,
                         child: Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 'Title',
                                 style: TextStyle(

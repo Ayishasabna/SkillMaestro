@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:skillmaestro/expert/model/expert_sign_in_req_model.dart';
 import 'package:skillmaestro/expert/model/expert_sign_up_req_model.dart';
+import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
 import 'package:skillmaestro/expert/view/expert_home.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
 import 'package:skillmaestro/user/view/login.dart';
@@ -30,18 +31,19 @@ class ExpertProvider with ChangeNotifier {
 
     final mobile = mobileData;
     final password = passwordData;
+    log('=====================mobile:$mobile+++++++++++++++password:$password');
     /*  final signInExpertDatas =
         ExpertSignInReqModel(mobile: mobile, password: password);
     final tokenData =
         await ExpertSignInApiService().ExpertSignIn(signInExpertDatas, context); */
     final tokenData = await ExpertSignInApiService().ExpertSignIn(
         ExpertSignInReqModel(mobile: mobile, password: password), context);
-    //log(("vgghvshgsdm+++++++++++++++++++++${tokenData['experttoken']}"));
+    log(("++++++++++++++++++expertlogin+++++++++++++++++++++${tokenData?.experttoken}"));
     if (tokenData?.experttoken != null) {
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return ExpertHomeScreen();
+          return expertBottomNavBar();
         },
       ), (route) => false);
       ExpertLogin();

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/expert_provider.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
-
-import '../../common/widgets/button.dart';
-import '../../common/widgets/common_widget.dart';
 import '../../common/widgets/textfield.dart';
 import '../../user/view/validator.dart';
 

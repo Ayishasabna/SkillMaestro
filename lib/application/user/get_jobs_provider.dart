@@ -15,4 +15,17 @@ class AlljobsListForUser with ChangeNotifier {
     }); */
     return userJobs;
   }
+
+  /* Future<Map<String, dynamic>> getSlotesForUser() async {
+    userJobs = await FetchJobs().getSlots();
+    //log("----------------jobsMap---------$expert");
+    notifyListeners();
+
+    /*  FetchAllUsersDetails().fetchAllUsersDetails().then((value) {
+      value = usersMap;
+      
+      return usersMap;
+    }); */
+    return userJobs;
+  } */
 }

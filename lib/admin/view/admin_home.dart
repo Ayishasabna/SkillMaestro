@@ -90,34 +90,6 @@ class AdminHome extends StatelessWidget {
     );
   }
 
-  /* Widget buildPieChart() {
-    List<charts_flutter_new.Series<Job, String>> seriesList = [
-      charts_flutter_new.Series(
-        id: 'Workers',
-        data: jobs,
-        domainFn: (Job job, _) => job.title,
-        measureFn: (Job job, _) => job.workerCount,
-        labelAccessorFn: (Job job, _) => '${job.title}: ${job.workerCount}',
-      ),
-    ];
-
-    return Container(
-      height: 300,
-      width: 300,
-      child: charts_flutter_new.PieChart(
-        seriesList,
-        animate: true,
-        defaultRenderer: charts_flutter_new.ArcRendererConfig(
-          arcRendererDecorators: [
-            charts_flutter_new.ArcLabelDecorator(
-              labelPosition: charts_flutter_new.ArcLabelPosition.inside,
-            ),
-          ],
-        ),
-      ),
-    );
-  } */
-
   Widget buildCard(
       String title, dynamic pageroute, BuildContext context, Color colors) {
     return GestureDetector(
@@ -134,7 +106,10 @@ class AdminHome extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 8.0),
-              Text(title),
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
               const SizedBox(height: 8.0),
               //Text('Count: $count'),
             ],

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:skillmaestro/features/presentation/pages/admin/admin_home.dart';
+import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
-
 import '../../admin/view/add_jobs.dart';
 import '../../admin/view/admin_home.dart';
 import '../../core/constants.dart';
-//import '../pages/admin/add_jobs.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -17,7 +15,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int indexColor = 0;
   // ignore: non_constant_identifier_names
-  List Screen = [AdminHome(), UserHome(), UserHome()];
+  List Screen = [AdminHome(), SettingsScreen(), SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {

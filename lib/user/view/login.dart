@@ -1,14 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/admin/view/add_jobs.dart';
-import 'package:skillmaestro/expert/view/expert_home.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
+import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
 import '../../admin/view/admin_login.dart';
 import '../../application/user/user_provider.dart';
-import '../../expert/view/expert_signup.dart';
 import 'user_signup.dart';
 import '../../common/widgets/button.dart';
 import '../../common/widgets/textfield.dart';
@@ -85,8 +81,8 @@ class UserLogin extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => UserSignUp()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const UserSignUp()));
                   },
                   child: const Text(
                     'Sign Up',
@@ -98,41 +94,36 @@ class UserLogin extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            loginSignupButton(
+            /* loginSignupButton(
               buttonName: 'Login',
               functionName: () => signInButtonClicked(context),
-              pageroute: UserHome(),
-            )
+              pageroute: const UserBottomNavBar(),
+            ) */
+            ElevatedButton(
+                onPressed: () async {
+                  await signInButtonClicked(context);
+                },
+                child: Text('Login'))
           ],
         ),
       )),
     );
   }
 
-  void signInButtonClicked(BuildContext context) async {
+  Future signInButtonClicked(BuildContext context) async {
     log('signin clicked');
     final mobile = signinMobileController.text;
     final password = signinPasswordController.text;
 
     if (mobile.isEmpty || password.isEmpty) {
       return;
-    }
-    /*  if (mobile == 'smarticoapp23@gmail.com') {
-      log('You are Admin');
-      // Provider.of<CommonProvider>(context, listen: false).onloading();
-
-      Provider.of<AdminProvider>(context, listen: false)
-          .checkAdminSignIn(context, email, password);
-
-      // Provider.of<CommonProvider>(context, listen: false)
-          // .offLoading();
-    }  */
-    else {
-      log('You are someone else');
-      // Provider.of<CommonProvider>(context, listen: false).onloading();
+    } else {
+      //Provider.of<CommonProvider>(context, listen: false).onloading();
 
       Provider.of<UserProvider>(context, listen: false)
-          .checkUserSignIn(context, password, mobile);
+          .checkUserSignIn(context, mobile, password);
+      log('You are someone else');
+      //log('===============================mobile==password=====$mobile=====$password');
       // Provider.of<CommonProvider>(context, listen: false)
       //     .offLoading() ;
     }

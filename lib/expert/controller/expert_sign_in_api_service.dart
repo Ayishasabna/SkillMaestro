@@ -21,18 +21,22 @@ class ExpertSignInApiService {
     String path = ApiConfigration.baseUrl + ApiConfigration.expertSignIn;
 
     try {
-      String mobi = expertSignInReqModel.mobile;
-      log(("+++++++++++++$mobi"));
-      log(("+++++++++++++${expertSignInReqModel.password}"));
-      String? token = await getExpertAccesToken();
-      Response response = await dio.post(path,
-          data: jsonEncode(expertSignInReqModel.toJson()),
-          options: Options(headers: {"authorization": "Bearer $token"}));
+      //String mobi = expertSignInReqModel.mobile;
+      //log(("+++++++++++++$mobi"));
+      //log(("+++++++++++++${expertSignInReqModel.password}"));
+      log('======halllooooonnn===============mobile:${expertSignInReqModel.mobile}+++++++++++++++password:${expertSignInReqModel.password}');
+      //String? token = await getExpertAccesToken();
+      Response response = await dio.post(
+        path,
+        data: jsonEncode(expertSignInReqModel.toJson()),
+      );
+      //log('======halllooooonnn=how are you==============${response.data}');
       //log("==========+++++++++==============${response.data}");
       /* if (context.mounted) {
         Provider.of<CommonProvider>(context, listen: false).offLoading();
       } */
       if (response.statusCode == 200 || response.statusCode == 201) {
+        log('======halllooooonnn=how are you==============${response.data}');
         final ExpertSignInResModel responseData =
             ExpertSignInResModel.fromJson(response.data);
         log("============expert responsedata controller=======${responseData}");
@@ -42,30 +46,6 @@ class ExpertSignInApiService {
       log(e.message.toString());
     }
 
-    /* try {
-      Response response =
-          await dio.post(path, data: jsonEncode(expertSignInReqModel.toJson()));
-      log("===============================");
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        log('=====responsedata expert========${response.data}');
-        if (context.mounted) {
-          Provider.of<CommonProvider>(context, listen: false).offLoading();
-        }
-       
-        final token = response.data['experttoken'];
-        //final data = response.data['data']['user'];
-        //final id = data['_id'];
-        //final name = data['username'];
-        await storage.write(key: 'expert_access_token', value: token);
-        //await storage.write(key: 'currentExpertName', value: name);
-
-        //await storage.write(key: 'currentExpertId', value: id);
-        return response.data;
-      }
-    } on DioException catch (e) {
-      Provider.of<CommonProvider>(context, listen: false).userNotExist(context);
-      log(e.message.toString(), name: 'error');
-    } */
     return null;
   }
 }
