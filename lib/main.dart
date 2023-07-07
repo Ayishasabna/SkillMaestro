@@ -4,6 +4,8 @@ import 'package:skillmaestro/application/admin/add_job_provider.dart';
 import 'package:skillmaestro/application/admin/all_experts_list_provider.dart';
 import 'package:skillmaestro/application/admin/all_jobs_list_provider.dart';
 import 'package:skillmaestro/application/admin/block_user_provider.dart';
+import 'package:skillmaestro/application/admin/chart_provider.dart';
+import 'package:skillmaestro/application/expert/expert_message_provider.dart';
 import 'package:skillmaestro/application/expert/expert_provider.dart';
 import 'package:skillmaestro/application/expert/show_all_jobs_provider.dart';
 import 'package:skillmaestro/application/user/add_address_provider.dart';
@@ -16,23 +18,27 @@ import 'package:skillmaestro/user/view/login.dart';
 
 import 'application/admin/admin_provider.dart';
 import 'application/admin/all_users_list_provider.dart';
+import 'application/admin/get_card_count_provider.dart';
 import 'application/common/common_provider.dart';
 import 'application/expert/expert_profile_provider.dart';
 import 'application/expert/get_jobs_provider.dart';
+import 'application/expert/get_user_contacts_provider.dart';
+import 'application/user/chat/chat_provider.dart';
 import 'application/user/chat/message_provider.dart';
 import 'application/user/get_jobs_provider.dart';
 import 'application/user/user_add_job_provider.dart';
 import 'common/on_boarding/first_screen.dart';
+//import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 //
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
-  // This widget is the root of your application.
+  //final razorpay = Razorpay();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -58,6 +64,10 @@ class MyApp extends StatelessWidget {
         ListenableProvider(create: (context) => UserAddJobProvider()),
         ListenableProvider(create: (context) => MessagingUserProvider()),
         ListenableProvider(create: (context) => GetContactsProvider()),
+        ListenableProvider(create: (context) => getCardProvider()),
+        ListenableProvider(create: (context) => GetUserContactsProvider()),
+        ListenableProvider(create: (context) => MessagingExpertProvider()),
+        ListenableProvider(create: (context) => ChartDataProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

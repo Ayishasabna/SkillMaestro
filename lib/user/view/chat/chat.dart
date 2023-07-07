@@ -1,4 +1,4 @@
-import 'dart:developer';
+/* import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -130,10 +130,10 @@ class MessagingUser extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 8.0),
                         child: IconButton(
                           onPressed: () {
-                            if (data.msgController.text.isNotEmpty) {
+                            /*  if (data.msgController.text.isNotEmpty) {
                               data.sendMessage(data.msgController.text);
                               data.msgController.clear();
-                            }
+                            } */
                           },
                           icon: const Icon(
                             Icons.send,
@@ -288,4 +288,4 @@ class UserChatScreen extends StatelessWidget {
     );
   }
 }
- */
+ */ */

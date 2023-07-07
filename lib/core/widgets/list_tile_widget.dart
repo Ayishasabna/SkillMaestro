@@ -16,8 +16,9 @@ class ListTileWidget extends StatelessWidget {
     log('================inside list tile==+++================${map}');
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ChatScreen(list: list)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => //ChatScreen(username: list[0]['username'])
+                ChatScreen(list: list)));
       },
       child: ListTile(
         leading: CircleAvatar(

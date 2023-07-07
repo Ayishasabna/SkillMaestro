@@ -3,6 +3,7 @@ import 'package:skillmaestro/expert/view/expert_selected_job.dart';
 import 'package:skillmaestro/user/view/login.dart';
 import 'all_booking_list.dart';
 import 'expert_add_shedule.dart';
+import 'expert_all_booking.dart';
 import 'expert_profile.dart';
 import 'expert_skills.dart';
 
@@ -29,7 +30,8 @@ class ExpertHomeScreen extends StatelessWidget {
     JobService(
       name: "My Bookings",
       //icon: Icons.usb_rounded,
-      pageRoute: const AllBookingTab(),
+      pageRoute: ExpertAllBooking(),
+      //const AllBookingTab(),
       assetname: "assets/booking3.jpg",
       //"assets/booking1.jpg",
     ),

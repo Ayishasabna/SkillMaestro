@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/settings/settings_screen.dart';
+import 'package:skillmaestro/expert/view/chat/expert_message_screen.dart';
 import 'package:skillmaestro/expert/view/expert_chat.dart';
 import 'package:skillmaestro/expert/view/expert_home.dart';
 import 'package:skillmaestro/expert/view/expert_payment_screen.dart';
+import 'package:skillmaestro/user/view/chat/message_screen.dart';
 import '../../core/constants.dart';
 
 // ignore: camel_case_types
@@ -19,7 +21,8 @@ class _expertBottomNavBarState extends State<expertBottomNavBar> {
 
   List bottomNavScreens = [
     ExpertHomeScreen(),
-    ExpertChatScrn(),
+    ExpertMessageScreen(),
+    //ExpertChatScrn(),
     ExpertPaymentScreen(),
     const SettingsScreen()
   ];

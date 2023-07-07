@@ -51,9 +51,10 @@ class UserCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => JobDetailScreen(
-                  title: map['job_role'], id: map['_id'],
-                  //id: map['_id']
-                )));
+                title: map['job_role'],
+                id: map['_id'],
+                basicRate: map['base_rate'],
+                additionalRate: map['add_rate'])));
       },
       child: Column(
         children: [

@@ -71,11 +71,21 @@ class ExpertLogin extends StatelessWidget {
               functionName: () => signInButtonClicked(context),
               pageroute: const expertBottomNavBar(),
             ) */
-            ElevatedButton(
-                onPressed: () async {
-                  await signInButtonClicked(context);
-                },
-                child: Text('login'))
+            Container(
+              height: 50,
+              width: 125,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      backgroundColor: Colors.teal[400],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  onPressed: () async {
+                    await signInButtonClicked(context);
+                  },
+                  child: Text('login', style: TextStyle(fontSize: 20))),
+            )
           ],
         ),
       )),

@@ -5,20 +5,32 @@ import '../../core/constants.dart';
 
 // ignore: must_be_immutable
 class JobDetailScreen extends StatelessWidget {
-  JobDetailScreen({super.key, required this.title, required this.id});
+  JobDetailScreen({
+    super.key,
+    required this.title,
+    required this.id,
+    required this.basicRate,
+    required this.additionalRate,
+  });
   String title;
   String id;
-  //String id;
+  int basicRate;
+  int additionalRate;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /* appBar: AppBar(
-          title: Center(child: const Text("Job Details")),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Center(
+              child: Text(
+            title.toUpperCase(),
+          )),
           //backgroundColor: const Color(0xFF02D1AC),
           backgroundColor: mainColor,
-        ), */
-        bottomNavigationBar: BottomNavigationBar(
+          automaticallyImplyLeading: false,
+        ),
+        /*  bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
@@ -28,16 +40,19 @@ class JobDetailScreen extends StatelessWidget {
           selectedItemColor: mainColor, // Set your desired selected item color
           unselectedItemColor:
               Colors.grey, // Set your desired unselected item color
-        ),
+        ), */
         body: SafeArea(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+              /* SizedBox(
+                height: 10,
+              ),
               Text(
                 title.toUpperCase(),
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
+              ), */
               const SizedBox(
                 height: 20,
               ),
@@ -66,16 +81,22 @@ class JobDetailScreen extends StatelessWidget {
                     Text(
                       "How Can You find expert $title near you?",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
-                    Text(
-                      "SkillMaestro connects you to \nproffesional $title services. ",
+                    Center(
+                      child: Text(
+                          'SkillMaestro connects you to professional $title services.Connect with SkillMaestro for expert  $title services . Connect with us and get efficient services at the best rates.',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400)),
+                    )
+                    /* Text(
+                      "SkillMaestro  Connects you to \n  Proffesional $title Services. ",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
+                    ), */
                   ],
                 ),
               ),
@@ -88,12 +109,68 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: const ListTile(
-                  leading: Text(
-                    'Rate Chart',
-                    style: TextStyle(fontSize: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Here is the rate information',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(height: 10),
+                                //Text('Here is the rate information.'),
+                                SizedBox(height: 10),
+                                Center(
+                                    child: Text(
+                                  'Basic Rate: Rs. ${basicRate}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                                SizedBox(height: 8),
+                                Center(
+                                    child: Text(
+                                  'Additional Rate: Rs. ${additionalRate}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                                SizedBox(height: 16),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: TextButton(
+                                    child: Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const ListTile(
+                    leading: Text(
+                      'Rate Chart',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    trailing: Icon(Icons.add),
                   ),
-                  trailing: Icon(Icons.add),
                 ),
               ),
               const SizedBox(
@@ -105,12 +182,55 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: const ListTile(
-                  leading: Text(
-                    'Terms and Conditions',
-                    style: TextStyle(fontSize: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'SkillMaestro charges for unit of 2 hour of service initially, and every 60 minutes thereon Material charges are additional. Customer can either purchase the material directly or request the service partner to procure it. Time for material procurement will be charged in the final bill.Our service partner will help you with a quotation in case of long hour work schedules. Please confirm the quotation before initiating work to avoid any conflict on service completion.',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: TextButton(
+                                    child: Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: ListTile(
+                    leading: Text(
+                      'Terms and Conditions',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    trailing: Icon(Icons.add),
                   ),
-                  trailing: Icon(Icons.add),
                 ),
               ),
               const SizedBox(
@@ -122,12 +242,52 @@ class JobDetailScreen extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(10), // Adjust the value as needed
                 ),
-                child: const ListTile(
-                  leading: Text(
-                    'How it Works',
-                    style: TextStyle(fontSize: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'After you book the service,  ${title} in your area will receive a notification coordinated by SkillWhiz customer service. Kindly wait for the confirmation message. Our service partner will call and note the details of the problem, to bring along the necessary tools and other equipment. Make sure all materials for service are kept ready before service starts. In case you want the Skillwhiz partner to purchase the materials, let them know beforehand. The time taken for purchase of materials will be added as part of service charges. Skillwhiz partner will give you a quotation if required for work that requires more than 4 hours. Work will be done only after your approval of the quote When the work is over, our agent will let you know the service charge. Please make the payment accordingly online on our platform or by cash to the service provider',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: TextButton(
+                                    child: Text('Close'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const ListTile(
+                    leading: Text(
+                      'How it Works',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    trailing: Icon(Icons.add),
                   ),
-                  trailing: Icon(Icons.add),
                 ),
               ),
               const SizedBox(

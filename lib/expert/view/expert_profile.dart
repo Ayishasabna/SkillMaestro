@@ -94,6 +94,8 @@ class _ExpertProfileState extends State<ExpertProfile> {
                               ),
                               subtitle: Text(
                                 snapshot.data?.username ?? "dkd",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Tile(

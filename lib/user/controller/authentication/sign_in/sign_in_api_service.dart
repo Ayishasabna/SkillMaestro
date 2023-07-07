@@ -39,12 +39,16 @@ class UserSignInApiService {
 
         //log('(((((((((((((((((((((((${signInResModel.result})))))))))))))))))))))))');
         final data = response.data['result'];
-        //final name = data['username'];
-        log("============================id++++++++++++++++++$data");
+        final name = data['username'];
+        final id = data['_id'];
+        log("_______________________user sign in _____________$data");
         //log("+++++++++++++++++++++++++++++$name");
-        //await storage.write(key: 'currentUserName', value: name);
+        await storage.write(key: 'currentUserName', value: name);
 
-        //await storage.write(key: 'currentUserId', value: id);
+        await storage.write(key: 'currentUserId', value: id);
+        await storage.write(
+            key: 'user_access_token', value: response.data['token']);
+
         return signInResModel;
       }
     } on DioException catch (e) {

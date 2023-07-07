@@ -6,8 +6,10 @@ import 'package:skillmaestro/application/user/user_add_job_provider.dart';
 import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
 import 'package:skillmaestro/user/model/add_adress_model.dart';
 import 'package:skillmaestro/user/model/book_job_request_model.dart';
+import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 import '../../application/user/get_slots_provider.dart';
+import 'package:intl/intl.dart';
 
 List<String>? selectedValue;
 String? selectedTimeSlot;
@@ -37,6 +39,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
   final field1 = TextEditingController();
 
   List result = [];
+  late String availableDate;
 
   @override
   Widget build(BuildContext context) {
@@ -97,12 +100,71 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                   child: Consumer<GetSlotsForUserProvider>(
                                     builder: (context, slots, child) {
                                       //selectedValue = slots.userSlots['result'];
-                                      log('kkkkkkk======================${slots.userSlots['result']}=====================');
-                                      /*   .map<String>(
-                                              (item) => item as String)
-                                          .toList(); */
+                                      log('kkkkkkk======================${slots.userSlots['result'].length}=====================');
+                                      /* for (int i = 0;
+                                          i < slots.userSlots.length;
+                                          i++) {
+                                        String dateTimeString =
+                                            slots.userSlots['result'][i];
+                                        log('________________________format__________$dateTimeString');
+                                        DateTime dateTime =
+                                            DateTime.parse(dateTimeString);
+                                        log('________________________Date__________$dateTime');
+                                        String formattedDate =
+                                            DateFormat.yMd().format(dateTime);
+                                        log('________________________formattedDate__________$formattedDate');
+                                        availableDate = formattedDate;
+                                      } */
+                                      int n = slots.userSlots['result'].length;
+                                      log("__________________$n");
+                                      List<DropdownMenuItem<String>>
+                                          dropdownItems = [];
+
+                                      for (int i = 0; i < n; i++) {
+                                        String dateTimeString =
+                                            slots.userSlots['result'][i];
+                                        DateTime dateTime =
+                                            DateTime.parse(dateTimeString);
+                                        String formattedDate =
+                                            DateFormat.yMd().format(dateTime);
+                                        availableDate = formattedDate;
+
+                                        DropdownMenuItem<String> dropdownItem =
+                                            DropdownMenuItem<String>(
+                                          value: availableDate,
+                                          child: Text(
+                                            availableDate,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                          /* onTap: () {
+      selectedTimeSlot = e;
+      log("======================timeslot++++++++++++$selectedTimeSlot");
+    }, */
+                                        );
+
+                                        dropdownItems.add(dropdownItem);
+                                      }
 
                                       return DropdownButtonFormField<String>(
+                                        value: selectedTimeSlot,
+                                        items: dropdownItems,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Select slots';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            selectedTimeSlot = newValue;
+                                          });
+                                        },
+                                      );
+                                      /* DropdownButtonFormField<String>(
                                         // items: dropdownitems(),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -130,10 +192,10 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                                 return DropdownMenuItem<String>(
                                                   value: e,
                                                   child: Text(
-                                                    e.toString(),
+                                                    'e$e'.toString(),
                                                     style: const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w400,
+                                                          FontWeight.bold,
                                                       fontSize: 17,
                                                     ),
                                                   ),
@@ -151,9 +213,12 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                           selectedTimeSlot = value;
                                           log('addTra******${slots.userSlots['result']}=======================');
                                         },
-                                      );
+                                      ); */
                                     },
                                   )),
+                            ),
+                            SizedBox(
+                              height: 20,
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -209,33 +274,46 @@ Future adressdialogue(context, String id, String selectedslots) async {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: const Text('Add Address'),
+        title: Center(
+          child: const Text(
+            'Add Address',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Name',
-              ),
+                  labelText: 'Name',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             TextField(
               controller: HouseNameController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'HouseName',
-              ),
+                  labelText: 'HouseName',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             TextField(
               controller: streetController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Street',
-              ),
+                  labelText: 'Street',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             TextField(
               controller: pincodeController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Pincode',
-              ),
+                  labelText: 'Pincode',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -285,6 +363,12 @@ Future bookNow(
   date = TextEditingController(text: DateTime.now().toString());
   jobId = TextEditingController(text: id.toString());
 
+  String dateTimeString = date.text;
+  DateTime dateTime = DateTime.parse(dateTimeString);
+
+  String newdate = DateFormat.yMd().format(dateTime);
+  TextEditingController dateController = TextEditingController(text: newdate);
+  log('___________________date_____________${newdate}');
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -293,34 +377,45 @@ Future bookNow(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: const Text('Booking Details'),
+        title: Center(
+          child: const Text(
+            'Booking Details',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: timeslot,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Time',
-              ),
+                  labelText: 'Time',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             TextField(
               controller: address,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Address',
-              ),
+                  labelText: 'Address',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             TextField(
-              controller: date,
+              controller: dateController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
-                labelText: 'Date',
-              ),
+                  labelText: 'Date',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            TextField(
+            /* TextField(
               controller: jobId,
               decoration: const InputDecoration(
                 labelText: 'JobId',
               ),
-            ),
+            ), */
           ],
         ),
         actions: [
@@ -334,7 +429,7 @@ Future bookNow(
               Provider.of<UserAddJobProvider>(context, listen: false)
                   .AddJob(model, context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => BottomNavBar()));
+                  MaterialPageRoute(builder: (context) => UserBottomNavBar()));
               //addAddress(context, id);
               // Perform submit action
             },

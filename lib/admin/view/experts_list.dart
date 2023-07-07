@@ -12,6 +12,7 @@ class AllExpertForAdmin extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text("All Experts"),
           //backgroundColor: const Color(0xFF02D1AC),
           backgroundColor: mainColor,
@@ -67,7 +68,7 @@ class UserCard extends StatelessWidget {
                 ),
                 Text('Email: ${map['email']}'),
                 Text('Mobile: ${map['mobile']}'),
-                Text('jobRole:  ${map['skills']}'),
+                //Text('jobRole:  ${map['skills']}'),
               ],
             ),
             ElevatedButton(

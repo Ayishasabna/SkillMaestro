@@ -88,7 +88,7 @@ class UserCard extends StatelessWidget {
                       return AlertDialog(
                         title: const Text('Block User'),
                         content: Text(
-                            "Are You Sure You Want To BLock ${map['username']}}"),
+                            "Are You Sure You Want To BLock ${map['username']}"),
                         actions: [
                           ElevatedButton(
                               onPressed: () {

@@ -21,11 +21,11 @@ class UserHome extends StatefulWidget {
 class _UserHomeState extends State<UserHome> {
   int _currentIndex = 0;
   // ignore: prefer_final_fields
-  List<Widget> _pages = [
+  /* List<Widget> _pages = [
     const UserHome(),
     const UserHome(),
     const SettingsScreen(),
-  ];
+  ]; */
 
   List<dynamic> jobList = [];
 
@@ -189,9 +189,10 @@ class UserCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => JobDetailScreen(
-                  title: map['job_role'], id: map['_id'],
-                  //id: map['_id']
-                )));
+                title: map['job_role'],
+                id: map['_id'],
+                basicRate: map['base_rate'],
+                additionalRate: map['add_rate'])));
       },
       child: Card(
         shape: RoundedRectangleBorder(

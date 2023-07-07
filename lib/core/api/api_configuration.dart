@@ -1,12 +1,13 @@
 import 'package:charts_flutter_new/flutter.dart';
 
 class ApiConfigration {
-  static const ipAddress = "192.168.1.87";
+  static const ipAddress = "192.168.1.75";
   //'10.4.1.200';
   static const baseUrl = "http://$ipAddress:4000";
 
   //----User Endpoints---
   static const verifyOtp = '/verify-otp';
+
   static const signUp = '/signup';
   static const signin = '/signin';
   static const get7Jobs = '/get7Jobs';
@@ -15,8 +16,9 @@ class ApiConfigration {
   static const getSlots = '/getSlots/';
   static const addAddress = '/addAddress';
   static const bookJob = '/bookJob';
-  static const getContacts = '/getContacts';
+  static const getExpertContacts = '/getContacts';
   static const getMessage = '/getMessage';
+  static const addMessage = '/addMessage';
 
   //static const login = '/login';
   //static const otp = '/OTP';
@@ -36,6 +38,9 @@ class ApiConfigration {
   static const addShedule = '/expert/addSchedule';
   static const getSchedule = '/expert/getSchedule';
   static const myBookings = '/expert/myBookings';
+  static const getUserContacts = '/expert/getContacts';
+  static const expertGetMessage = '/expert/getMessage';
+  static const expertAddMessage = '/expert/addMessage';
 
   // static const signUp = '/signup';
 
@@ -50,6 +55,8 @@ class ApiConfigration {
   static const blockExpert = '/blockExpert';
   static const blockUser = '/blockUser';
   static const unBlockUser = '/unBlockUser';
+  static const getChartData = '/getChartData';
+  static const getCardCounts = '/getCardCounts';
 
   //static const adminLogin = '/login';
 }

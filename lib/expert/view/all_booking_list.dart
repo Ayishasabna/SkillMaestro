@@ -9,12 +9,12 @@ Map<String, dynamic> map = {};
 
 class AllBookingTab extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  const AllBookingTab({Key? key});
-
+  AllBookingTab({Key? key, required this.map});
+  Map<String, dynamic> map = {};
   @override
   Widget build(BuildContext context) {
-    context.read<ExpertAllJobsProvider>().GetMyBookings();
-    log("=====================response============${context.read<ExpertAllJobsProvider>().GetMyBookings()}");
+    //context.read<ExpertAllJobsProvider>().GetMyBookings();
+    log("_______________my bookings_____________");
     //final response = context.read<ExpertAllJobsProvider>().GetMyBookings();
 
     // ignore: unnecessary_null_comparison
@@ -56,15 +56,24 @@ class AllBookingTab extends StatelessWidget {
         body: Consumer<ExpertAllJobsProvider>(
           builder: (context, value, child) {
             map = value.booking;
-            log('=============================valu.booking.result===========${value.booking}');
+            List<dynamic> results = map['result'];
+            log('__________________________addresses____________________________$results');
+
             return ListView(padding: const EdgeInsets.all(16.0), children: [
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ListTile(
+                    ListTile(
                       leading: Icon(Icons.person),
-                      title: Text('User Information'),
+                      title: Text(
+                        'User Information',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        'Name: ${results[0]['address']['name']}',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -81,7 +90,7 @@ class AllBookingTab extends StatelessWidget {
                   ],
                 ),
               ),
-              Card(
+              /* Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,7 +112,7 @@ class AllBookingTab extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+              ), */
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,8 +125,8 @@ class AllBookingTab extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Job Role: string'),
+                        children: [
+                          Text('Job Role: ${results[0]['jobId']['job_role']}'),
                           // Add more job information here
                         ],
                       ),
@@ -137,11 +146,28 @@ class AllBookingTab extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Name: string'),
-                          Text('House: string'),
-                          Text('Street: string'),
-                          Text('Pincode: 0'),
+                        children: [
+                          Text(
+                            'Name: ${results[0]['address']['name']}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'House: ${results[0]['address']['house']}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Street: ${results[0]['address']['street']}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Pincode: ${results[0]['address']['pincode']}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+
+                          //Text('Name: string'),
+                          //Text('House: string'),
+                          //Text('Street: string'),
+                          //Text('Pincode: 0'),
                         ],
                       ),
                     ),

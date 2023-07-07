@@ -15,13 +15,13 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int indexColor = 0;
   // ignore: non_constant_identifier_names
-  List Screen = [AdminHome(), SettingsScreen(), SettingsScreen()];
+  List Screen = [AdminHome(), AddJobs(), SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Screen[indexColor],
-        floatingActionButton: FloatingActionButton(
+        /* floatingActionButton: FloatingActionButton(
           onPressed: () async {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => const AddJobs()));
@@ -30,8 +30,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           child: const Icon(Icons.add),
           backgroundColor: mainColor,
           // Colors.amber,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        ), */
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(canvasColor: mainColor
               //Color(0xFF02D1AC)
@@ -52,6 +52,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       child: Icon(Icons.home,
                           size: 30,
                           color: indexColor == 0 ? Colors.amber : Colors.grey)),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          indexColor = 1;
+                        });
+                      },
+                      child: Icon(Icons.add_box,
+                          size: 30,
+                          color: indexColor == 1 ? Colors.amber : Colors.grey)),
                   GestureDetector(
                       onTap: () {
                         setState(() {

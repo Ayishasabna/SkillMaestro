@@ -1,4 +1,5 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:skillmaestro/user/model/chat/send_message_model.dart';
 
 class ChatContainer extends StatefulWidget {
   final dynamic data;
@@ -6,77 +7,96 @@ class ChatContainer extends StatefulWidget {
   final dynamic socket;
   final dynamic user;
 
-  const ChatContainer({
-    Key? key,
-    required this.data,
-    required this.currentChat,
-    required this.socket,
-    required this.user,
-  }) : super(key: key);
+  ChatContainer(
+      {required this.data,
+      required this.currentChat,
+      required this.socket,
+      required this.user});
 
   @override
   _ChatContainerState createState() => _ChatContainerState();
 }
 
 class _ChatContainerState extends State<ChatContainer> {
-  List<dynamic> messages = [];
+  List<Map<String, dynamic>> messages = [];
+  TextEditingController messageController = TextEditingController();
   ScrollController scrollController = ScrollController();
-  dynamic arrivalMessage;
+  Map<String, dynamic>? arrivalMessage;
 
   @override
   void initState() {
     super.initState();
-    fetchData();
-  }
-
-  void fetchData() async {
-    List<dynamic> response;
     if (widget.user != null) {
-      response = await getUserMessage(
-        {'from': widget.data['_id'], 'to': widget.currentChat['id']},
-      );
+      /*  getUserMessage({'from': widget.data['_id'], 'to': widget.currentChat['id']}).then((response) {
+        setState(() {
+          messages = response.data;
+        });
+      }); */
     } else {
-      response = await getExpertMessage(
-        {'from': widget.data['_id'], 'to': widget.currentChat['id']},
-      );
+      /* getExpertMessage({'from': widget.data['_id'], 'to': widget.currentChat['id']}).then((response) {
+        setState(() {
+          messages = response.data;
+        });
+      }); */
     }
 
-    setState(() {
-      messages = response;
-    });
+    if (widget.socket != null) {
+      widget.socket.on('msg-recieve', (msg) {
+        setState(() {
+          arrivalMessage = {'fromSelf': false, 'message': msg};
+        });
+      });
+    }
   }
 
-  void handleSendMsg(String msg) async {
-    widget.socket.current.emit('send-message', {
+  @override
+  void dispose() {
+    messageController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> handleSendMsg(String msg) async {
+    widget.socket.emit('send-message', {
       'to': widget.currentChat['id'],
       'from': widget.data['_id'],
       'msg': msg,
     });
 
     if (widget.user != null) {
-      await addUserMessage({
+      /* await addUserMessage({
         'from': widget.data['_id'],
         'to': widget.currentChat['id'],
         'message': msg,
         'model': 'user',
-      });
+      }); */
     } else {
-      await addExpertMessage({
+      /* await SendMessageModel({
         'from': widget.data['_id'],
         'to': widget.currentChat['id'],
         'message': msg,
         'model': 'expert',
-      });
+      }); */
     }
 
     setState(() {
       messages.add({'fromSelf': true, 'message': msg});
     });
+
+    messageController.clear();
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Chat Container'),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -85,51 +105,36 @@ class _ChatContainerState extends State<ChatContainer> {
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 final message = messages[index];
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: message['fromSelf']
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      if (!message['fromSelf'])
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            message['fromSelf']
-                                ? widget.data['image']
-                                : widget.currentChat['image'],
-                          ),
-                        ),
-                      Flexible(
-                        child: Container(
-                          padding: EdgeInsets.all(12.0),
-                          margin: EdgeInsets.symmetric(horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            color: message['fromSelf']
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                          child: Text(
-                            message['message'],
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (message['createdAt'] != null)
-                        Text(
-                          'Sent@ ${message['createdAt'].split(',')[0]}\nTime@ ${message['createdAt'].split(',')[1]}',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      if (message['createdAt'] == null)
-                        Text()}
+                return ListTile(
+                  title: Text(message['message']),
+                  leading: message['fromSelf']
+                      ? Icon(Icons.person)
+                      : Icon(Icons.computer),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: messageController,
+                    decoration: InputDecoration(
+                      hintText: 'Type a message',
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () => handleSendMsg(messageController.text),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
- */

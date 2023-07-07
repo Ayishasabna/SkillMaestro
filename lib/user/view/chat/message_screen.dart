@@ -10,6 +10,7 @@ import 'package:skillmaestro/user/view/user_home.dart';
 import '../../../application/user/chat/get_contacts_provider.dart';
 import '../../../core/widgets/list_tile_widget.dart';
 import '../../../core/widgets/textstyle.dart';
+import '../bottom_nav/bottom_nav.dart';
 
 Map<String, dynamic> map = {};
 List<dynamic> list = [];
@@ -33,8 +34,8 @@ class MessageScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => UserBottomNavBar()));
               },
               icon: Icon(Icons.close)),
           //notificationBtnIcon(context),

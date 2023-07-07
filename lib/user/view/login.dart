@@ -2,11 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
-import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
 import '../../admin/view/admin_login.dart';
 import '../../application/user/user_provider.dart';
 import 'user_signup.dart';
-import '../../common/widgets/button.dart';
 import '../../common/widgets/textfield.dart';
 
 class UserLogin extends StatelessWidget {
@@ -99,11 +97,21 @@ class UserLogin extends StatelessWidget {
               functionName: () => signInButtonClicked(context),
               pageroute: const UserBottomNavBar(),
             ) */
-            ElevatedButton(
-                onPressed: () async {
-                  await signInButtonClicked(context);
-                },
-                child: Text('Login'))
+            Container(
+              height: 50,
+              width: 125,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      backgroundColor: Colors.teal[400],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  onPressed: () async {
+                    await signInButtonClicked(context);
+                  },
+                  child: Text('Login', style: TextStyle(fontSize: 20))),
+            )
           ],
         ),
       )),

@@ -1,4 +1,4 @@
-class GetMessageModel {
+/* class GetMessageModel {
   GetMessageModel({
     this.myself,
     this.message,
@@ -22,7 +22,7 @@ class GetMessageModel {
         "time": time,
       };
 }
-
+ */
 
 /* class MessageModel {
   String? sendBy;

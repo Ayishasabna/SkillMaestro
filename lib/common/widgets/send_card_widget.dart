@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,6 +7,7 @@ import '../../application/user/chat/message_provider.dart';
 import '../../core/widgets/textstyle.dart';
 
 Widget sendCardWidget(context, String msg, String time) {
+  log("_________________--time__________________$time");
   return Column(
     children: [
       Align(
@@ -14,7 +17,8 @@ Widget sendCardWidget(context, String msg, String time) {
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(5)),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
