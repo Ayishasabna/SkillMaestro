@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 import '../../../common/settings/settings_screen.dart';
 import '../../../core/constants.dart';
+import '../all_booking_screen.dart';
 import '../chat/message_screen.dart';
 
 class UserBottomNavBar extends StatefulWidget {
@@ -17,7 +18,7 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
   List bottomNavScreens = [
     UserHome(),
     MessageScreen(),
-    UserHome(),
+    ViewAllBookingScreen(),
     SettingsScreen()
   ];
 

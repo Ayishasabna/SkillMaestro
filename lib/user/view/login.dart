@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
+import 'package:skillmaestro/user/view/all_booking_screen.dart';
+import 'package:skillmaestro/user/view/user_home.dart';
 import '../../admin/view/admin_login.dart';
 import '../../application/user/user_provider.dart';
 import 'user_signup.dart';
@@ -108,6 +111,8 @@ class UserLogin extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                   onPressed: () async {
+                    /* Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ViewAllScreen())); */
                     await signInButtonClicked(context);
                   },
                   child: Text('Login', style: TextStyle(fontSize: 20))),

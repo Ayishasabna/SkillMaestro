@@ -1,7 +1,7 @@
 import 'package:charts_flutter_new/flutter.dart';
 
 class ApiConfigration {
-  static const ipAddress = "192.168.1.75";
+  static const ipAddress = "10.4.1.200";
   //'10.4.1.200';
   static const baseUrl = "http://$ipAddress:4000";
 

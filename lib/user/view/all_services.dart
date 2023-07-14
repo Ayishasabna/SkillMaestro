@@ -15,7 +15,7 @@ class JobServicesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: const Text("Job Services"),
+          title: const Text("Services For You"),
           backgroundColor: Colors.teal[400]),
       body: Consumer<AlljobsListForUser>(builder: (context, value, child) {
         //log('------insideconsumer------${value.usersMap}');

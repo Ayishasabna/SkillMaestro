@@ -7,6 +7,7 @@ import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
 import 'package:skillmaestro/user/model/add_adress_model.dart';
 import 'package:skillmaestro/user/model/book_job_request_model.dart';
 import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
+import 'package:skillmaestro/user/view/confirm_booking.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 import '../../application/user/get_slots_provider.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
 
   List result = [];
   late String availableDate;
+  String? initialDateTimeString;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                   child: Consumer<GetSlotsForUserProvider>(
                                     builder: (context, slots, child) {
                                       //selectedValue = slots.userSlots['result'];
-                                      log('kkkkkkk======================${slots.userSlots['result'].length}=====================');
+                                      //log('kkkkkkk======================${slots.userSlots['result'].length}=====================');
                                       /* for (int i = 0;
                                           i < slots.userSlots.length;
                                           i++) {
@@ -119,6 +121,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                       log("__________________$n");
                                       List<DropdownMenuItem<String>>
                                           dropdownItems = [];
+                                      Map<String, String> dateFormats = {};
 
                                       for (int i = 0; i < n; i++) {
                                         String dateTimeString =
@@ -127,13 +130,16 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                             DateTime.parse(dateTimeString);
                                         String formattedDate =
                                             DateFormat.yMd().format(dateTime);
-                                        availableDate = formattedDate;
+                                        //availableDate = formattedDate;
+                                        // Store the formatted date and its corresponding original format string
+                                        dateFormats[formattedDate] =
+                                            dateTimeString;
 
                                         DropdownMenuItem<String> dropdownItem =
                                             DropdownMenuItem<String>(
-                                          value: availableDate,
+                                          value: formattedDate,
                                           child: Text(
-                                            availableDate,
+                                            formattedDate,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 17,
@@ -161,6 +167,13 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                         onChanged: (String? newValue) {
                                           setState(() {
                                             selectedTimeSlot = newValue;
+                                            // Retrieve the original format string based on the selected formatted date
+                                            initialDateTimeString =
+                                                dateFormats[selectedTimeSlot] ??
+                                                    '';
+
+                                            log('________________________selectedtimeslot_____________$selectedTimeSlot');
+                                            log('___________________________new string__________$initialDateTimeString');
                                           });
                                         },
                                       );
@@ -223,7 +236,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
                             ElevatedButton(
                               onPressed: () {
                                 adressdialogue(
-                                    context, widget.id, selectedTimeSlot!
+                                    context, widget.id, initialDateTimeString!
                                     //selectedValue!
                                     );
                               },
@@ -410,26 +423,27 @@ Future bookNow(
                   labelStyle:
                       TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            /* TextField(
+            TextField(
               controller: jobId,
               decoration: const InputDecoration(
                 labelText: 'JobId',
               ),
-            ), */
+            ),
           ],
         ),
         actions: [
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               final model = BookJobRequestModel(
                   slots: selectedslot,
                   address: address1,
                   date: date.text,
                   jobId: jobId.text);
-              Provider.of<UserAddJobProvider>(context, listen: false)
+              await Provider.of<UserAddJobProvider>(context, listen: false)
                   .AddJob(model, context);
+              Navigator.of(context).pop();
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => UserBottomNavBar()));
+                  MaterialPageRoute(builder: (context) => BookingStatus()));
               //addAddress(context, id);
               // Perform submit action
             },
