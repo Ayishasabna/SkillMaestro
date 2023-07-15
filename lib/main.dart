@@ -20,12 +20,14 @@ import 'application/admin/admin_provider.dart';
 import 'application/admin/all_users_list_provider.dart';
 import 'application/admin/get_card_count_provider.dart';
 import 'application/common/common_provider.dart';
+import 'application/expert/expert_job_detail_provider.dart';
 import 'application/expert/expert_profile_provider.dart';
 import 'application/expert/get_jobs_provider.dart';
 import 'application/expert/get_user_contacts_provider.dart';
 import 'application/user/chat/chat_provider.dart';
 import 'application/user/chat/message_provider.dart';
 import 'application/user/get_jobs_provider.dart';
+import 'application/user/job_detail_provider.dart';
 import 'application/user/user_add_job_provider.dart';
 import 'common/on_boarding/first_screen.dart';
 //import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -68,6 +70,8 @@ class MyApp extends StatelessWidget {
         ListenableProvider(create: (context) => GetUserContactsProvider()),
         ListenableProvider(create: (context) => MessagingExpertProvider()),
         ListenableProvider(create: (context) => ChartDataProvider()),
+        ListenableProvider(create: (context) => JobDetailProvider()),
+        ListenableProvider(create: (context) => ExpertJobProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

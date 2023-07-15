@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 import '../../application/user/chat/message_provider.dart';
 import '../../core/widgets/textstyle.dart';
 
-Widget sendCardWidget(context, String msg, String time) {
-  log("_________________--time__________________$time");
+Widget sendCardWidget(context, String msg, String time, bool fromMe) {
   return Column(
     children: [
       Align(
@@ -17,7 +16,8 @@ Widget sendCardWidget(context, String msg, String time) {
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: fromMe ? Colors.grey.shade300 : Colors.blue,
+                //color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(5)),
             child: Padding(
               padding: const EdgeInsets.all(12.0),

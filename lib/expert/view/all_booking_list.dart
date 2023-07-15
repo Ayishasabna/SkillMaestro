@@ -1,11 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
+import 'package:skillmaestro/application/user/job_detail_provider.dart';
+import 'package:skillmaestro/expert/model/send_estimate_model.dart';
 import '../../core/constants.dart';
 
 Map<String, dynamic> map = {};
+TextEditingController bookingIdController = TextEditingController();
+TextEditingController hoursController = TextEditingController();
+TextEditingController partsController = TextEditingController();
+TextEditingController amountController = TextEditingController();
+TextEditingController PriceController = TextEditingController();
 
 class AllBookingTab extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -173,9 +181,187 @@ class AllBookingTab extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.amber // Set the desired color here
+                      ),
+                  onPressed: () {
+                    log('_____________sendestimate_________${results[0]['estimate']['parts']}');
+                    sendEstimate(
+                        context,
+                        results[0]['_id'],
+                        results[0]['estimate']['hours'],
+                        results[0]['estimate']['parts'],
+                        results[0]['jobId']['base_rate']);
+                    /*    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Approve Booking'),
+                          content: Text(
+                              "Are You Sure You Want To Approve ${map['approve']}}"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancel")),
+                            ElevatedButton(
+                                onPressed: () {
+                                  /* value.approveExpert(
+                                      value.allExperts![index]!.id); */
+
+                                  Navigator.pop(context);
+                                },
+                                style: const ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.green)),
+                                child: const Text(
+                                  "Approve",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ],
+                        );
+                      },
+                    ); */
+                  },
+                  child: Text('Send Estimate'))
             ]);
           },
         ));
   }
+}
+
+Future sendEstimate(
+  context,
+  String id,
+  num hours,
+  List<dynamic> parts,
+  num amount,
+) async {
+  bookingIdController.text = id;
+  hoursController.text = hours.toString();
+
+  //num totalAmount = amount + num.parse(PriceController.text);
+
+  amountController.text = amount.toString();
+  //partsController.text = parts.toString();
+  String partsText = parts.join(',');
+  //partsController.text = partsText;
+  log('______________partsController.text __________${partsController.text}');
+  //String dateTimeString = date.text;
+  //DateTime dateTime = DateTime.parse(dateTimeString);
+
+  //String newdate = DateFormat.yMd().format(dateTime);
+  //TextEditingController dateController = TextEditingController(text: newdate);
+  //log('___________________date_____________${newdate}');
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      //context.read<AddAddressProvider>();
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        title: Center(
+          child: const Text(
+            'Details',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: bookingIdController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                  labelText: 'BookingId',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            TextField(
+              controller: hoursController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                  labelText: 'Hours',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            TextField(
+              controller: partsController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                  labelText: 'Parts',
+                  labelStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            TextField(
+              controller: PriceController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                labelText: 'Price',
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: TextField(
+                controller: amountController,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                decoration: const InputDecoration(
+                  labelText: 'Total Amount',
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () async {
+              //List<dynamic> partsList = partsController.text.split(',');
+              int price = int.parse(PriceController.text);
+
+              log("_____________AmountController__________${amountController.text}");
+              log("_____________HoursController__________${hoursController.text}");
+
+              //List<dynamic> partsList = partsController.text;
+
+              //log('_partsList____________$partsList');
+              List<Part> partsList = partsController.text
+                  .split(',')
+                  .map((pName) => Part(pName: pName, price: price))
+                  .toList();
+              log('_partsList____________$partsList');
+              SendEstimateModel model = SendEstimateModel(
+                  bookId: bookingIdController.text,
+                  hours: num.parse(hoursController.text),
+                  parts: partsList,
+                  amount: num.parse(amountController.text));
+              await Provider.of<JobDetailProvider>(context, listen: false)
+                  .sendEstimate(model);
+              log('_______________afterProvider');
+              Navigator.pop(context);
+              // final model = BookJobRequestModel(
+              //     slots: selectedslot,
+              //     address: address1,
+              //     date: date.text,
+              //     jobId: jobId.text);
+              // await Provider.of<UserAddJobProvider>(context, listen: false)
+              //     .AddJob(model, context);
+              // Navigator.of(context).pop();
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => BookingStatus()));
+              //addAddress(context, id);
+              // Perform submit action
+            },
+            child: const Text('Confirm'),
+          ),
+        ],
+      );
+    },
+  );
 }

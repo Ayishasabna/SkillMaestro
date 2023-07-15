@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_user_contacts_provider.dart';
+import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
 import 'package:skillmaestro/expert/view/expert_home.dart';
 
 import '../../../application/user/chat/get_contacts_provider.dart';
@@ -36,7 +37,7 @@ class ExpertMessageScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ExpertHomeScreen()));
+                    builder: (context) => expertBottomNavBar()));
               },
               icon: Icon(Icons.close)),
           //notificationBtnIcon(context),

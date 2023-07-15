@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../application/user/chat/message_provider.dart';
 import '../../core/widgets/textstyle.dart';
 
-Widget replayCardWidget(context, String msg, String time) {
+Widget replayCardWidget(context, String msg, String time, bool fromMe) {
   log("_____________reply card widget______________");
   return Column(
     children: [
@@ -17,7 +17,9 @@ Widget replayCardWidget(context, String msg, String time) {
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(5)),
+                color: fromMe ? Colors.grey.shade300 : Colors.blue,
+                //color: Colors.blue,
+                borderRadius: BorderRadius.circular(5)),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
               child: Column(

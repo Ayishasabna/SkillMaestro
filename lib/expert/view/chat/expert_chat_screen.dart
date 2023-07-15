@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class ExpertChatScreen extends StatefulWidget {
 }
 
 Map<String, dynamic> user = {};
+bool isFromMe = true;
+late ScrollController _chatListController;
 //String userid = '';
 
 class _ExpertChatScreenState extends State<ExpertChatScreen> {
@@ -29,12 +32,13 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
   bool connectedToSocket = false;
   String connectMessage = 'Connecting.....';
   TextEditingController msginputController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
+  //ScrollController _scrollController = ScrollController();
 
   @override
   initState() {
     super.initState();
     _useronlineStatus = expertOnlineStatus.connecting;
+    _chatListController = ScrollController(initialScrollOffset: 0);
     connectedToSocket = false;
     user = widget.list[0];
 
@@ -42,11 +46,22 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Scroll to the last message after the layout is built
-      _scrollToLastMessage();
+      // _scrollToLastMessage();
     });
   }
 
-  void _scrollToLastMessage() {
+  chatListScrollToBottom() {
+    Timer(Duration(microseconds: 100), () {
+      if (_chatListController.hasClients) {
+        _chatListController.animateTo(
+            _chatListController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 100),
+            curve: Curves.decelerate);
+      }
+    });
+  }
+
+  /* void _scrollToLastMessage() {
     if (_scrollController.hasClients && chatMessages.isNotEmpty) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
@@ -54,7 +69,7 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
         curve: Curves.easeOut,
       );
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +94,12 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.separated(
+                            controller: _chatListController,
                             itemCount: data.msgs!.length,
                             // ignore: body_might_complete_normally_nullable
                             itemBuilder: (context, index) {
+                              chatListScrollToBottom();
+                              bool fromMe = isFromMe;
                               //final message = data.msgs![index];
                               if (data.msgs![index].fromSelf == true) {
                                 String createdAtString =
@@ -94,18 +112,19 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
                                       context,
                                       data.msgs![index].message,
                                       createdAtString,
-                                      isSent),
+                                      isSent,
+                                      true),
                                 );
                               } else if (data.msgs![index].fromSelf == false) {
                                 //final lastMessage = data.msgs!.last;
                                 return Align(
                                   alignment: Alignment.centerLeft,
                                   child: ExpertreplayCardWidget(
-                                    context,
-                                    //lastMessage.message,
-                                    data.msgs![index].message,
-                                    DateTime.now().toString(),
-                                  ),
+                                      context,
+                                      //lastMessage.message,
+                                      data.msgs![index].message,
+                                      DateTime.now().toString(),
+                                      false),
                                 );
                               }
                             },
@@ -132,7 +151,9 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
         children: [
           chatTextArea(),
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await ExpertsendCardWidget(context, msginputController.text,
+                    DateTime.now().toString(), false, true);
                 sendMessage(
                   msginputController.text,
                   user['id'],

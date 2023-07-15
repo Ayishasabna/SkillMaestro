@@ -4,7 +4,8 @@ import 'package:skillmaestro/application/expert/expert_message_provider.dart';
 
 import '../../../core/widgets/textstyle.dart';
 
-Widget ExpertsendCardWidget(context, String msg, String time, bool isSent) {
+Widget ExpertsendCardWidget(
+    context, String msg, String time, bool isSent, bool fromMe) {
   //log("_________________--time__________________$time");
   return Column(
     children: [
@@ -15,7 +16,8 @@ Widget ExpertsendCardWidget(context, String msg, String time, bool isSent) {
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: fromMe ? Colors.grey.shade300 : Colors.blue,
+                //color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(5)),
             child: Padding(
               padding: const EdgeInsets.all(12.0),

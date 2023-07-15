@@ -52,7 +52,7 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
               icon: Icon(
                 Icons.payment,
               ),
-              label: 'Payment'),
+              label: 'Bookings'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings,

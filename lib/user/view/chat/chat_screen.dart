@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 Map<String, dynamic> expert = {};
+bool isFromMe = true;
+late ScrollController _chatListController;
 //String userid = '';
 
 class _ChatScreenState extends State<ChatScreen> {
@@ -33,9 +36,10 @@ class _ChatScreenState extends State<ChatScreen> {
   initState() {
     super.initState();
     _expertonlineStatus = expertOnlineStatus.connecting;
+    _chatListController = ScrollController(initialScrollOffset: 0);
     // connectedToSocket = false;
     expert = widget.list[0];
-    log('______________widget.list[0]___________$expert');
+    chatListScrollToBottom();
 
     context
         .read<MessagingUserProvider>()
@@ -44,6 +48,17 @@ class _ChatScreenState extends State<ChatScreen> {
     //final provider = Provider.of<MessagingUserProvider>(context, listen: false);
     //log('================chat screen=================${provider.userName}');
     //provider.firstRunState(selectedId: selectedId!);
+  }
+
+  chatListScrollToBottom() {
+    Timer(Duration(microseconds: 100), () {
+      if (_chatListController.hasClients) {
+        _chatListController.animateTo(
+            _chatListController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 100),
+            curve: Curves.decelerate);
+      }
+    });
   }
 
   @override
@@ -70,8 +85,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.separated(
+                            controller: _chatListController,
                             itemCount: data.msgs!.length,
                             itemBuilder: (context, index) {
+                              chatListScrollToBottom();
+                              bool fromMe = isFromMe;
+
                               if (data.msgs![index].fromSelf == true) {
                                 String createdAtString =
                                     data.msgs![index].createdAt;
@@ -100,14 +119,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                     DateFormat('M/d/yyyy, h:mm:ss a')
                                         .parse(createdAtString);
                                 log('__________________created At++_________${createdAt}'); */
-                                return sendCardWidget(context,
-                                    data.msgs![index].message, createdAtString);
+                                return sendCardWidget(
+                                    context,
+                                    data.msgs![index].message,
+                                    createdAtString,
+                                    true);
                               } else if (data.msgs![index].fromSelf == false) {
                                 return replayCardWidget(
-                                  context,
-                                  data.msgs![index].message,
-                                  DateTime.now().toString(),
-                                );
+                                    context,
+                                    data.msgs![index].message,
+                                    DateTime.now().toString(),
+                                    false);
 
                                 //data.msgs![index].createdAt);
                               }
@@ -144,7 +166,10 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           chatTextArea(),
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await sendCardWidget(context, msginputController.text,
+                    DateTime.now().toString(), true);
+                log("________________ msginputController.text,_________${msginputController.text}");
                 sendMessage(
                   msginputController.text,
                   expert['id'],
