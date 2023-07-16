@@ -45,20 +45,23 @@ class MessageScreen extends StatelessWidget {
       body: Consumer<GetContactsProvider>(
         builder: (context, value, child) {
           //map = value.contacts['result'];
-          list = value.contacts['result'];
-          log('========================${list.length}');
-          log('========================consumer====================${value.contacts['result']}');
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.separated(
-              itemBuilder: (context, index) {
-                return ListTileWidget(list: list);
-              },
-              separatorBuilder: (context, index) =>
-                  widgets().sizedboxHeight10(),
-              itemCount: list.length,
-            ),
-          );
+          if (value.contacts['result'] != null) {
+            list = value.contacts['result'];
+          }
+
+          return list.length == 0 || list.isEmpty
+              ? CircularProgressIndicator()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return ListTileWidget(list: list);
+                    },
+                    separatorBuilder: (context, index) =>
+                        widgets().sizedboxHeight10(),
+                    itemCount: list.length,
+                  ),
+                );
         },
       ),
     );

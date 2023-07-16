@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -18,10 +19,11 @@ TextEditingController endJobhoursController = TextEditingController();
 TextEditingController endJobpartsController = TextEditingController();
 TextEditingController endJobamountController = TextEditingController();
 TextEditingController endJobPriceController = TextEditingController();
+TextEditingController endjobpartController = TextEditingController();
 
 class ExpertAllBooking extends StatelessWidget {
-  const ExpertAllBooking({super.key});
-
+  ExpertAllBooking({super.key});
+  List<dynamic> results = [];
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -40,17 +42,23 @@ class ExpertAllBooking extends StatelessWidget {
     }); */
     return Scaffold(
         appBar: AppBar(
-          title: const Text("All Jobs"),
+          centerTitle: true,
+          title: const Text("Your Bookings"),
           backgroundColor: const Color(0xFF02D1AC),
           //backgroundColor: mainColor,
         ),
         body: Consumer2<ExpertAllJobsProvider, CommonProvider>(
             builder: (context, value, value2, child) {
           map = value.booking;
-          List<dynamic> results = map['result'];
+          if (map['result'] != null) {
+            results = map['result'];
+          }
           // ignore: prefer_is_empty
-          return results.length == 0 || value.booking.isEmpty
-              ? const Text("No Booking Available")
+          // return results.length == 0 || value.booking.isEmpty
+          //     ? const Text("No Booking Available")
+          return value.booking == null || value.booking.isEmpty
+              ? CircularProgressIndicator()
+              //const Text("No Booking Available")
               : ListView.builder(
                   itemCount: results.length,
                   itemBuilder: (context, index) {
@@ -213,8 +221,16 @@ class UserCard extends StatelessWidget {
                             Colors.amber // Set the desired color here
                         ),
                     onPressed: () {
+                      List<dynamic> dynamicList = map['estimate']['parts'];
+                      //List<Map<String, dynamic>> maplist =
+                      List<Map<String, dynamic>> mapList =
+                          dynamicList.map((item) {
+                        return Map<String, dynamic>.from(item);
+                      }).toList();
+
+                      log('______mapstringdynamic_____${mapList}');
                       EndJob(context, map['_id'], map['estimate']['hours'],
-                          map['estimate']['parts'], map['estimate']['amount']);
+                          mapList, map['estimate']['amount']);
                       /* sendEstimate(
                           context,
                           results[0]['_id'],
@@ -270,21 +286,36 @@ Future EndJob(
   context,
   String id,
   num hours,
-  List<dynamic> parts,
+  List<Map<String, dynamic>> parts,
+  //List<Map<String, dynamic>> parts,
   num amount,
 ) async {
+  endjobpartController.text = parts.toString();
   endJobbookingIdController.text = id;
   endJobhoursController.text = hours.toString();
-
+  log("_____parts____$parts");
   //num totalAmount = amount + num.parse(PriceController.text);
 
   endJobamountController.text = amount.toString();
   //endJobpartsController.text = parts.toString();
-  String partsText = parts.join(',');
+  endJobpartsController.text = parts[0]['pName'];
+  endJobPriceController.text = parts[0]['price'].toString();
+  //String partsText = parts.join(',');
+  // try {
+  //   Map<String, dynamic> partsMap = jsonDecode(partsText);
+  //   String pName = partsMap['pName'];
+  //   // Use the extracted pName value as needed
+  //   // ...
+  // } catch (e) {
+  //   // Handle the error
+  //   print('Error decoding partsText: $e');
+  // }
 
-  endJobpartsController.text = partsText;
+  //endJobpartsController.text = partsText;
+  //Map<String, dynamic> partsMap = jsonDecode(partsText);
+  //String pName = partsMap['pName'];
 
-  log('______________partsController.text __________${endJobpartsController.text}');
+  // log('______________partstext __________${pName}');
 
   return showDialog(
     context: context,
@@ -334,16 +365,14 @@ Future EndJob(
                 labelText: 'Price',
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: TextField(
-                controller: endJobamountController,
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                decoration: const InputDecoration(
-                  labelText: 'Total Amount',
-                ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            TextField(
+              controller: endJobamountController,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              decoration: const InputDecoration(
+                labelText: 'Total Amount',
               ),
             ),
           ],
@@ -351,25 +380,47 @@ Future EndJob(
         actions: [
           ElevatedButton(
             onPressed: () async {
-              //List<dynamic> partsList = partsController.text.split(',');
-              int price = int.parse(endJobPriceController.text);
+              log('________newpartsList____________${endJobpartsController.text}');
+              log('________newprices____________${endJobPriceController.text}');
 
-              log("_____________AmountController__________${price}");
+              ///List<dynamic> _partsList = endJobpartsController.text;
+              String jsonString = endJobpartsController.text;
+
+              //Map<String, dynamic> partsMap = jsonDecode(jsonString[0]);
+              //log('_________jsonDecode____________${partsMap}');
+              //String pName = partsMap['pName'];
+              //log('_______________pName_________');
+              //num price = partsMap['price'].toDouble();
+              // if (_partsList.isNotEmpty) {
+              //   log('_______________pName_________');
+              //   Map<String, dynamic> firstPart = _partsList[0];
+              //   String pName = firstPart['pName'];
+              //   log('pName: $pName');
+              // }
+              //List<dynamic> partsList = endJobpartsController.text.split(',');
+
+              //num price = num.parse(endJobPriceController.text);
+
+              //log("_____________AmountController__________${price}");
               //log("_____________HoursController__________${hoursController.text}");
 
               //List<dynamic> partsList = partsController.text;
 
               //log('_partsList____________$partsList');
-              List<Part> partsList = endJobpartsController.text
+
+              List<Part> partsList = endjobpartController.text
                   .split(',')
-                  .map((pName) => Part(pName: pName, price: price))
+                  .map((pName) => Part(
+                      pName: endJobpartsController.text,
+                      price: int.parse(endJobPriceController.text),
+                      id: endJobbookingIdController.text))
                   .toList();
-              log('_partsList____________$partsList');
+              log('_________ListpartsList____________${partsList[0]}');
               EndJobModel newmodel = EndJobModel(
-                  bookId: endJobbookingIdController.text,
+                  id: endJobbookingIdController.text,
                   hours: num.parse(endJobhoursController.text),
                   parts: partsList,
-                  total: num.parse(amountController.text));
+                  total: num.parse(endJobamountController.text));
 
               await Provider.of<ExpertJobProvider>(context, listen: false)
                   .EndJob(newmodel);

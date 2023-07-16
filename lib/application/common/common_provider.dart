@@ -89,6 +89,28 @@ class CommonProvider extends ChangeNotifier {
     );
   }
 
+  void approveEstimation(
+    context,
+  ) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Your Job is Booked Now',
+      ),
+    );
+  }
+
+  void declineEstimation(
+    context,
+  ) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Your Job is Booked Now',
+      ),
+    );
+  }
+
   void setShimmerLoading(value) {
     shimmerLoading = value;
     notifyListeners();

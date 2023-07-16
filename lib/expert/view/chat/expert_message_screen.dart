@@ -47,20 +47,24 @@ class ExpertMessageScreen extends StatelessWidget {
       body: Consumer<GetUserContactsProvider>(
         builder: (context, value, child) {
           //map = value.contacts['result'];
-          list = value.users['result'];
+          if (value.users['result'] != null) {
+            list = value.users['result'];
+          }
           //log('========================${list.length}');
           //log('========================consumer====================${value.contacts['result']}');
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.separated(
-              itemBuilder: (context, index) {
-                return ExpertListTileWidget(list: list);
-              },
-              separatorBuilder: (context, index) =>
-                  widgets().sizedboxHeight10(),
-              itemCount: list.length,
-            ),
-          );
+          return list.length == 0
+              ? CircularProgressIndicator()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return ExpertListTileWidget(list: list);
+                    },
+                    separatorBuilder: (context, index) =>
+                        widgets().sizedboxHeight10(),
+                    itemCount: list.length,
+                  ),
+                );
         },
       ),
     );

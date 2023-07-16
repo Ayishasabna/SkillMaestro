@@ -9,6 +9,8 @@ class PrivacyPoclicyScrn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: Text(
           'Privacy Policy',
           style: normalText,
@@ -21,10 +23,10 @@ class PrivacyPoclicyScrn extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                """ Privacy Policy
+                """ 
 
 
-Last updated: May 01, 2023
+Last updated: July 19, 2023
 
 This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.
 We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the Free Privacy Policy Generator.
@@ -128,9 +130,12 @@ We will let You know via email and/or a prominent notice on Our Service, prior t
 You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
 Contact Us
 If you have any questions about this Privacy Policy, You can contact us:
-By email: binshadp999@gmail.com""",
+By email: shai.shabna@gmail.com""",
                 style: TextStyle(
-                    fontFamily: 'poppins', fontSize: 16, color: Colors.black),
+                    fontFamily: 'poppins',
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
               ),
             )
           ],

@@ -9,6 +9,8 @@ class TermsAndConditionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: const Text('Terms & Conditions'),
         backgroundColor: mainColor,
       ),
@@ -20,11 +22,11 @@ class TermsAndConditionsScreen extends StatelessWidget {
               children: [
                 Text(
                   """
-Last updated: 02-02-2023
+Last updated: 19-07-2023
           
 Introduction
        
-Welcome to Smartico App,
+Welcome to SkillMaestro App,
 These Terms of Service govern your use of our website located at lala.com (together or individually “Service”) operated by BeatBox App.\n
 Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages.
 
@@ -126,7 +128,7 @@ If any provision of Terms is held by a court or other tribunal of competent juri
 BY USING SERVICE OR OTHER SERVICES PROVIDED BY US, YOU ACKNOWLEDGE THAT YOU HAVE READ THESE TERMS OF SERVICE AND AGREE TO BE BOUND BY THEM.
 
 21. Contact Us
-Please send your feedback, comments, requests for technical support by email: binshadp999@gmail.com.
+Please send your feedback, comments, requests for technical support by email: shai.shabna@gmail.com.
 
         """,
                   style: TextStyle(

@@ -28,6 +28,7 @@ import 'application/user/chat/chat_provider.dart';
 import 'application/user/chat/message_provider.dart';
 import 'application/user/get_jobs_provider.dart';
 import 'application/user/job_detail_provider.dart';
+import 'application/user/single_job_details_provider.dart';
 import 'application/user/user_add_job_provider.dart';
 import 'common/on_boarding/first_screen.dart';
 //import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -72,6 +73,8 @@ class MyApp extends StatelessWidget {
         ListenableProvider(create: (context) => ChartDataProvider()),
         ListenableProvider(create: (context) => JobDetailProvider()),
         ListenableProvider(create: (context) => ExpertJobProvider()),
+        ListenableProvider(create: (context) => JobDetailProvider()),
+        ListenableProvider(create: (context) => SingleBookingDetailsProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

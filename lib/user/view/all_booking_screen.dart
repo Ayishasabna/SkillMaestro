@@ -8,10 +8,12 @@ import 'package:skillmaestro/common/widgets/common_widget.dart';
 import 'package:skillmaestro/core/constants.dart';
 import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
 import 'package:skillmaestro/user/view/payment_description_screen.dart.dart';
+import 'package:skillmaestro/user/view/user_booking_description.dart';
 
 import '../../application/common/common_provider.dart';
 
 Map<String, dynamic> map = {};
+List<dynamic> results = [];
 
 class ViewAllBookingScreen extends StatelessWidget {
   ViewAllBookingScreen({
@@ -28,6 +30,7 @@ class ViewAllBookingScreen extends StatelessWidget {
       });
     });
     context.read<AlljobsListForUser>().GetUserBookings();
+    //context.read<CommonProvider>();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -40,15 +43,27 @@ class ViewAllBookingScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Consumer2<CommonProvider, AlljobsListForUser>(
-          builder: (context, value2, value, child) {
-        map = value.userBooking;
-        List<dynamic> results = map['result'];
+      body: Consumer2<AlljobsListForUser, CommonProvider>(
+          builder: (context, value, value2, child) {
+        //log('_________________map______________$map');
 
-        log('_____________ newresults__________________${map['result']}');
-        log('_____________ jobrole__________________${results[0]}');
-        return results.length == 0 || value.userBooking.isEmpty
-            ? const Text("No Booking Available")
+        //log('_____________ newresults__________________${map['result']}');
+        //log('_____________ jobrole__________________${results[0]}');
+        map = value.userBooking;
+        /* if (map['result'] != null) {
+          //CircularProgressIndicator();
+          results = map['result'];
+        } else if (map['result'] == null) {
+          CircularProgressIndicator();
+        } */
+
+        if (map['result'] != null) {
+          results = map['result'];
+        }
+
+        return results.length == 0 || results.isEmpty
+            ? CircularProgressIndicator()
+            //const Text("No Booking Available")
             : ListView.builder(
                 itemBuilder: (context, index) {
                   return Padding(
@@ -77,186 +92,7 @@ class ViewAllBookingScreen extends StatelessWidget {
                         },
                         child: value2.shimmerLoading
                             ? getRecentShimmer(height, width)
-                            : UserCard(map: results[index])
-
-                        /* Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    16.0), // Adjust the value as needed
-                              ),
-                              elevation: 10,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        //Image.network("${map['image']}"),
-                                        Text(
-                                          'Job : ${results}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20),
-                                        ),
-                                        Text(
-                                            'Base Rate: ${map['jobId']['base_rate']}'),
-                                        Text(
-                                            'Additional Rate: ${map['jobId']['ad_rate']}'),
-                                        //Text('createdAt:  ${map['jobId']['createdAt']}'),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Icon(Icons.location_on),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Name: ${map['address']['name']}',
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ),
-                                                Text(
-                                                  'House: ${map['address']['house']}',
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ),
-                                                Text(
-                                                  'Street: ${map['address']['street']}',
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ),
-                                                Text(
-                                                  'Pincode: ${map['address']['pincode']}',
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors
-                                              .amber // Set the desired color here
-                                          ),
-                                      onPressed: () {
-                                        /* if (map['isBanned'] == true) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Approve Booking'),
-                          content: Text(
-                              "Are You Sure You Want To Approve ${map['approve']}}"),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Cancel")),
-                            ElevatedButton(
-                                onPressed: () {
-                                  /* value.approveExpert(
-                                      value.allExperts![index]!.id); */
-    
-                                  Navigator.pop(context);
-                                },
-                                style: const ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStatePropertyAll(Colors.green)),
-                                child: const Text(
-                                  "Approve",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ],
-                        );
-                      },
-                    );
-                  } */
-                                      },
-                                      child: const Text("Approve"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ), */
-
-                        /* Card(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: height / 4,
-                                      width: width / 1.10,
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15)),
-                                        /* image: DecorationImage(
-                                        image:
-                                        /*  NetworkImage(
-                                            value.allGigs![index].image) */
-                                        ) */
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "hai",
-                                            style: const TextStyle(
-                                                fontFamily: 'Roboto',
-                                                fontSize: 23,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: Colors.blue,
-                                              ),
-                                              Text(
-                                                '5.0',
-                                                style: TextStyle(fontSize: 19),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'hai',
-                                            style: const TextStyle(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.blue),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ), */
-                        ),
+                            : UserCard(map: results[index])),
                   );
                 },
                 itemCount: results.length,
@@ -333,8 +169,16 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //List<dynamic> results = map['result'];
+
+    String buttonText = map['status'];
+
     return GestureDetector(
       onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => UserBookingDescription(
+                  map: map,
+                )));
         // Navigator.of(context).push(MaterialPageRoute(
         //     builder: (context) => expertBottomNavBar(
         //           map: map,
@@ -399,8 +243,8 @@ class UserCard extends StatelessWidget {
                     backgroundColor: Colors.amber // Set the desired color here
                     ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => PaymentScreen()));
+                  /*  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => PaymentScreen())); */
                   /* if (map['isBanned'] == true) {
                     showDialog(
                       context: context,
@@ -435,7 +279,7 @@ class UserCard extends StatelessWidget {
                     );
                   } */
                 },
-                child: const Text("Payment"),
+                child: Text(buttonText),
               ),
             ],
           ),

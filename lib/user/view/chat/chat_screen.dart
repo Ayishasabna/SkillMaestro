@@ -169,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () async {
                 await sendCardWidget(context, msginputController.text,
                     DateTime.now().toString(), true);
-                log("________________ msginputController.text,_________${msginputController.text}");
+
                 sendMessage(
                   msginputController.text,
                   expert['id'],
@@ -198,8 +198,8 @@ class _ChatScreenState extends State<ChatScreen> {
     ));
   }
 
-  void sendMessage(String text, String expertid) {
-    context.read<MessagingUserProvider>().sendMessage(text, expertid);
+  void sendMessage(String text, String expertid) async {
+    await context.read<MessagingUserProvider>().sendMessage(text, expertid);
     //context.read<MessagingUserProvider>().sendingMessage(text);
   }
 }

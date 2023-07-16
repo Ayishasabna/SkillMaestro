@@ -77,7 +77,7 @@ class MessagingUserProvider with ChangeNotifier {
         });
   }
 
-  void sendMessage(String msg, String expertid) async {
+  Future sendMessage(String msg, String expertid) async {
     DateTime now = DateTime.now();
     String userid = await getCurrentUserId();
 

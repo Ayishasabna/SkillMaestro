@@ -62,9 +62,10 @@ class JobDetailServioce {
 
   Future EndJob(EndJobModel endJobModel) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.endJob;
-    log('____________--endjobCntroller_______________');
+    //log('____________--endjobCntroller_______________${endJobModel.hours}');
     try {
       String? token = await getExpertAccesToken();
+      log("token______$token");
       Response response = await dio.post(path,
           data: jsonEncode(endJobModel.toJson()),
           options: Options(headers: {"authorization": "Bearer $token"}));

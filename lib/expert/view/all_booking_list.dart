@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
 import 'package:skillmaestro/application/user/job_detail_provider.dart';
 import 'package:skillmaestro/expert/model/send_estimate_model.dart';
+import '../../application/expert/expert_job_detail_provider.dart';
 import '../../core/constants.dart';
 
 Map<String, dynamic> map = {};
@@ -98,29 +99,6 @@ class AllBookingTab extends StatelessWidget {
                   ],
                 ),
               ),
-              /* Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text('Expert Information'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Username: string'),
-                          Text('Email: string'),
-                          Text('Mobile: string'),
-                          // Add more expert information here
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ), */
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,37 +173,6 @@ class AllBookingTab extends StatelessWidget {
                         results[0]['estimate']['hours'],
                         results[0]['estimate']['parts'],
                         results[0]['jobId']['base_rate']);
-                    /*    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Approve Booking'),
-                          content: Text(
-                              "Are You Sure You Want To Approve ${map['approve']}}"),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Cancel")),
-                            ElevatedButton(
-                                onPressed: () {
-                                  /* value.approveExpert(
-                                      value.allExperts![index]!.id); */
-
-                                  Navigator.pop(context);
-                                },
-                                style: const ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStatePropertyAll(Colors.green)),
-                                child: const Text(
-                                  "Approve",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ],
-                        );
-                      },
-                    ); */
                   },
                   child: Text('Send Estimate'))
             ]);
@@ -335,13 +282,13 @@ Future sendEstimate(
                   .split(',')
                   .map((pName) => Part(pName: pName, price: price))
                   .toList();
-              log('_partsList____________$partsList');
+              log('_send estimatepartsList____________$partsList');
               SendEstimateModel model = SendEstimateModel(
                   bookId: bookingIdController.text,
                   hours: num.parse(hoursController.text),
                   parts: partsList,
                   amount: num.parse(amountController.text));
-              await Provider.of<JobDetailProvider>(context, listen: false)
+              await Provider.of<ExpertJobProvider>(context, listen: false)
                   .sendEstimate(model);
               log('_______________afterProvider');
               Navigator.pop(context);

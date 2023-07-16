@@ -16,7 +16,7 @@ class MyBookings {
     String path = ApiConfigration.baseUrl + ApiConfigration.myBookings;
 
     String? token = await getExpertAccesToken();
-    log('=====================experttoken============$token');
+
     try {
       Response response = await dio.get(path,
           options: Options(headers: {"authorization": "Bearer $token"}));

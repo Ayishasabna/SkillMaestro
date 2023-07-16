@@ -1,7 +1,7 @@
 import 'package:charts_flutter_new/flutter.dart';
 
 class ApiConfigration {
-  static const ipAddress = "192.168.1.75";
+  static const ipAddress = "192.168.1.70";
   //'10.4.1.200';
   static const baseUrl = "http://$ipAddress:4000";
 
@@ -20,6 +20,11 @@ class ApiConfigration {
   static const getMessage = '/getMessage';
   static const addMessage = '/addMessage';
   static const userBookings = '/myBookings';
+  static const singleBooking = '/booking';
+  static const approveEstimate = '/approveEstimate';
+  static const decline = '/decline';
+  static const cancelBooking = '/cancelBooking';
+  static const addReview = '/addReview';
 
   //static const login = '/login';
   //static const otp = '/OTP';
