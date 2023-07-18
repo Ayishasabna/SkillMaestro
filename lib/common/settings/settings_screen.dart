@@ -115,7 +115,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               onTap: () async {},
             ),
-            Tile(
+            /* Tile(
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
               onTap: () {},
               title: Text(
@@ -128,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                   size: 28,
                 ),
               ),
-            ),
+            ), */
           ],
         ),
       ),

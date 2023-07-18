@@ -6,7 +6,7 @@ class ReviewModel {
   String jobId;
   String bookId;
   String message;
-  int rating;
+  num rating;
 
   ReviewModel({
     required this.reviewBy,

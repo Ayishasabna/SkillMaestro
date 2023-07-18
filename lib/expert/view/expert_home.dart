@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skillmaestro/common/on_boarding/login_screen.dart';
 import 'package:skillmaestro/expert/view/expert_selected_job.dart';
 import 'package:skillmaestro/user/view/login.dart';
 import 'all_booking_list.dart';
@@ -10,11 +11,11 @@ import 'expert_skills.dart';
 class ExpertHomeScreen extends StatelessWidget {
   final List<JobService> jobServices = [
     JobService(
-        name: "My Jobs",
+        name: "Select Skill",
         //icon: Icons.book_online,
         assetname: "assets/project1.png",
         // "assets/job-1.jpg",
-        pageRoute: const ExpertSelectedJobs()),
+        pageRoute: const ExpertSkills()),
     JobService(
         name: "Profile",
         //icon: Icons.usb_rounded,
@@ -42,72 +43,72 @@ class ExpertHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
+        /* floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => ExpertSkills()));
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.amber,
-        ),
-        floatingActionButtonLocation: _CustomFABLocation(),
+        ), */
+        //floatingActionButtonLocation: _CustomFABLocation(),
         body: SafeArea(
-          child: Column(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  PopupMenuButton(
-                    icon: const Icon(Icons.menu),
-                    onSelected: (value) {
-                      if (value == 'logout') {
-                        //deleteUserAccesToken();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserLogin(),
-                            ),
-                            (route) => false);
-                        const Text('logout');
-                      }
-                    },
-                    itemBuilder: (BuildContext context) => [
-                      const PopupMenuItem(
-                        value: 'logout',
-                        child: Text('Logout'),
-                      ),
-                    ],
+              PopupMenuButton(
+                icon: const Icon(Icons.menu),
+                onSelected: (value) {
+                  if (value == 'logout') {
+                    //deleteUserAccesToken();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BoardingLoginScreen(),
+                        ),
+                        (route) => false);
+                    const Text('logout');
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                  const PopupMenuItem(
+                    value: 'logout',
+                    child: Text('Logout'),
                   ),
                 ],
               ),
-              /* SizedBox(
-                height: 40,
-              ), */
-              Image.asset(
-                "assets/casual-life-3d-man-chatting-on-dating-site.png",
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: .9,
-                    crossAxisCount: 2, // Number of columns in the grid
-                    crossAxisSpacing: 16.0, // Spacing between columns
-                    mainAxisSpacing: 16.0, // Spacing between rows
-                  ),
-                  itemCount: jobServices.length,
-                  itemBuilder: (context, index) {
-                    return JobServiceItem(jobService: jobServices[index]);
-                  },
-                ),
-              ),
             ],
           ),
-        ));
+          /* SizedBox(
+                height: 40,
+              ), */
+          Image.asset(
+            "assets/casual-life-3d-man-chatting-on-dating-site.png",
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: .9,
+                crossAxisCount: 2, // Number of columns in the grid
+                crossAxisSpacing: 16.0, // Spacing between columns
+                mainAxisSpacing: 16.0, // Spacing between rows
+              ),
+              itemCount: jobServices.length,
+              itemBuilder: (context, index) {
+                return JobServiceItem(jobService: jobServices[index]);
+              },
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }
 

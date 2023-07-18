@@ -14,6 +14,8 @@ import '../../common/widgets/common_widget.dart';
 import '../model/end_job_model.dart';
 
 Map<String, dynamic> map = {};
+List<dynamic> dynamicList = [];
+List<Map<String, dynamic>> mapList = [{}];
 TextEditingController endJobbookingIdController = TextEditingController();
 TextEditingController endJobhoursController = TextEditingController();
 TextEditingController endJobpartsController = TextEditingController();
@@ -24,6 +26,7 @@ TextEditingController endjobpartController = TextEditingController();
 class ExpertAllBooking extends StatelessWidget {
   ExpertAllBooking({super.key});
   List<dynamic> results = [];
+  List<Map<String, dynamic>> mapList = [];
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -139,11 +142,23 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('___________________mappppp________${map}');
+    log('___________________mappppp________${map['status']}');
+    String buttonName = map['status'];
+    //String? newButtonName;
+    /*  if (buttonName == 'pending') {
+      newButtonName = 'started Job';
+    } else if (buttonName == 'startJob') {
+      newButtonName = 'End Job';
+    } else if (buttonName == 'endJob') {
+      newButtonName = 'started Job';
+    } else {
+      buttonName = 'kkk';
+    } */
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AllBookingTab(
+            builder: (context) => BookingDescriptionTab(
                   map: map,
                 )));
       },
@@ -209,69 +224,191 @@ class UserCard extends StatelessWidget {
                               Colors.blue // Set the desired color here
                           ),
                       onPressed: () {
+                        if (buttonName == 'pending') {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  content: Text(
+                                    "Are you sure you want to Start the job",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20),
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          if (map['estimate']['parts'] ==
+                                              null) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    content: Text(
+                                                      "First, send the estimate from the booking details page, and once the user approves it, you can start your job",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  );
+                                                });
+                                          }
+                                        },
+                                        child: Text('yes')),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('No'))
+                                  ],
+                                );
+                              });
+                          Provider.of<ExpertJobProvider>(context, listen: false)
+                              .StartJob(map['_id']);
+                          Navigator.of(context).pop();
+                        }
+                        if (buttonName == 'started') {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  content: Text(
+                                    "Are you sure you want to end the job?",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20),
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          log('___________________map[estimate][parts]_______________${map['estimate']['parts']}');
+                                          if (map['estimate']['parts']
+                                              .isEmpty) {
+                                            Navigator.of(context).pop();
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    content: Text(
+                                                      "First, send the estimate from the booking details page, and once the user approves it, you can start your job",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 18),
+                                                    ),
+                                                  );
+                                                });
+                                          } else {
+                                            dynamicList =
+                                                map['estimate']['parts'];
+                                            mapList = dynamicList.map((item) {
+                                              return Map<String, dynamic>.from(
+                                                  item);
+                                            }).toList();
+                                            EndJob(
+                                                context,
+                                                map['_id'],
+                                                map['estimate']['hours'],
+                                                mapList,
+                                                map['estimate']['amount']);
+                                          }
+                                          //Navigator.of(context).pop();
+                                        },
+                                        child: Text('yes')),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('No'))
+                                  ],
+                                );
+                              });
+                        }
+                        if (buttonName == 'cancelled') {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(
+                                    "You already cancelled the job",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20,
+                                        color: Colors.red),
+                                  ),
+                                );
+                              });
+                        }
+                        if (buttonName == 'completed') {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(
+                                    "Job Completed...Thank You",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20,
+                                        color: Colors.amber),
+                                  ),
+                                );
+                              });
+                        }
+
                         // map['_id']
-                        Provider.of<ExpertJobProvider>(context, listen: false)
-                            .StartJob(map['_id']);
-                        Navigator.of(context).pop();
                       },
-                      child: Text('start Job')),
-                  ElevatedButton(
+                      child: Text(buttonName)),
+                  /*   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
                             Colors.amber // Set the desired color here
                         ),
                     onPressed: () {
-                      List<dynamic> dynamicList = map['estimate']['parts'];
+                      if (map['estimate']['parts'] != null) {
+                        dynamicList = map['estimate']['parts'];
+                        mapList = dynamicList.map((item) {
+                          return Map<String, dynamic>.from(item);
+                        }).toList();
+                      }
+                      //List<dynamic> dynamicList = map['estimate']['parts'];
                       //List<Map<String, dynamic>> maplist =
-                      List<Map<String, dynamic>> mapList =
+                      /*  List<Map<String, dynamic>> mapList =
                           dynamicList.map((item) {
                         return Map<String, dynamic>.from(item);
-                      }).toList();
+                      }).toList(); */
 
                       log('______mapstringdynamic_____${mapList}');
-                      EndJob(context, map['_id'], map['estimate']['hours'],
-                          mapList, map['estimate']['amount']);
-                      /* sendEstimate(
-                          context,
-                          results[0]['_id'],
-                          results[0]['estimate']['hours'],
-                          results[0]['estimate']['parts'],
-                          results[0]['jobId']['base_rate']); */
-/* 
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Approve Booking'),
-                            content: Text(
-                                "Are You Sure You Want To Approve ${map['approve']}}"),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Cancel")),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    /* value.approveExpert(
-                                          value.allExperts![index]!.id); */
+                      if (map['estimate']['parts'] == null) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(
+                                  "First send the estimate",
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            });
+                      } else {
+                        EndJob(context, map['_id'], map['estimate']['hours'],
+                            mapList, map['estimate']['amount']);
+                      }
 
-                                    Navigator.pop(context);
-                                  },
-                                  style: const ButtonStyle(
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Colors.green)),
-                                  child: const Text(
-                                    "Approve",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                            ],
-                          );
-                        },
-                      ); */
                     },
                     child: const Text("End Job"),
-                  ),
+                  ), */
                 ],
               ),
             ],

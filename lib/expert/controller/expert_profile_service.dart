@@ -35,11 +35,14 @@ class ExpertProfileService {
     String path = ApiConfigration.baseUrl + ApiConfigration.editProfile;
 
     String? token = await getExpertAccesToken();
-    log('------------------------inside edit controller-------${editData.name}');
+    log('___________________editing Page________________${editData.email}');
+    log('___________________editing Page________________${editData.name}');
+    log('------------------------inside edit controller-------${token}');
     try {
-      Response response = await dio.patch(path,
+      Response response = await dio.post(path,
           data: jsonEncode(editData.toJson()),
           options: Options(headers: {"Authorization": "Bearer $token"}));
+      log('___________________editing Page________________${response.data}');
       if (response.statusCode == 200) {
         log('profile editing successful');
       }

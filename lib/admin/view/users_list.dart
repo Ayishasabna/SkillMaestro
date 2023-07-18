@@ -20,6 +20,7 @@ class UsersList extends StatelessWidget {
     }); */
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("All Users"),
         backgroundColor: const Color(0xFF02D1AC),
         //backgroundColor: mainColor,
@@ -51,8 +52,16 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color color;
     bool userResult = map['isBanned'];
-
+    if (map['isBanned'] == true) {
+      userStatus = "Blocked";
+      color = Colors.red;
+    } else {
+      userStatus = "Verified";
+      color = Colors.amber;
+    }
+    //log("_____________________map inside card_____________${map['isBanned']}");
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0), // Adjust the value as needed
@@ -78,7 +87,7 @@ class UserCard extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber // Set the desired color here
+                  backgroundColor: color // Set the desired color here
                   ),
               onPressed: () {
                 if (map['isBanned'] == false) {
@@ -126,9 +135,17 @@ class UserCard extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('UnBlock User'),
+                        title: Center(
+                          child: const Text('UnBlock User',
+                              style: TextStyle(fontSize: 19)),
+                        ),
                         content: Text(
-                            "Are You Sure You Want To UnBLock ${map['username']}}"),
+                          "Are You Sure You Want To UnBLock ${map['username']}",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                         actions: [
                           ElevatedButton(
                               onPressed: () {

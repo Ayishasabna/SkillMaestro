@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/user/add_address_provider.dart';
 import 'package:skillmaestro/application/user/user_add_job_provider.dart';
-import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
 import 'package:skillmaestro/user/model/add_adress_model.dart';
 import 'package:skillmaestro/user/model/book_job_request_model.dart';
-import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
 import 'package:skillmaestro/user/view/confirm_booking.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 import '../../application/user/get_slots_provider.dart';
@@ -42,10 +40,12 @@ class _UserGetSlotState extends State<UserGetSlot> {
   List result = [];
   late String availableDate;
   String? initialDateTimeString;
-
+  @override
   @override
   Widget build(BuildContext context) {
+    //Map<String, dynamic> userSlots =
     context.read<GetSlotsForUserProvider>().getSlotesForUser(widget.id);
+    //log("______________________slots____________${userSlots}");
     //context.read<AddJobProvider>().
     return SafeArea(
       child: Scaffold(
@@ -101,136 +101,75 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                   ),
                                   child: Consumer<GetSlotsForUserProvider>(
                                     builder: (context, slots, child) {
-                                      //selectedValue = slots.userSlots['result'];
-                                      //log('kkkkkkk======================${slots.userSlots['result'].length}=====================');
-                                      /* for (int i = 0;
-                                          i < slots.userSlots.length;
-                                          i++) {
-                                        String dateTimeString =
-                                            slots.userSlots['result'][i];
-                                        log('________________________format__________$dateTimeString');
-                                        DateTime dateTime =
-                                            DateTime.parse(dateTimeString);
-                                        log('________________________Date__________$dateTime');
-                                        String formattedDate =
-                                            DateFormat.yMd().format(dateTime);
-                                        log('________________________formattedDate__________$formattedDate');
-                                        availableDate = formattedDate;
-                                      } */
                                       int n = slots.userSlots['result'].length;
-                                      log("__________________$n");
-                                      List<DropdownMenuItem<String>>
-                                          dropdownItems = [];
-                                      Map<String, String> dateFormats = {};
+                                      bool isLoading =
+                                          slots.userSlots['result'] == null ||
+                                              slots.userSlots['result'].isEmpty;
+                                      if (isLoading) {
+                                        Text('kkkkk');
+                                        return Text('No Expert Available');
+                                      } else {
+                                        List<DropdownMenuItem<String>>
+                                            dropdownItems = [];
+                                        Map<String, String> dateFormats = {};
 
-                                      for (int i = 0; i < n; i++) {
-                                        String dateTimeString =
-                                            slots.userSlots['result'][i];
-                                        DateTime dateTime =
-                                            DateTime.parse(dateTimeString);
-                                        String formattedDate =
-                                            DateFormat.yMd().format(dateTime);
-                                        //availableDate = formattedDate;
-                                        // Store the formatted date and its corresponding original format string
-                                        dateFormats[formattedDate] =
-                                            dateTimeString;
+                                        for (int i = 0; i < n; i++) {
+                                          String dateTimeString =
+                                              slots.userSlots['result'][i];
+                                          DateTime dateTime =
+                                              DateTime.parse(dateTimeString);
+                                          String formattedDate =
+                                              DateFormat.yMd().format(dateTime);
+                                          //availableDate = formattedDate;
+                                          // Store the formatted date and its corresponding original format string
+                                          dateFormats[formattedDate] =
+                                              dateTimeString;
 
-                                        DropdownMenuItem<String> dropdownItem =
-                                            DropdownMenuItem<String>(
-                                          value: formattedDate,
-                                          child: Text(
-                                            formattedDate,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17,
+                                          DropdownMenuItem<String>
+                                              dropdownItem =
+                                              DropdownMenuItem<String>(
+                                            value: formattedDate,
+                                            child: Text(
+                                              formattedDate,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              ),
                                             ),
-                                          ),
-                                          /* onTap: () {
-      selectedTimeSlot = e;
-      log("======================timeslot++++++++++++$selectedTimeSlot");
-    }, */
+                                          );
+
+                                          dropdownItems.add(dropdownItem);
+                                        }
+
+                                        return DropdownButtonFormField<String>(
+                                          value: selectedTimeSlot,
+                                          items: dropdownItems,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Select slots';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              selectedTimeSlot = newValue;
+                                              // Retrieve the original format string based on the selected formatted date
+                                              initialDateTimeString =
+                                                  dateFormats[
+                                                          selectedTimeSlot] ??
+                                                      '';
+                                            });
+                                          },
                                         );
-
-                                        dropdownItems.add(dropdownItem);
                                       }
-
-                                      return DropdownButtonFormField<String>(
-                                        value: selectedTimeSlot,
-                                        items: dropdownItems,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Select slots';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            selectedTimeSlot = newValue;
-                                            // Retrieve the original format string based on the selected formatted date
-                                            initialDateTimeString =
-                                                dateFormats[selectedTimeSlot] ??
-                                                    '';
-
-                                            log('________________________selectedtimeslot_____________$selectedTimeSlot');
-                                            log('___________________________new string__________$initialDateTimeString');
-                                          });
-                                        },
-                                      );
-                                      /* DropdownButtonFormField<String>(
-                                        // items: dropdownitems(),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Select slots';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-
-                                        value: selectedTimeSlot,
-                                        /* slots.userSlots['result'] !=
-                                                    null &&
-                                                slots.userSlots['result']
-                                                    .isNotEmpty
-                                            ? slots.userSlots['result'][0]
-                                            : null, */
-
-                                        items: slots.userSlots['result'] !=
-                                                    null &&
-                                                slots.userSlots['result']
-                                                    .isNotEmpty
-                                            ? slots.userSlots['result']
-                                                .map<DropdownMenuItem<String>>(
-                                                    (e) {
-                                                return DropdownMenuItem<String>(
-                                                  value: e,
-                                                  child: Text(
-                                                    'e$e'.toString(),
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 17,
-                                                    ),
-                                                  ),
-                                                  onTap: () {
-                                                    selectedTimeSlot = e;
-                                                    log("======================timeslot++++++++++++$selectedTimeSlot");
-                                                    // slots.userJobs['result'] = e;
-                                                  },
-                                                );
-                                              }).toList()
-                                            : [],
-                                        onChanged: (value) {
-                                          //selectedTimeSlot = value;
-                                          //slots.userSlots['result'] = value;
-                                          selectedTimeSlot = value;
-                                          log('addTra******${slots.userSlots['result']}=======================');
-                                        },
-                                      ); */
+                                      //slots.userSlots['result'].isEmpty
+                                      //? CircularProgressIndicator()
                                     },
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             ElevatedButton(
@@ -287,8 +226,8 @@ Future adressdialogue(context, String id, String selectedslots) async {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: Center(
-          child: const Text(
+        title: const Center(
+          child: Text(
             'Add Address',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
@@ -298,7 +237,7 @@ Future adressdialogue(context, String id, String selectedslots) async {
           children: [
             TextField(
               controller: nameController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Name',
                   labelStyle:
@@ -306,7 +245,7 @@ Future adressdialogue(context, String id, String selectedslots) async {
             ),
             TextField(
               controller: HouseNameController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'HouseName',
                   labelStyle:
@@ -314,7 +253,7 @@ Future adressdialogue(context, String id, String selectedslots) async {
             ),
             TextField(
               controller: streetController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Street',
                   labelStyle:
@@ -322,7 +261,7 @@ Future adressdialogue(context, String id, String selectedslots) async {
             ),
             TextField(
               controller: pincodeController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Pincode',
                   labelStyle:
@@ -340,9 +279,15 @@ Future adressdialogue(context, String id, String selectedslots) async {
                   street: address1.street,
                   pincode: address1.pincode);
               bookNow(context, view, id, selectedslots);
-              // Perform submit action
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      UserHome(), // Replace UserHome with the actual screen you want to navigate back to
+                ),
+              );
+
               //Navigator.of(context).pop();
-              //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>))
             },
             child: Text('Submit'),
           ),
@@ -361,6 +306,7 @@ AddAddressModel addAddress(context, String id) {
       name: name, house: house, street: street, pincode: pincode);
   Provider.of<AddAddressProvider>(context, listen: false)
       .AddAddress(model, context);
+
   //bookNow(context, model, id);
   return model;
 }
@@ -381,7 +327,7 @@ Future bookNow(
 
   String newdate = DateFormat.yMd().format(dateTime);
   TextEditingController dateController = TextEditingController(text: newdate);
-  log('___________________date_____________${newdate}');
+
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -390,8 +336,8 @@ Future bookNow(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: Center(
-          child: const Text(
+        title: const Center(
+          child: Text(
             'Booking Details',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
@@ -401,7 +347,7 @@ Future bookNow(
           children: [
             TextField(
               controller: timeslot,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Time',
                   labelStyle:
@@ -409,7 +355,7 @@ Future bookNow(
             ),
             TextField(
               controller: address,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Address',
                   labelStyle:
@@ -417,7 +363,7 @@ Future bookNow(
             ),
             TextField(
               controller: dateController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Date',
                   labelStyle:
@@ -441,7 +387,9 @@ Future bookNow(
                   jobId: jobId.text);
               await Provider.of<UserAddJobProvider>(context, listen: false)
                   .AddJob(model, context);
+              // ignore: use_build_context_synchronously
               Navigator.of(context).pop();
+              // ignore: use_build_context_synchronously
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => BookingStatus()));
               //addAddress(context, id);

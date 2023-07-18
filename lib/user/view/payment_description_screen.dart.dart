@@ -51,7 +51,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Code that depends on inherited widget or element goes here
-      if (widget.map['status'] == "closed") {
+      if (widget.map['status'] == "completed" ||
+          widget.map['status'] == "closed") {
         //log('________new log________________________${Provider.of<SingleBookingDetailsProvider>(context, listen: false).getSingleBooking(widget.map["_id"], context)}');
         showIsBooked(widget.map);
       }

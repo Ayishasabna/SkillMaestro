@@ -175,10 +175,30 @@ class UserCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => UserBookingDescription(
-                  map: map,
-                )));
+        if (map['status'] == 'completed' ||
+            map['status'] == 'pending' ||
+            map['status'] == 'closed' ||
+            map['status'] == 'started') {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => UserBookingDescription(
+                    map: map,
+                  )));
+        } else {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text(
+                    "You have already cancelled your job.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: Colors.blue),
+                  ),
+                );
+              });
+        }
+
         // Navigator.of(context).push(MaterialPageRoute(
         //     builder: (context) => expertBottomNavBar(
         //           map: map,

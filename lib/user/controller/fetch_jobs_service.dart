@@ -34,6 +34,25 @@ class FetchJobs {
     return job;
   }
 
+  Future<Map<String, dynamic>> getJobDetail(String job_role) async {
+    String path =
+        ApiConfigration.baseUrl + ApiConfigration.jobDetail + '/${job_role}';
+    log("_______________________$path");
+    String? token = await getUserAccesToken();
+    try {
+      Response response = await dio.get(path,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+
+      if (response.statusCode == 200) {
+        job = response.data;
+        log('________________________jobdetail_______________${response.data}');
+
+        return job;
+      }
+    } catch (e) {}
+    return job;
+  }
+
   Future<Map<String, dynamic>> getSlots(String id) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.getSlots + '$id';
     log('==========usertoken=======$path');
@@ -89,7 +108,7 @@ class FetchJobs {
     try {
       Map<String, dynamic> requestData = {
         'jobId': jobModel.jobId,
-        'slots': jobModel.slots,
+        'time': jobModel.slots,
         'date': jobModel.date,
         'address': jobModel.address,
       };

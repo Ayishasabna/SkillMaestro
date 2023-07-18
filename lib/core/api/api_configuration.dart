@@ -1,9 +1,8 @@
 import 'package:charts_flutter_new/flutter.dart';
 
 class ApiConfigration {
-  static const ipAddress = "192.168.1.70";
   //'10.4.1.200';
-  static const baseUrl = "http://$ipAddress:4000";
+  static const baseUrl = "https://skillmaestroserver.onrender.com";
 
   //----User Endpoints---
   static const verifyOtp = '/verify-otp';
@@ -12,7 +11,7 @@ class ApiConfigration {
   static const signin = '/signin';
   static const get7Jobs = '/get7Jobs';
   static const userAuth = '/isUserAuth';
-  static const jobDetail = '/jobDetail/{id}';
+  static const jobDetail = '/jobDetail';
   static const getSlots = '/getSlots/';
   static const addAddress = '/addAddress';
   static const bookJob = '/bookJob';

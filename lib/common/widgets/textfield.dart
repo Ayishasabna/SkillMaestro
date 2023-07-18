@@ -10,15 +10,21 @@ class textfield extends StatelessWidget {
     this.fieldname,
     this.function,
     this.value,
+    this.keyBoradtype,
+    this.validator,
+    this.fontSizeMultiplier,
     super.key,
   });
   String textFieldName;
+  double? fontSizeMultiplier;
   TextEditingController controllerName;
+  final String? Function(String?)? validator;
   String? function;
   //Function? function;
   String? fieldname;
   String? value;
   BuildContext context;
+  TextInputType? keyBoradtype;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +34,7 @@ class textfield extends StatelessWidget {
           borderRadius: BorderRadius.circular(10), color: Colors.grey[300]),
       child: TextFormField(
         controller: controllerName,
+        keyboardType: keyBoradtype,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: textFieldName,
@@ -38,13 +45,16 @@ class textfield extends StatelessWidget {
         },
         // validator: (value) => function ?? (value),
         // ignore: body_might_complete_normally_nullable
-        validator: (value) {
+        validator: validator,
+        style: TextStyle(fontSize: fontSizeMultiplier),
+
+        /* (value) {
           if (value == null || value.isEmpty) {
-            return 'Username is required';
+            return '${textFieldName} is required';
           } else {
             function;
           }
-        },
+        }, */
       ),
     );
   }

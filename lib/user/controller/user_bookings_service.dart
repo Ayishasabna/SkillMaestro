@@ -23,7 +23,7 @@ class UserBookings {
       //log("========================responsebooking============${response.data}");
       if (response.statusCode == 200) {
         bookings = response.data;
-        log('======booking details user=======${bookings['result']}');
+        //log('======booking details user=======${bookings['result']}');
 
         return bookings;
       }

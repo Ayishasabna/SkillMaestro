@@ -8,6 +8,9 @@ import 'package:skillmaestro/expert/view/expert_signin.dart';
 import 'package:skillmaestro/expert/view/expert_skills.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 
+import '../../core/constants.dart';
+import 'expert_selected_job.dart';
+
 class ExpertProfile extends StatefulWidget {
   const ExpertProfile({super.key});
 
@@ -80,43 +83,49 @@ class _ExpertProfileState extends State<ExpertProfile> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(left: 17),
                               child: Text(
                                 'Account',
-                                //style: normalText.copyWith(color: Colors.blue),
+                                style: normalText.copyWith(color: Colors.blue),
                               ),
                             ),
                             Tile(
-                              title: const Text(
+                              title: Text(
                                 "Username",
-                                //style: normalText,
+                                style: normalText,
                               ),
                               subtitle: Text(
-                                snapshot.data?.username ?? "dkd",
+                                snapshot.data?.username.toUpperCase() ?? "dkd",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Tile(
                               storage: storage,
-                              subtitle: Text("${snapshot.data?.mobile ?? ""} "),
-                              title: const Text(
+                              subtitle: Text("${snapshot.data?.mobile ?? ""} ",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              title: Text(
                                 "Phone",
-                                //style: normalText,
+                                style: normalText,
                               ),
                             ),
                             Tile(
                               storage: storage,
-                              subtitle: Text(snapshot.data?.email ?? ""),
-                              title: const Text(
+                              subtitle: Text(snapshot.data?.email ?? "",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              title: Text(
                                 "Email",
-                                //style: normalText,
+                                style: normalText,
                               ),
                             ),
-                            /* Tile(
+                            Tile(
                               storage: storage,
-                              title: const Text(" Remove Skills"),
+                              title: Text(" My Skills", style: normalText),
                               trailing: const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 17,
@@ -125,29 +134,37 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ExpertSkills(),
+                                      builder: (context) =>
+                                          ExpertSelectedJobs(),
+                                    ));
+                                //_showSchedulePopup(context);
+                              },
+                            ),
+                            Tile(
+                              storage: storage,
+                              title: Text(
+                                " Remove Skills",
+                                style: normalText,
+                              ),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 17,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ExpertSelectedJobs(),
                                     ));
                               },
                               /* title: Text(
                                 "DOB",
                                 style: normalText,
                               ), */
-                            ), */
-                            Tile(
-                              storage: storage,
-                              title: Text(" Get Shedule"),
-                              trailing: const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 17,
-                              ),
-                              onTap: () {
-                                _showSchedulePopup(context);
-                              },
                             ),
                             Tile(
-                              title: const Text(
-                                'Edit Profile',
-                              ),
+                              title: Text('Edit Profile', style: normalText),
                               leading:
                                   const CircleAvatar(child: Icon(Icons.edit)),
                               trailing: const Icon(
@@ -176,11 +193,11 @@ class _ExpertProfileState extends State<ExpertProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //kHeight10,
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(left: 17),
                               child: Text(
                                 'System',
-                                //style: normalText.copyWith(color: Colors.blue),
+                                style: normalText.copyWith(color: Colors.blue),
                               ),
                             ),
                             Tile(
@@ -195,7 +212,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                   size: 17,
                                 ),
                               ),
-                              title: const Text('Settings'),
+                              title: Text('Settings', style: normalText),
                               onTap: () {
                                 Navigator.push(
                                     context,
@@ -213,7 +230,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                               leading: const CircleAvatar(
                                 child: Icon(Icons.restart_alt_rounded),
                               ),
-                              title: const Text("Swich  User"),
+                              title: Text("Swich  User", style: normalText),
                               onTap: () {
                                 showDialog(
                                   context: context,
@@ -280,7 +297,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                   Icons.logout_outlined,
                                 ),
                               ),
-                              title: const Text('Sign Out'),
+                              title: Text('Sign Out', style: normalText),
                               onTap: () async {
                                 showDialog(
                                   context: context,

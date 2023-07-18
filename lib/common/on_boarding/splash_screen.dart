@@ -1,5 +1,6 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skillmaestro/common/on_boarding/login_screen.dart';
 import 'package:skillmaestro/common/on_boarding/second_screen.dart';
 import 'package:skillmaestro/user/view/login.dart';
 import '../../core/constants.dart';
@@ -21,6 +22,28 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/polar-mechanic.gif'),
+            const SizedBox(height: 40),
+            const Text(
+              'Skill \n    Maestro',
+              style: TextStyle(fontSize: 50),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  /* Widget build(BuildContext context) {
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
           children: [
@@ -38,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
             )
           ],
         ));
-  }
+  } */
 
   Future<void> gotoLogin() async {
     await Future.delayed(
@@ -57,9 +80,8 @@ class _SplashScreenState extends State<SplashScreen> {
       gotoLogin();
     } else {
       // ignore: use_build_context_synchronously
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) => UserLogin()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx1) => BoardingLoginScreen()));
     }
   }
 }
- */

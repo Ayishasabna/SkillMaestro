@@ -4,8 +4,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/user/get_jobs_provider.dart';
+import 'package:skillmaestro/common/on_boarding/login_screen.dart';
 import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/core/theme/access_token/token.dart';
+import 'package:skillmaestro/user/controller/fetch_jobs_service.dart';
 import 'package:skillmaestro/user/view/all_services.dart';
 import 'package:skillmaestro/user/view/job_screen.dart';
 
@@ -43,7 +45,7 @@ class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     getUserAccesToken();
-
+    FetchJobs().getJobDetail('cleaning');
     context.read<AlljobsListForUser>().fetchAllJobsForUser();
 
     return Scaffold(
@@ -62,7 +64,7 @@ class _UserHomeState extends State<UserHome> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserLogin(),
+                            builder: (context) => BoardingLoginScreen(),
                           ),
                           (route) => false);
                       const Text('logout');
@@ -187,6 +189,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        log("_________________jobdetail review seen map__________${map}");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => JobDetailScreen(
                 title: map['job_role'],

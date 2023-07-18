@@ -8,6 +8,7 @@ import 'package:skillmaestro/user/view/payment_description_screen.dart.dart';
 import '../../application/user/get_jobs_provider.dart';
 import '../../application/user/job_detail_provider.dart';
 import '../../core/constants.dart';
+import '../model/cancel_booking_model.dart';
 import '../model/decline_estimation_model.dart';
 
 TextEditingController bookingController = TextEditingController();
@@ -230,10 +231,28 @@ class UserBookingDescription extends StatelessWidget {
                           Colors.amber // Set the desired color here
                       ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PaymentScreen(
-                              map: map,
-                            )));
+                    if (map['status'] == 'completed' ||
+                        map['status'] == 'closed') {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PaymentScreen(
+                                map: map,
+                              )));
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text(
+                                "After completing the job, you can proceed with the Payment",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    color: Colors.blue),
+                              ),
+                            );
+                          });
+                    }
+
                     //log("_____________navigation to payment screen_________$map");
                   },
                   child: Text('Pay')),
@@ -281,22 +300,37 @@ class UserBookingDescription extends StatelessWidget {
                           children: [
                             ElevatedButton(
                                 onPressed: () {
-                                  if (textController.text.isNotEmpty) {
-                                    DeclineEstimationModel model =
-                                        DeclineEstimationModel(
+                                  if (cancelBookingController.text.isNotEmpty) {
+                                    CancelBookingModel model =
+                                        CancelBookingModel(
                                             id: map['_id'],
-                                            text: textController.text);
+                                            text: cancelBookingController.text);
+                                    log("_______________cancel bookingmodel___________${map['_id']}");
                                     Provider.of<JobDetailProvider>(context,
                                             listen: false)
-                                        .declineEstimate(model);
+                                        .cancelBooking(model);
+                                    cancelBookingController.clear();
                                     Navigator.pop(context);
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Are you sure you want to cancel the booking.Please Specify the reason'),
-                                      ),
-                                    );
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: Text(
+                                              "Please Specify the reason.",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18,
+                                                  color: Colors.blue),
+                                            ),
+                                          );
+                                        });
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   SnackBar(
+                                    //     content: Text(
+                                    //         'Are you sure you want to cancel the booking.Please Specify the reason'),
+                                    //   ),
+                                    // );
                                     // showSnackBar(context,
                                     //     "Please Specify the reason");
                                   }

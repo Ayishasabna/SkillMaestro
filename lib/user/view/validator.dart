@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 String checkUserName(String value) {
   if (value.isEmpty) {
     return 'Username is required';
@@ -42,6 +44,7 @@ String confirmPassword(String value, String pass) {
 String checkNumber(String val) {
   if (val.isNotEmpty) {
     if (val.length < 10) {
+      log('________ffff___________$val');
       return "Enter 10 digit Phone Number ";
     } else
       return '';

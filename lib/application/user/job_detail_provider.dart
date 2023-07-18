@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/expert/controller/job_detail_service.dart';
 import 'package:skillmaestro/expert/model/send_estimate_model.dart';
+import 'package:skillmaestro/user/model/cancel_booking_model.dart';
 import 'package:skillmaestro/user/view/user_booking_description.dart';
 
 import '../../user/controller/booking_details_service.dart';
@@ -19,6 +20,12 @@ class JobDetailProvider with ChangeNotifier {
 
   Future<void> declineEstimate(DeclineEstimationModel model) async {
     await UserBookingDetailsService().declineEstimate(model);
+    // expertDetails = ExpertProfileService().ExpertProfile();
+    notifyListeners();
+  }
+
+  Future<void> cancelBooking(CancelBookingModel CancelModel) async {
+    await UserBookingDetailsService().cancelBooking(CancelModel);
     // expertDetails = ExpertProfileService().ExpertProfile();
     notifyListeners();
   }

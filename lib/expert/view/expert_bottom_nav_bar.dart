@@ -6,6 +6,7 @@ import 'package:skillmaestro/expert/view/expert_home.dart';
 import 'package:skillmaestro/expert/view/expert_payment_screen.dart';
 import 'package:skillmaestro/user/view/chat/message_screen.dart';
 import '../../core/constants.dart';
+import 'expert_selected_job.dart';
 
 // ignore: camel_case_types
 class expertBottomNavBar extends StatefulWidget {
@@ -23,7 +24,7 @@ class _expertBottomNavBarState extends State<expertBottomNavBar> {
     ExpertHomeScreen(),
     ExpertMessageScreen(),
     //ExpertChatScrn(),
-    ExpertPaymentScreen(),
+    ExpertSelectedJobs(),
     const SettingsScreen()
   ];
 
@@ -57,7 +58,7 @@ class _expertBottomNavBarState extends State<expertBottomNavBar> {
               icon: Icon(
                 Icons.payment,
               ),
-              label: 'Payment'),
+              label: 'My Skills'),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings,

@@ -1,6 +1,7 @@
 class EditExpertProfileModel {
   String? name;
   String? email;
+  //String? mobile;
 
   EditExpertProfileModel({
     this.name,

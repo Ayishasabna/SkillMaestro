@@ -1,20 +1,22 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:skillmaestro/admin/view/cancelled_jobs_list.dart';
 import 'package:skillmaestro/admin/view/experts_list.dart';
 import 'package:skillmaestro/admin/view/jobs_list.dart';
 import 'package:skillmaestro/admin/view/users_list.dart';
 import 'package:skillmaestro/application/admin/chart_provider.dart';
 import 'package:skillmaestro/application/admin/get_card_count_provider.dart';
+import 'package:skillmaestro/common/on_boarding/login_screen.dart';
 import 'package:skillmaestro/core/theme/access_token/token.dart';
-import 'package:skillmaestro/user/view/login.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'dart:math' as math;
 
+import '../../common/widgets/bottom_nav_bar.dart';
+
 enum LegendShape { circle, rectangle }
+
+Map<String, dynamic> counts = {};
+List joblist = [];
 
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class AdminHome extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UserLogin(),
+                              builder: (context) => const BoardingLoginScreen(),
                             ),
                             (route) => false);
                         const Text('logout');
@@ -60,8 +62,13 @@ class AdminHome extends StatelessWidget {
               ),
               Consumer<getCardProvider>(
                 builder: (context, value, child) {
-                  log('___________________getcard provider_______${value.cardcount['result']}');
-                  Map<String, dynamic> counts = value.cardcount['result'];
+                  if (value.cardcount['result'] == null ||
+                      value.cardcount['result'].isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  counts = value.cardcount['result'];
+
                   return GridView.builder(
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(16.0),
@@ -76,7 +83,7 @@ class AdminHome extends StatelessWidget {
                       switch (index) {
                         case 0:
                           return buildCard('Users', counts["userCount"],
-                              UsersList(), context, Colors.green);
+                              const UsersList(), context, Colors.green);
                         case 1:
                           return buildCard('Experts', counts["expertCount"],
                               const AllExpertForAdmin(), context, Colors.grey);
@@ -87,7 +94,7 @@ class AdminHome extends StatelessWidget {
                           return buildCard(
                               'Cancelled Jobs',
                               counts["cancelCount"],
-                              const CancelledJobs(),
+                              const BottomNavBar(),
                               context,
                               Colors.cyan);
                         default:
@@ -105,7 +112,7 @@ class AdminHome extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
@@ -127,12 +134,13 @@ class AdminHome extends StatelessWidget {
                 //width: 50,
                 child: Consumer<ChartDataProvider>(
                   builder: (context, value, child) {
-                    log('_______________value__${value.expert['result']['pieData']}');
-                    log("____________hai_______");
-                    List joblist = value.expert['result']['pieData'];
-                    //log('_______________value__${joblist}');
-
-                    //final List<Map<String, dynamic>> dataList = joblist;
+                    if (value.expert['result'] == null ||
+                        value.expert['result'].isEmpty) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (value.expert['result']['pieData'] != null) {
+                      joblist = value.expert['result']['pieData'];
+                    }
 
                     final dataMap = <String, double>{};
 
@@ -141,19 +149,7 @@ class AdminHome extends StatelessWidget {
                       final expertCount = data['expert_count'] as int;
 
                       dataMap[id] = expertCount.toDouble();
-                      log("_______________________datamap________${dataMap}");
                     }
-
-                    /*  final chartModel =
-                        chartModelFromJson(value.expert.toString());
-
-                    final dataMap = <String, double>{};
-
-                    for (final pieData in chartModel.result.pieData) {
-                      dataMap[pieData.id] = pieData.expertCount.toDouble();
-                    }
-
-                    print(dataMap); */
 
                     return HomePage(
                       dataMap: dataMap,
@@ -191,11 +187,12 @@ class AdminHome extends StatelessWidget {
               const SizedBox(height: 8.0),
               Text(
                 title,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Text(
                 'Count:$count',
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 8.0),
               //Text('Count: $count'),
@@ -211,31 +208,7 @@ class AdminHome extends StatelessWidget {
   }
 }
 
-/* class PieChartWidget extends StatelessWidget {
-  final List<ChartModel> result;
-
-  PieChartWidget({required this.result});
-
-  @override
-  Widget build(BuildContext context) {
-    context.read<ChartDataProvider>().chartData();
-    final data = result.map((datum) {
-      return charts.Series<PieDatum, String>(
-        id: datum.id,
-        data: [datum],
-        domainFn: (PieDatum datum, _) => datum.id,
-        measureFn: (PieDatum datum, _) => datum.expertCount,
-      );
-    }).toList();
-
-    return charts.PieChart(
-      data,
-      animate: true,
-      animationDuration: Duration(milliseconds: 500),
-    );
-  }
-} */
-
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.dataMap}) : super(key: key);
   Map<String, double> dataMap = {};
@@ -267,24 +240,25 @@ class HomePageState extends State<HomePage> {
       const Color.fromRGBO(254, 154, 92, 1),
     ]
   ];
+  // ignore: prefer_final_fields
   ChartType? _chartType = ChartType.disc;
-  bool _showCenterText = true;
-  double? _ringStrokeWidth = 32;
+
+  // ignore: unnecessary_nullable_for_final_variable_declarations
+  final double? _ringStrokeWidth = 32;
+  // ignore: prefer_final_fields
   double? _chartLegendSpacing = 32;
 
+  // ignore: prefer_final_fields
   bool _showLegendsInRow = false;
+  // ignore: prefer_final_fields
   bool _showLegends = true;
-  bool _showLegendLabel = false;
 
-  bool _showChartValueBackground = true;
-  bool _showChartValues = true;
-  bool _showChartValuesInPercentage = false;
-  bool _showChartValuesOutside = false;
+  final bool _showGradientColors = false;
 
-  bool _showGradientColors = false;
-
-  LegendShape? _legendShape = LegendShape.circle;
-  LegendPosition? _legendPosition = LegendPosition.right;
+  // ignore: unnecessary_nullable_for_final_variable_declarations
+  final LegendShape? _legendShape = LegendShape.circle;
+  // ignore: unnecessary_nullable_for_final_variable_declarations
+  final LegendPosition? _legendPosition = LegendPosition.right;
 
   int key = 0;
 
@@ -335,7 +309,7 @@ class HomePageState extends State<HomePage> {
                   fit: FlexFit.tight,
                   child: chart,
                 ),
-                Flexible(
+                const Flexible(
                   flex: 2,
                   fit: FlexFit.tight,
                   child: Text('hhh'),
@@ -361,37 +335,3 @@ class HomePageState extends State<HomePage> {
     );
   }
 }
-
-/* class HomePage2 extends StatelessWidget {
-  HomePage2({Key? key}) : super(key: key);
-
-  final dataMap = <String, double>{
-    "Flutter": 5,
-  };
-
-  final colorList = <Color>[
-    Colors.greenAccent,
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Pie Chart 1"),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: PieChart(
-          dataMap: dataMap,
-          chartType: ChartType.ring,
-          baseChartColor: Colors.grey[50]!.withOpacity(0.15),
-          colorList: colorList,
-          chartValuesOptions: const ChartValuesOptions(
-            showChartValuesInPercentage: true,
-          ),
-          totalValue: 20,
-        ),
-      ),
-    );
-  }
-} */

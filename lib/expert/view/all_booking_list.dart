@@ -7,9 +7,201 @@ import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
 import 'package:skillmaestro/application/user/job_detail_provider.dart';
 import 'package:skillmaestro/expert/model/send_estimate_model.dart';
 import '../../application/expert/expert_job_detail_provider.dart';
+import '../../common/widgets/textfield.dart';
 import '../../core/constants.dart';
 
-Map<String, dynamic> map = {};
+TextEditingController bookingController = TextEditingController();
+TextEditingController textController = TextEditingController();
+TextEditingController cancelBookingController = TextEditingController();
+TextEditingController bookingIdController = TextEditingController();
+TextEditingController hoursController = TextEditingController();
+TextEditingController partsController = TextEditingController();
+TextEditingController amountController = TextEditingController();
+TextEditingController PriceController = TextEditingController();
+
+// ignore: must_be_immutable
+class BookingDescriptionTab extends StatelessWidget {
+  BookingDescriptionTab({super.key, required this.map});
+  Map<String, dynamic> map = {};
+
+  @override
+  Widget build(BuildContext context) {
+    Widget buttonwidget;
+
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Booking Description'),
+          backgroundColor: mainColor,
+        ),
+        body: ListView(padding: const EdgeInsets.all(16.0), children: [
+          Card(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.description),
+                      // SizedBox(
+                      //   width: 20,
+                      // ),
+                      Column(
+                        children: [
+                          Text(
+                            '  Job Status: ${map['status']}',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'Bill Amount: ${map['bill_amount']}',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'Payment: ${map['payment']['payment_status']}',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          cardwidget(results: map),
+          Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ListTile(
+                  leading: Icon(Icons.location_on),
+                  title: Text('Address'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Name: ${map['address']['name']}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        'House: ${map['address']['house']}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        'Street: ${map['address']['street']}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        'Pincode: ${map['address']['pincode']}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+
+                      //Text('Name: string'),
+                      //Text('House: string'),
+                      //Text('Street: string'),
+                      //Text('Pincode: 0'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber // Set the desired color here
+                  ),
+              onPressed: () {
+                if (map['status'] == 'completed' ||
+                    map['status'] == 'closed' ||
+                    map['status'] == 'cancelled') {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Text(
+                            "Already ${map['status']} the Job",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: Colors.blue),
+                          ),
+                        );
+                      });
+                } else if (map['status'] == 'started') {
+                  sendEstimate(context, map['_id'], map['estimate']['hours'],
+                      map['estimate']['parts'], map['jobId']['base_rate']);
+                }
+
+                //log("_____________navigation to payment screen_________$map");
+              },
+              child: Text('Send Estimate')),
+
+          // Container(
+          //   height: 50,
+          //   width: 100,
+          //   child: Text(results[0]['payment']['invoice']),
+          // ),
+        ]));
+  }
+}
+
+class cardwidget extends StatelessWidget {
+  const cardwidget({
+    super.key,
+    required this.results,
+  });
+
+  final Map<String, dynamic> results;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Icon(Icons.work),
+                SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Job Role: ${results['jobId']['job_role']}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text('Basic Rate: ${results['jobId']['base_rate']}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text('Additional Rate: ${results['jobId']['add_rate']}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    // Add more job information here
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/* Map<String, dynamic> map = {};
 TextEditingController bookingIdController = TextEditingController();
 TextEditingController hoursController = TextEditingController();
 TextEditingController partsController = TextEditingController();
@@ -23,7 +215,7 @@ class AllBookingTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //context.read<ExpertAllJobsProvider>().GetMyBookings();
-    log("_______________my bookings_____________");
+    log("_______________Booking Details_____________${map['estimate']['parts']}");
     //final response = context.read<ExpertAllJobsProvider>().GetMyBookings();
 
     // ignore: unnecessary_null_comparison
@@ -65,8 +257,8 @@ class AllBookingTab extends StatelessWidget {
         body: Consumer<ExpertAllJobsProvider>(
           builder: (context, value, child) {
             map = value.booking;
-            List<dynamic> results = map['result'];
-            log('__________________________addresses____________________________$results');
+            //List<dynamic> results = map['result'];
+            //log('__________________________addresses____________________________$results');
 
             return ListView(padding: const EdgeInsets.all(16.0), children: [
               Card(
@@ -80,7 +272,7 @@ class AllBookingTab extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       subtitle: Text(
-                        'Name: ${results[0]['address']['name']}',
+                        'Name: ${map['address']['name']}',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
@@ -112,7 +304,7 @@ class AllBookingTab extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Job Role: ${results[0]['jobId']['job_role']}'),
+                          Text('Job Role: ${map['jobId']['job_role']}'),
                           // Add more job information here
                         ],
                       ),
@@ -134,19 +326,19 @@ class AllBookingTab extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Name: ${results[0]['address']['name']}',
+                            'Name: ${map['address']['name']}',
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
-                            'House: ${results[0]['address']['house']}',
+                            'House: ${map['address']['house']}',
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
-                            'Street: ${results[0]['address']['street']}',
+                            'Street: ${map['address']['street']}',
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
-                            'Pincode: ${results[0]['address']['pincode']}',
+                            'Pincode: ${map['address']['pincode']}',
                             style: TextStyle(fontSize: 16),
                           ),
 
@@ -166,20 +358,16 @@ class AllBookingTab extends StatelessWidget {
                           Colors.amber // Set the desired color here
                       ),
                   onPressed: () {
-                    log('_____________sendestimate_________${results[0]['estimate']['parts']}');
-                    sendEstimate(
-                        context,
-                        results[0]['_id'],
-                        results[0]['estimate']['hours'],
-                        results[0]['estimate']['parts'],
-                        results[0]['jobId']['base_rate']);
+                    //log('_____________sendestimate_________${results[0]['estimate']['parts']}');
+                    /* sendEstimate(context, map['_id'], map['estimate']['hours'],
+                        map['estimate']['parts'], map['jobId']['base_rate']); */
                   },
                   child: Text('Send Estimate'))
             ]);
           },
         ));
   }
-}
+} */
 
 Future sendEstimate(
   context,
@@ -218,53 +406,55 @@ Future sendEstimate(
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: bookingIdController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                  labelText: 'BookingId',
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            TextField(
-              controller: hoursController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                  labelText: 'Hours',
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            TextField(
-              controller: partsController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                  labelText: 'Parts',
-                  labelStyle:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            TextField(
-              controller: PriceController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                labelText: 'Price',
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: TextField(
-                controller: amountController,
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: bookingIdController,
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                 decoration: const InputDecoration(
-                  labelText: 'Total Amount',
+                    labelText: 'BookingId',
+                    labelStyle:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              TextField(
+                controller: hoursController,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                decoration: const InputDecoration(
+                    labelText: 'Hours',
+                    labelStyle:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              TextField(
+                controller: partsController,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                decoration: const InputDecoration(
+                    labelText: 'Parts',
+                    labelStyle:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              TextField(
+                controller: PriceController,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                decoration: const InputDecoration(
+                  labelText: 'Price',
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: TextField(
+                  controller: amountController,
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                  decoration: const InputDecoration(
+                    labelText: 'Total Amount',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           ElevatedButton(
