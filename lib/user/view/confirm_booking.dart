@@ -12,7 +12,7 @@ class BookingStatus extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text('Have any questions? Reach directly to our Customer Support'),
         ],
       ),

@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/common/widgets/common_widget.dart';
-import 'package:skillmaestro/user/view/payment_description_screen.dart.dart';
-
 import '../../application/user/get_jobs_provider.dart';
 import '../../core/constants.dart';
 
@@ -36,7 +32,6 @@ class WorkReviewScreen extends StatelessWidget {
                                 [index]['rating']
                             .toDouble();
 
-                        log("______________ratingnew______________${newRating}");
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -49,12 +44,6 @@ class WorkReviewScreen extends StatelessWidget {
                                     ignoreGestures: true,
                                     allowHalfRating: true,
                                     initialRating: newRating,
-                                    /* double.parse(
-                                          value.jobDetail['result']['reviews']
-                                              [index]['rating'])
-                                      .toDouble(), */
-                                    /* value.jobDetail['result']
-                                      ['reviews'][index]['rating'], */
                                     itemSize: 20,
                                     itemBuilder: (context, index) => const Icon(
                                       Icons.star,
@@ -66,7 +55,7 @@ class WorkReviewScreen extends StatelessWidget {
                                     "(${value.jobDetail['result']['reviews'][index]['message']})",
                                     style: normalText,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
@@ -76,46 +65,22 @@ class WorkReviewScreen extends StatelessWidget {
                                 ],
                               ),
                               widgets().sizedboxHeight10(),
-                              /* Text(
-                          value.reveiws![index]!.description,
-                          style: const TextStyle(fontSize: 19),
-                        ),
-                        kHeight10, */
                               Row(
-                                children: [
-                                  /* const CircleAvatar(
-                                  radius: 10,
-                                  backgroundImage:
-                                      AssetImage('assets/splash/unknown.jpg'),
-                                ), */
+                                children: const [
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  /* Text(
-                              "${value.reveiws![index]!.userId.fullName}  ,  ",
-                              style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ), */
-                                  /* Text(
-                              value.reveiws![index]!.userId.status,
-                              style: const TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold),
-                            ) */
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                children: [
-                                  const Icon(
+                                children: const [
+                                  Icon(
                                     Icons.verified,
                                     size: 18,
                                   ),
-                                  /* Text(
-                                'Verified User  ${value.reveiws![index]!.date}') */
                                 ],
                               ),
                             ],

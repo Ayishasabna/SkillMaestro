@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -6,7 +5,7 @@ Future<String> getUserAccesToken() async {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   String? accesToken = await storage.read(key: 'user_access_token');
   String? token = accesToken!.replaceAll('"', '');
-  log('-------------useracesstoken--------------$token');
+  
   return token;
 }
 

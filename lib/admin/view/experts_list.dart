@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../application/admin/all_experts_list_provider.dart';
@@ -47,6 +48,16 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? buttonName;
+    Color? color;
+    if (map['isBanned'] == false) {
+      color = Colors.amber;
+      buttonName = 'verified';
+    }
+    if (map['isBanned'] == true) {
+      color = Colors.red;
+      buttonName = 'Blocked';
+    }
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0), // Adjust the value as needed
@@ -73,7 +84,7 @@ class UserCard extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber // Set the desired color here
+                  backgroundColor: color // Set the desired color here
                   ),
               onPressed: () {
                 if (map['isBanned'] == true) {
@@ -110,7 +121,7 @@ class UserCard extends StatelessWidget {
                   );
                 }
               },
-              child: const Text("true"),
+              child: Text(buttonName!),
             ),
           ],
         ),

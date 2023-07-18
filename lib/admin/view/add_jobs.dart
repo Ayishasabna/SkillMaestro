@@ -229,6 +229,7 @@ class _AddJobsState extends State<AddJobs> {
 
     //String filepath = file.path;
     File imageFile = File(file.path);
+    // ignore: unused_local_variable
     String? token = await getAdminAccesToken();
 
     JobModel jobmodel = JobModel(adRate: adRate, bRate: bRate, job: job);

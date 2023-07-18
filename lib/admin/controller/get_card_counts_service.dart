@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
 
+// ignore: camel_case_types
 class getCardCounts {
   Dio dio = Dio();
 
@@ -23,11 +22,12 @@ class getCardCounts {
 
       if (response.statusCode == 201) {
         cardcount = response.data;
-        log('_______________getCard++++++Counts________________${cardcount}');
 
         return cardcount;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return cardcount;
   }
 }

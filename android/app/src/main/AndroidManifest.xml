@@ -2,7 +2,7 @@
     package="com.example.skillmaestro">
     <uses-permission android:name="android.permission.CLEAR_TRAFFIC_STATS" />
    <application
-        android:label="skillmaestro"
+        android:label="SkillMaestro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

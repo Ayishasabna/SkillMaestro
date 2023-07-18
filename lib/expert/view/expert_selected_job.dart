@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
 import 'package:skillmaestro/core/constants.dart';
 import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
-import 'package:skillmaestro/expert/view/expert_home.dart';
+
 
 //Set<String> removeskills = {};
 String remove = '';
@@ -27,7 +27,7 @@ class ExpertSelectedJobs extends StatelessWidget {
       body: SafeArea(
         child:
             Consumer<ExpertAllJobsProvider>(builder: (context, value, child) {
-          //log('------selected    jobs------${value.expertSelectedJobs}');
+          
           // ignore: prefer_is_empty
           return value.expertSelectedJobs.length == 0 ||
                   value.expertSelectedJobs.isEmpty
@@ -88,7 +88,7 @@ class UserCard extends StatelessWidget {
 
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => expertBottomNavBar()));
+                          builder: (context) => const expertBottomNavBar()));
                     },
                     style: const ButtonStyle(
                         backgroundColor:
@@ -118,10 +118,7 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.network("${map['image']}"),
-                    /* */
-                    // Text('Base Rate: ${map['base_rate']}'),
-                    //Text('Additional Rate: ${map['ad_rate']}'),
-                    //Text('createdAt:  ${map['createdAt']}'),
+                    
                   ],
                 ),
               ),

@@ -3,8 +3,6 @@ import 'package:skillmaestro/common/settings/about.dart';
 import 'package:skillmaestro/common/settings/privacy_policy.dart';
 import 'package:skillmaestro/common/settings/terms_and_conditions_screen.dart';
 import 'package:skillmaestro/expert/view/expert_profile.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
-
 import '../../core/constants.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -87,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
               onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PrivacyPoclicyScrn()
+                  MaterialPageRoute(builder: (context) => const PrivacyPoclicyScrn()
                       //PrivacyPoclicyScrn(),
                       )),
               title: Text(

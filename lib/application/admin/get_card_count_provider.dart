@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import '../../admin/controller/get_card_counts_service.dart';
 
+// ignore: camel_case_types
 class getCardProvider with ChangeNotifier {
   Map<String, dynamic> expert = {};
   Map<String, dynamic> cardcount = {};
@@ -11,14 +9,9 @@ class getCardProvider with ChangeNotifier {
   //getCardCounts
   Future<Map<String, dynamic>> cardCount() async {
     cardcount = await getCardCounts().getCardcounts();
-    log("----------------card++++++ Count---------$cardcount");
+
     notifyListeners();
 
-    /*  FetchAllUsersDetails().fetchAllUsersDetails().then((value) {
-      value = usersMap;
-      
-      return usersMap;
-    }); */
     return cardcount;
   }
 }

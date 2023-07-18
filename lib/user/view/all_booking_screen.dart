@@ -1,13 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skillmaestro/application/user/get_jobs_provider.dart';
 import 'package:skillmaestro/common/widgets/common_widget.dart';
 import 'package:skillmaestro/core/constants.dart';
-import 'package:skillmaestro/expert/view/expert_bottom_nav_bar.dart';
-import 'package:skillmaestro/user/view/payment_description_screen.dart.dart';
+
 import 'package:skillmaestro/user/view/user_booking_description.dart';
 
 import '../../application/common/common_provider.dart';
@@ -16,7 +13,7 @@ Map<String, dynamic> map = {};
 List<dynamic> results = [];
 
 class ViewAllBookingScreen extends StatelessWidget {
-  ViewAllBookingScreen({
+  const ViewAllBookingScreen({
     super.key,
   });
 
@@ -45,24 +42,17 @@ class ViewAllBookingScreen extends StatelessWidget {
       ),
       body: Consumer2<AlljobsListForUser, CommonProvider>(
           builder: (context, value, value2, child) {
-        //log('_________________map______________$map');
-
-        //log('_____________ newresults__________________${map['result']}');
-        //log('_____________ jobrole__________________${results[0]}');
+        
         map = value.userBooking;
-        /* if (map['result'] != null) {
-          //CircularProgressIndicator();
-          results = map['result'];
-        } else if (map['result'] == null) {
-          CircularProgressIndicator();
-        } */
+        
 
         if (map['result'] != null) {
           results = map['result'];
         }
 
+        // ignore: prefer_is_empty
         return results.length == 0 || results.isEmpty
-            ? CircularProgressIndicator()
+            ? const Center(child: CircularProgressIndicator())
             //const Text("No Booking Available")
             : ListView.builder(
                 itemBuilder: (context, index) {
@@ -70,25 +60,7 @@ class ViewAllBookingScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
                     child: GestureDetector(
                         onTap: () async {
-                          /*    await context
-                      .read<SingleGigDetailsProvider>()
-                      .getGig(value.allGigs![index].id, context);
-                  if (context.mounted) {
-                    await Provider.of<ReservedGigs>(context, listen: false)
-                        .getreveiws(value.allGigs![index].id);
-                  }
-                  await Provider.of<ReservedGigs>(context, listen: false)
-                      .getreveiws(value.allGigs![index].id);
-
-                  if (context.mounted) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ServiceDescriptionScrn(
-                            isBooked: false,
-                          ),
-                        ));
-                  } */
+                         
                         },
                         child: value2.shimmerLoading
                             ? getRecentShimmer(height, width)
@@ -163,6 +135,7 @@ class ViewAllBookingScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class UserCard extends StatelessWidget {
   UserCard({super.key, required this.map});
   Map<String, dynamic> map = {};
@@ -187,7 +160,7 @@ class UserCard extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
+                return const AlertDialog(
                   content: Text(
                     "You have already cancelled your job.",
                     style: TextStyle(
@@ -199,10 +172,6 @@ class UserCard extends StatelessWidget {
               });
         }
 
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => expertBottomNavBar(
-        //           map: map,
-        //         )));
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -227,30 +196,30 @@ class UserCard extends StatelessWidget {
                   Text('Base Rate: ${map['jobId']['base_rate']}'),
                   Text('Additional Rate: ${map['jobId']['ad_rate']}'),
                   //Text('createdAt:  ${map['jobId']['createdAt']}'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.location_on),
+                      const Icon(Icons.location_on),
                       Column(
                         children: [
                           Text(
                             'Name: ${map['address']['name']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'House: ${map['address']['house']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'Street: ${map['address']['street']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'Pincode: ${map['address']['pincode']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       )
@@ -263,41 +232,7 @@ class UserCard extends StatelessWidget {
                     backgroundColor: Colors.amber // Set the desired color here
                     ),
                 onPressed: () {
-                  /*  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => PaymentScreen())); */
-                  /* if (map['isBanned'] == true) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Approve Booking'),
-                          content: Text(
-                              "Are You Sure You Want To Approve ${map['approve']}}"),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Cancel")),
-                            ElevatedButton(
-                                onPressed: () {
-                                  /* value.approveExpert(
-                                      value.allExperts![index]!.id); */
-    
-                                  Navigator.pop(context);
-                                },
-                                style: const ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStatePropertyAll(Colors.green)),
-                                child: const Text(
-                                  "Approve",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ],
-                        );
-                      },
-                    );
-                  } */
+                  
                 },
                 child: Text(buttonText),
               ),

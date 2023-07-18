@@ -9,10 +9,7 @@ class JobsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AllJobsListForAdmin>().fetchAllJobs();
-    //List<jobProfile> allJobProfiles = [];
-    /* WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AllJobsListForAdmin>(context, listen: false).fetchAllJobs();
-    }); */
+    
     return Scaffold(
         appBar: AppBar(
           title: const Text("All Jobs"),

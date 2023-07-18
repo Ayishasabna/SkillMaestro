@@ -1,17 +1,16 @@
 // ignore_for_file: unused_field
 
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/user/get_jobs_provider.dart';
 import 'package:skillmaestro/common/on_boarding/login_screen.dart';
-import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/core/theme/access_token/token.dart';
 import 'package:skillmaestro/user/controller/fetch_jobs_service.dart';
 import 'package:skillmaestro/user/view/all_services.dart';
 import 'package:skillmaestro/user/view/job_screen.dart';
 
-import 'login.dart';
+
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -22,12 +21,7 @@ class UserHome extends StatefulWidget {
 
 class _UserHomeState extends State<UserHome> {
   int _currentIndex = 0;
-  // ignore: prefer_final_fields
-  /* List<Widget> _pages = [
-    const UserHome(),
-    const UserHome(),
-    const SettingsScreen(),
-  ]; */
+  
 
   List<dynamic> jobList = [];
 
@@ -64,7 +58,7 @@ class _UserHomeState extends State<UserHome> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BoardingLoginScreen(),
+                            builder: (context) => const BoardingLoginScreen(),
                           ),
                           (route) => false);
                       const Text('logout');
@@ -79,7 +73,7 @@ class _UserHomeState extends State<UserHome> {
                 )
               ],
             ),
-            //widgets().sizedboxHeight10(),
+            
             // ignore: sized_box_for_whitespace
             Container(
               height: 330,
@@ -148,7 +142,7 @@ class _UserHomeState extends State<UserHome> {
             ),
 
             Consumer<AlljobsListForUser>(builder: (context, value, child) {
-              //log('------insideconsumer------${value.usersMap}');
+              
               // ignore: prefer_is_empty
               return value.userJobs.length == 0 || value.userJobs.isEmpty
                   ? const Text("No Users available")
@@ -175,12 +169,13 @@ class _UserHomeState extends State<UserHome> {
   Future<void> fetchJobsAndNavigateToJobServices(
       BuildContext context, jobList) async {
     jobRoles = jobList.map((item) => item['job_role'] as String).toList();
-    log("-----------------jonbrolellpppppp----------${jobRoles}");
+   
 
     images = jobList.map((item) => item['image'] as String).toList();
   }
 }
 
+// ignore: must_be_immutable
 class UserCard extends StatelessWidget {
   UserCard({super.key, required this.map});
   Map<String, dynamic> map = {};
@@ -189,7 +184,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        log("_________________jobdetail review seen map__________${map}");
+        
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => JobDetailScreen(
                 title: map['job_role'],
@@ -204,18 +199,12 @@ class UserCard extends StatelessWidget {
         ),
         elevation: 10,
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network("${map['image']}"),
-              /* Text(
-                '${map['job_role']}',
-                // style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-              ), */
-              // Text('Base Rate: ${map['base_rate']}'),
-              //Text('Additional Rate: ${map['ad_rate']}'),
-              //Text('createdAt:  ${map['createdAt']}'),
+              
             ],
           ),
         ),

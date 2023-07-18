@@ -1,11 +1,9 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/common/common_provider.dart';
 import 'package:skillmaestro/common/widgets/textfield.dart';
-import 'package:skillmaestro/constants/utils.dart';
 import 'package:skillmaestro/user/view/payment_description_screen.dart.dart';
-import '../../application/user/get_jobs_provider.dart';
 import '../../application/user/job_detail_provider.dart';
 import '../../core/constants.dart';
 import '../model/cancel_booking_model.dart';
@@ -22,21 +20,16 @@ class UserBookingDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     Widget buttonwidget;
-    log('___________________pay UserBooking Description map___________${map}');
+   
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Booking Description'),
           backgroundColor: mainColor,
         ),
-        body: /* Consumer<AlljobsListForUser>(
-          builder: (context, value, child) {
-           // map = value.userBooking;
-            //List<dynamic> results = map['result'];
-            log('__________________________bookingDescription____________________________$results');
-
-            return */
+        body: 
             ListView(padding: const EdgeInsets.all(16.0), children: [
           Card(
             child: Column(
@@ -45,25 +38,23 @@ class UserBookingDescription extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      Icon(Icons.description),
-                      // SizedBox(
-                      //   width: 20,
-                      // ),
+                      const Icon(Icons.description),
+                      
                       Column(
                         children: [
                           Text(
                             '  Job Status: ${map['status']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'Bill Amount: ${map['bill_amount']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'Payment: ${map['payment']['payment_status']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -90,32 +81,29 @@ class UserBookingDescription extends StatelessWidget {
                     children: [
                       Text(
                         'Name: ${map['address']['name']}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       Text(
                         'House: ${map['address']['house']}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       Text(
                         'Street: ${map['address']['street']}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       Text(
                         'Pincode: ${map['address']['pincode']}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
 
-                      //Text('Name: string'),
-                      //Text('House: string'),
-                      //Text('Street: string'),
-                      //Text('Pincode: 0'),
+                      
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
@@ -138,7 +126,7 @@ class UserBookingDescription extends StatelessWidget {
 
                     Navigator.pop(context);
                   },
-                  child: Text('Approve')),
+                  child: const Text('Approve')),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -152,19 +140,13 @@ class UserBookingDescription extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           //title: const Text('Approve / Estimation'),
-                          content: Text(
+                          content: const Text(
                             "Please specify the Reason",
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
 
                           actions: [
-                            /*  textfield(
-                                    textFieldName: "Booking Id",
-                                    controllerName: bookingController,
-                                    context: context),
-                                SizedBox(
-                                  height: 10,
-                                ), */
+                           
                             textfield(
                                 textFieldName: "Reason",
                                 controllerName: textController,
@@ -186,7 +168,7 @@ class UserBookingDescription extends StatelessWidget {
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content: Text(
                                                 'Please Specify the reason'),
                                           ),
@@ -200,7 +182,7 @@ class UserBookingDescription extends StatelessWidget {
                                             MaterialStatePropertyAll(
                                                 Colors.red)),
                                     child: const Text("Decline")),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 ElevatedButton(
@@ -221,10 +203,9 @@ class UserBookingDescription extends StatelessWidget {
                         );
                       },
                     );
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => PaymentScreen()));
+                   
                   },
-                  child: Text('Decline')),
+                  child: const Text('Decline')),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -241,7 +222,7 @@ class UserBookingDescription extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
+                            return const AlertDialog(
                               content: Text(
                                 "After completing the job, you can proceed with the Payment",
                                 style: TextStyle(
@@ -253,9 +234,9 @@ class UserBookingDescription extends StatelessWidget {
                           });
                     }
 
-                    //log("_____________navigation to payment screen_________$map");
+                   
                   },
-                  child: Text('Pay')),
+                  child: const Text('Pay')),
             ],
           ),
           ElevatedButton(
@@ -270,7 +251,7 @@ class UserBookingDescription extends StatelessWidget {
                   builder: (context) {
                     return AlertDialog(
                       //title: const Text('Approve / Estimation'),
-                      content: Text(
+                      content: const Text(
                         "Please specify the Reason",
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
@@ -287,7 +268,7 @@ class UserBookingDescription extends StatelessWidget {
                             textFieldName: "Reason",
                             controllerName: cancelBookingController,
                             context: context),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         // Text(
@@ -305,7 +286,7 @@ class UserBookingDescription extends StatelessWidget {
                                         CancelBookingModel(
                                             id: map['_id'],
                                             text: cancelBookingController.text);
-                                    log("_______________cancel bookingmodel___________${map['_id']}");
+                                    
                                     Provider.of<JobDetailProvider>(context,
                                             listen: false)
                                         .cancelBooking(model);
@@ -315,7 +296,7 @@ class UserBookingDescription extends StatelessWidget {
                                     showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return AlertDialog(
+                                          return const AlertDialog(
                                             content: Text(
                                               "Please Specify the reason.",
                                               style: TextStyle(
@@ -325,14 +306,7 @@ class UserBookingDescription extends StatelessWidget {
                                             ),
                                           );
                                         });
-                                    // ScaffoldMessenger.of(context).showSnackBar(
-                                    //   SnackBar(
-                                    //     content: Text(
-                                    //         'Are you sure you want to cancel the booking.Please Specify the reason'),
-                                    //   ),
-                                    // );
-                                    // showSnackBar(context,
-                                    //     "Please Specify the reason");
+                                    
                                   }
                                 },
                                 style: const ButtonStyle(
@@ -342,7 +316,7 @@ class UserBookingDescription extends StatelessWidget {
                                   "Confirm",
                                   style: TextStyle(color: Colors.white),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             ElevatedButton(
@@ -352,11 +326,8 @@ class UserBookingDescription extends StatelessWidget {
                                 style: const ButtonStyle(
                                     backgroundColor:
                                         MaterialStatePropertyAll(Colors.green)),
-                                child: Icon(Icons.close)
-                                // const Text(
-                                //   "No",
-                                //   style: TextStyle(color: Colors.white),
-                                // )
+                                child: const Icon(Icons.close)
+                                
                                 ),
                           ],
                         ),
@@ -365,17 +336,13 @@ class UserBookingDescription extends StatelessWidget {
                   },
                 );
               },
-              child: Text('Cancel Booking')),
+              child: const Text('Cancel Booking')),
 
-          // Container(
-          //   height: 50,
-          //   width: 100,
-          //   child: Text(results[0]['payment']['invoice']),
-          // ),
         ]));
   }
 }
 
+// ignore: camel_case_types
 class cardwidget extends StatelessWidget {
   const cardwidget({
     super.key,
@@ -394,21 +361,21 @@ class cardwidget extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                Icon(Icons.work),
-                SizedBox(
+                const Icon(Icons.work),
+                const SizedBox(
                   width: 20,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Job Role: ${results['jobId']['job_role']}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     Text('Basic Rate: ${results['jobId']['base_rate']}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     Text('Additional Rate: ${results['jobId']['add_rate']}',
-                        style: TextStyle(
+                        style:const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     // Add more job information here
                   ],

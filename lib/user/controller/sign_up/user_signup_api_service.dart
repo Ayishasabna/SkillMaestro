@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../application/common/common_provider.dart';
 import '../../../core/api/api_configuration.dart';
-import '../../model/authentication/otp_model.dart';
+
 import '../../model/authentication/user_sign_up_model.dart';
 
 class UserSignUpApiService {

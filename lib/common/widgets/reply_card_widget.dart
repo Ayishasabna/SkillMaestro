@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +5,6 @@ import '../../application/user/chat/message_provider.dart';
 import '../../core/widgets/textstyle.dart';
 
 Widget replayCardWidget(context, String msg, String time, bool fromMe) {
-  log("_____________reply card widget______________");
   return Column(
     children: [
       Align(

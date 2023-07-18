@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/expert/view/chat/expert_message_screen.dart';
-import 'package:skillmaestro/expert/view/expert_chat.dart';
 import 'package:skillmaestro/expert/view/expert_home.dart';
-import 'package:skillmaestro/expert/view/expert_payment_screen.dart';
-import 'package:skillmaestro/user/view/chat/message_screen.dart';
 import '../../core/constants.dart';
 import 'expert_selected_job.dart';
 
@@ -22,9 +19,9 @@ class _expertBottomNavBarState extends State<expertBottomNavBar> {
 
   List bottomNavScreens = [
     ExpertHomeScreen(),
-    ExpertMessageScreen(),
+    const ExpertMessageScreen(),
     //ExpertChatScrn(),
-    ExpertSelectedJobs(),
+    const ExpertSelectedJobs(),
     const SettingsScreen()
   ];
 
@@ -64,11 +61,6 @@ class _expertBottomNavBarState extends State<expertBottomNavBar> {
                 Icons.settings,
               ),
               label: 'settings'),
-          /* BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-              ),
-              label: 'Profile'), */
         ],
       ),
     );

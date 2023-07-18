@@ -1,9 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:skillmaestro/expert/model/booking_reponse_model.dart';
-
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
 
@@ -20,14 +16,14 @@ class MyBookings {
     try {
       Response response = await dio.get(path,
           options: Options(headers: {"authorization": "Bearer $token"}));
-      //log("========================responsebooking============${response.data}");
+
       if (response.statusCode == 200) {
         bookings = response.data;
-        log('======booking details=======${bookings['result']}');
-
         return bookings;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return bookings;
   }
 }

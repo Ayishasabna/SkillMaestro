@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:skillmaestro/user/model/chat/send_message_model.dart';
 
-class ChatContainer extends StatefulWidget {
+
+
+/* class ChatContainer extends StatefulWidget {
   final dynamic data;
   final dynamic currentChat;
   final dynamic socket;
@@ -138,3 +138,4 @@ class _ChatContainerState extends State<ChatContainer> {
     );
   }
 }
+ */

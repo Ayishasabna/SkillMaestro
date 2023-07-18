@@ -19,7 +19,7 @@ class PrivacyPoclicyScrn extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

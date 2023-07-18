@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/on_boarding/login_screen.dart';
-import '../../user/view/login.dart';
 import '../widgets/button.dart';
 
 class ThirdScreen extends StatelessWidget {
@@ -43,39 +42,13 @@ class ThirdScreen extends StatelessWidget {
                   0.07, // Adjust the height between text and button
             ),
             onBoradingButton(
-              firstname: BoardingLoginScreen(),
-              secondname: BoardingLoginScreen(),
+              firstname: const BoardingLoginScreen(),
+              secondname: const BoardingLoginScreen(),
             ),
           ],
         ),
       ),
     );
   }
-  /* Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          const SizedBox(
-            height: 100,
-          ),
-          Image.asset('assets/Electrician-PNG-Picture.png'),
-          const SizedBox(
-            height: 60,
-          ),
-          const Text(
-            'The best result and \nyour satisfaction is our \ntop priority',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 60,
-          ),
-          onBoradingButton(
-            firstname: BoardingLoginScreen(),
-            secondname: BoardingLoginScreen(),
-          ),
-        ],
-      )),
-    );
-  } */
+  
 }

@@ -1,8 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:skillmaestro/core/api/api_configuration.dart';
 import 'package:skillmaestro/core/theme/access_token/token.dart';
 import '../../expert/controller/expert_message_service.dart';
 import '../../user/model/chat/get_message_model.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../user/model/chat/send_message_model.dart';
 
@@ -22,6 +23,7 @@ class MessagingExpertProvider with ChangeNotifier {
     super.dispose();
     _socket?.disconnect();
     _socket?.emit('disconnect', userId);
+    notifyListeners();
   }
 
   void firstRunState({required String expertId}) {
@@ -29,19 +31,24 @@ class MessagingExpertProvider with ChangeNotifier {
 
     _connectSocket();
     getMessage();
+    notifyListeners();
   }
 
   _connectSocket() async {
     String id = await getCurrentExpertId();
     _socket = IO.io(
-        'http://10.4.1.200:4000',
+        ApiConfigration.baseUrl,
+//'http://10.4.1.200:4000',
         IO.OptionBuilder().setTransports(['websocket']).setQuery(
                 {'add-user': id}) // for Flutter or Dart VM
             .build());
     //_socket?._connectSocket();
     _socket?.emit('addUser', id);
+    // ignore: avoid_print
     _socket?.onConnect((data) => print("connection established"));
+    // ignore: avoid_print
     _socket?.onConnectError((data) => print("connection Error :$data"));
+    // ignore: avoid_print
     _socket?.onDisconnect((data) => print("socket connection disconnected"));
     _socket?.on('msg-recieve', (data) {
       GetMessageModel model = GetMessageModel(
@@ -49,6 +56,7 @@ class MessagingExpertProvider with ChangeNotifier {
       msgs!.add(model);
       notifyListeners();
     });
+    notifyListeners();
   }
 
   Future<void> getMessage() async {
@@ -58,9 +66,11 @@ class MessagingExpertProvider with ChangeNotifier {
               msgs = value,
               notifyListeners(),
             });
+    notifyListeners();
   }
 
   void sendMessage(String msg, String userid) async {
+    // ignore: unused_local_variable
     DateTime now = DateTime.now();
     String expertid = await getCurrentExpertId();
 

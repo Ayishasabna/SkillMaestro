@@ -1,13 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/core/widgets/textstyle.dart';
-import 'package:skillmaestro/expert/view/chat/newchat_screen.dart';
-
 import '../../expert/view/chat/expert_chat_screen.dart';
 
 Map<String, dynamic> map = {};
 
+// ignore: must_be_immutable
 class ExpertListTileWidget extends StatelessWidget {
   ExpertListTileWidget({super.key, required this.list});
   List<dynamic> list = [];
@@ -15,7 +12,7 @@ class ExpertListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     map = list[0];
-    log('================inside list tile==+++================${map}');
+    
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -38,7 +35,7 @@ class ExpertListTileWidget extends StatelessWidget {
         ),
         subtitle: Text(
           'Email:${map['email']}\nMobile:${map['mobile']}',
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         trailing: const Text(
           '2:00 pm',

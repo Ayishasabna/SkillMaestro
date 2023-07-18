@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skillmaestro/common/on_boarding/login_screen.dart';
 import 'package:skillmaestro/common/on_boarding/second_screen.dart';
-import 'package:skillmaestro/user/view/login.dart';
 import '../../core/constants.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -67,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: 3),
     );
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (ctx) => const SecondScreen()),
     );
@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx1) => BoardingLoginScreen()));
+          MaterialPageRoute(builder: (ctx1) => const BoardingLoginScreen()));
     }
   }
 }

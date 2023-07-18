@@ -26,7 +26,3 @@ class UserSignUpModel {
         "password": password,
       };
 }
-/* "username": "haig",
-  "email"  :"haiag@gmail.com" ,
-  "password" :"haijjjj",
-  "mobile" :"9746048135" */

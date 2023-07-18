@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/user/add_address_provider.dart';
@@ -43,10 +43,9 @@ class _UserGetSlotState extends State<UserGetSlot> {
   @override
   @override
   Widget build(BuildContext context) {
-    //Map<String, dynamic> userSlots =
+    
     context.read<GetSlotsForUserProvider>().getSlotesForUser(widget.id);
-    //log("______________________slots____________${userSlots}");
-    //context.read<AddJobProvider>().
+    
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -106,8 +105,8 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                           slots.userSlots['result'] == null ||
                                               slots.userSlots['result'].isEmpty;
                                       if (isLoading) {
-                                        Text('kkkkk');
-                                        return Text('No Expert Available');
+                                       
+                                        return const Text('No Expert Available');
                                       } else {
                                         List<DropdownMenuItem<String>>
                                             dropdownItems = [];
@@ -120,8 +119,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                               DateTime.parse(dateTimeString);
                                           String formattedDate =
                                               DateFormat.yMd().format(dateTime);
-                                          //availableDate = formattedDate;
-                                          // Store the formatted date and its corresponding original format string
+                                          
                                           dateFormats[formattedDate] =
                                               dateTimeString;
 
@@ -164,8 +162,7 @@ class _UserGetSlotState extends State<UserGetSlot> {
                                           },
                                         );
                                       }
-                                      //slots.userSlots['result'].isEmpty
-                                      //? CircularProgressIndicator()
+                                      
                                     },
                                   )),
                             ),
@@ -283,13 +280,13 @@ Future adressdialogue(context, String id, String selectedslots) async {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      UserHome(), // Replace UserHome with the actual screen you want to navigate back to
+                      const UserHome(), // Replace UserHome with the actual screen you want to navigate back to
                 ),
               );
 
               //Navigator.of(context).pop();
             },
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
         ],
       );
@@ -391,7 +388,7 @@ Future bookNow(
               Navigator.of(context).pop();
               // ignore: use_build_context_synchronously
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => BookingStatus()));
+                  MaterialPageRoute(builder: (context) => const BookingStatus()));
               //addAddress(context, id);
               // Perform submit action
             },

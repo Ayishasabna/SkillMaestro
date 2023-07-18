@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/common/widgets/common_widget.dart';
@@ -12,6 +11,7 @@ import '../../model/add_message_model.dart';
 
 String? selectedId;
 
+// ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
   ChatScreen({super.key, required this.list});
   List<dynamic> list;
@@ -44,18 +44,14 @@ class _ChatScreenState extends State<ChatScreen> {
     context
         .read<MessagingUserProvider>()
         .firstRunState(selectedId: expert['id']);
-
-    //final provider = Provider.of<MessagingUserProvider>(context, listen: false);
-    //log('================chat screen=================${provider.userName}');
-    //provider.firstRunState(selectedId: selectedId!);
   }
 
   chatListScrollToBottom() {
-    Timer(Duration(microseconds: 100), () {
+    Timer(const Duration(microseconds: 100), () {
       if (_chatListController.hasClients) {
         _chatListController.animateTo(
             _chatListController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 100),
             curve: Curves.decelerate);
       }
     });
@@ -74,8 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Consumer<MessagingUserProvider>(
         builder: (context, data, child) {
-          //List<GetMessageModel>? chatMessages = data.msgs;
-          //log('______________value___________${chatMessages?.length}');
+          // ignore: avoid_unnecessary_containers
           return Container(
             child: Column(
               children: [
@@ -87,38 +82,16 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: ListView.separated(
                             controller: _chatListController,
                             itemCount: data.msgs!.length,
+                            // ignore: body_might_complete_normally_nullable
                             itemBuilder: (context, index) {
                               chatListScrollToBottom();
+                              // ignore: unused_local_variable
                               bool fromMe = isFromMe;
 
                               if (data.msgs![index].fromSelf == true) {
                                 String createdAtString =
                                     data.msgs![index].createdAt;
-                                //log('__________________created At_________${createdAtString}');
 
-                                /* final timeRegex =
-                                    RegExp(r'(\d{1,2}:\d{2}:\d{2}\s[ap]m)$');
-                                final timeMatch =
-                                    timeRegex.firstMatch(createdAtString);
-
-                                if (timeMatch != null) {
-                                  final time = timeMatch.group(1);
-                                  print(time); // Output: 9:57:53 pm
-                                } */
-                                log('__________________created At_________${createdAtString}');
-                                //DateTime dateTime = convertDateString(createdAtString);
-
-                                /*  DateTime createdAt =
-                                    DateFormat('M/d/yyyy,h:mm:ss a')
-                                        .parse(createdAtString)
-                                        .toLocal();
-
-                                log('__________________created At++_________$createdAt'); */
-
-                                /* DateTime createdAt =
-                                    DateFormat('M/d/yyyy, h:mm:ss a')
-                                        .parse(createdAtString);
-                                log('__________________created At++_________${createdAt}'); */
                                 return sendCardWidget(
                                     context,
                                     data.msgs![index].message,
@@ -131,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     DateTime.now().toString(),
                                     false);
 
-                                //data.msgs![index].createdAt);
+                               
                               }
                             },
                             separatorBuilder:
@@ -141,15 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                 ),
-                /* Expanded(
-                    child: ListView.builder(
-                        itemCount: //10,
-                            chatMessages?.length,
-                        itemBuilder: (context, index) {
-                          ChatMessageModel chatmessagemodel =
-                              chatMessages?[index] as ChatMessageModel;
-                          return Text(chatmessagemodel.message);
-                        })) */
+                
                 bottomChatArea(),
               ],
             ),
@@ -161,12 +126,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
   bottomChatArea() {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           chatTextArea(),
           IconButton(
               onPressed: () async {
+                // ignore: await_only_futures
                 await sendCardWidget(context, msginputController.text,
                     DateTime.now().toString(), true);
 
@@ -176,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 );
                 msginputController.text = '';
               },
-              icon: Icon(Icons.send))
+              icon: const Icon(Icons.send))
         ],
       ),
     );
@@ -193,7 +159,7 @@ class _ChatScreenState extends State<ChatScreen> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsets.all(10),
+          contentPadding: const EdgeInsets.all(10),
           hintText: 'Type Message'),
     ));
   }

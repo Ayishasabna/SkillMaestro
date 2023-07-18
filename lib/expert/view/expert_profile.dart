@@ -5,7 +5,6 @@ import 'package:skillmaestro/application/expert/expert_profile_provider.dart';
 import 'package:skillmaestro/common/settings/settings_screen.dart';
 import 'package:skillmaestro/expert/view/edit_expert_profile.dart';
 import 'package:skillmaestro/expert/view/expert_signin.dart';
-import 'package:skillmaestro/expert/view/expert_skills.dart';
 import 'package:skillmaestro/user/view/user_home.dart';
 
 import '../../core/constants.dart';
@@ -52,11 +51,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                       ),
                       // ignore: sized_box_for_whitespace
                       Container(
-                        /* decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/splash/bgImage.jpeg'),
-                              fit: BoxFit.fill),
-                        ), */
+                        
                         width: double.infinity,
                         height: height / 4,
                         child: Padding(
@@ -84,7 +79,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                               height: 10,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 17),
+                              padding: const EdgeInsets.only(left: 17),
                               child: Text(
                                 'Account',
                                 style: normalText.copyWith(color: Colors.blue),
@@ -97,14 +92,14 @@ class _ExpertProfileState extends State<ExpertProfile> {
                               ),
                               subtitle: Text(
                                 snapshot.data?.username.toUpperCase() ?? "dkd",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Tile(
                               storage: storage,
                               subtitle: Text("${snapshot.data?.mobile ?? ""} ",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold)),
                               title: Text(
@@ -115,7 +110,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                             Tile(
                               storage: storage,
                               subtitle: Text(snapshot.data?.email ?? "",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold)),
                               title: Text(
@@ -135,7 +130,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          ExpertSelectedJobs(),
+                                          const ExpertSelectedJobs(),
                                     ));
                                 //_showSchedulePopup(context);
                               },
@@ -155,7 +150,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          ExpertSelectedJobs(),
+                                          const ExpertSelectedJobs(),
                                     ));
                               },
                               /* title: Text(
@@ -194,7 +189,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                           children: [
                             //kHeight10,
                             Padding(
-                              padding: EdgeInsets.only(left: 17),
+                              padding: const EdgeInsets.only(left: 17),
                               child: Text(
                                 'System',
                                 style: normalText.copyWith(color: Colors.blue),
@@ -267,7 +262,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      UserHome(),
+                                                      const UserHome(),
                                                 ),
                                                 (route) => false);
                                           } else {
@@ -362,6 +357,7 @@ class _ExpertProfileState extends State<ExpertProfile> {
   }
 }
 
+// ignore: must_be_immutable
 class Tile extends StatelessWidget {
   Tile(
       {super.key,
@@ -396,6 +392,7 @@ class Tile extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 void _showSchedulePopup(BuildContext context) {
   showDialog(
     context: context,

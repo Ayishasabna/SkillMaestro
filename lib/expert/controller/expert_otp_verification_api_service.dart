@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/expert/model/expert_otp_verify_model.dart';
 import 'package:skillmaestro/expert/model/expert_verify_otp_model.dart';
 import '../../application/common/common_provider.dart';
 import '../../core/api/api_configuration.dart';
@@ -33,13 +32,11 @@ class ExpertOtpVerifyApiService {
         Provider.of<CommonProvider>(context, listen: false)
             .showSuccessSnackBar(context);
 
-        /* final ExpertSignUpResModel verificationResponse =
-            ExpertSignUpResModel.fromJson(response.data); */
         final ExpertSignUpResModel returnsignUpResModel =
             ExpertSignUpResModel.fromJson(response.data);
 
         log(returnsignUpResModel.experttoken);
-        log("-------------otpverificationapiservice:::::;${response.data}");
+       
         return returnsignUpResModel;
       }
     } on DioException catch (e) {
@@ -61,13 +58,7 @@ class ExpertOtpVerifyApiService {
     await storage.write(key: 'currentExpertId', value: id);
   }
 
-  /* storeCurrentDetails(Response response) async {
-    final data = response.data['data']['user'];
-    final id = data['_id'];
-    final name = data['fullName'];
-    await storage.write(key: 'currentUserName', value: name);
-    await storage.write(key: 'currentUserId', value: id);
-  } */
+ 
 }
 
 

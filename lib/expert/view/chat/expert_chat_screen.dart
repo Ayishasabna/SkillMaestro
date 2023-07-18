@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/core/constants.dart';
@@ -51,25 +50,17 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
   }
 
   chatListScrollToBottom() {
-    Timer(Duration(microseconds: 100), () {
+    Timer(const Duration(microseconds: 100), () {
       if (_chatListController.hasClients) {
         _chatListController.animateTo(
             _chatListController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 100),
             curve: Curves.decelerate);
       }
     });
   }
 
-  /* void _scrollToLastMessage() {
-    if (_scrollController.hasClients && chatMessages.isNotEmpty) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
-  } */
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +90,7 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
                             // ignore: body_might_complete_normally_nullable
                             itemBuilder: (context, index) {
                               chatListScrollToBottom();
+                              // ignore: unused_local_variable
                               bool fromMe = isFromMe;
                               //final message = data.msgs![index];
                               if (data.msgs![index].fromSelf == true) {
@@ -152,6 +144,7 @@ class _ExpertChatScreenState extends State<ExpertChatScreen> {
           chatTextArea(),
           IconButton(
               onPressed: () async {
+                // ignore: await_only_futures
                 await ExpertsendCardWidget(context, msginputController.text,
                     DateTime.now().toString(), false, true);
                 sendMessage(

@@ -2,14 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:skillmaestro/core/theme/access_token/token.dart';
 import 'package:skillmaestro/user/view/bottom_nav/bottom_nav.dart';
 import 'package:skillmaestro/user/view/login.dart';
 import 'package:skillmaestro/user/view/otp_verification.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
-
-import '../../core/constants.dart';
 import '../../user/controller/authentication/otp_verification_api_service.dart';
 import '../../user/controller/authentication/sign_in/sign_in_api_service.dart';
 import '../../user/controller/sign_up/user_signup_api_service.dart';
@@ -32,23 +27,17 @@ class UserProvider with ChangeNotifier {
     final mobile = mobileData;
     final password = passwordData;
 
-    /*  final signInExpertDatas =
-        ExpertSignInReqModel(mobile: mobile, password: password);
-    final tokenData =
-        await ExpertSignInApiService().ExpertSignIn(signInExpertDatas, context); */
-    log("+++++++++++++++++++++++mobile:$mobile+++++++++password:$password");
     final tokenData = await UserSignInApiService().userSignIn(
         UserSignInReqModel(mobile: mobile, password: password), context);
-    log('++++++++++++++++++++++++++tokendata================${tokenData?.token}');
-    //log(("vgghvshgsdm+++++++++++++++++++++${tokenData['experttoken']}"));
+
     if (tokenData?.token != null) {
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return UserBottomNavBar();
+          return const UserBottomNavBar();
         },
       ), (route) => false);
-      UserLogin();
+      const UserLogin();
     }
     isLoading = false;
     notifyListeners();
@@ -102,7 +91,7 @@ class UserProvider with ChangeNotifier {
       mobile: mobile,
       password: password,
     );
-    print(context);
+    //print(context);
     final signUpResult =
         await UserSignUpApiService().userSignUp(signUpUserDatas, context);
 
@@ -133,7 +122,7 @@ class UserProvider with ChangeNotifier {
           key: 'user_access_token', value: jsonEncode(tokenData.token));
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
-          return UserLogin();
+          return const UserLogin();
         },
       ), (route) => false);
     }

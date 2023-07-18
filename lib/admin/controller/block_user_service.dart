@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
 
@@ -9,6 +7,7 @@ class BlockUserService {
   Dio dio = Dio();
   Map<String, dynamic> users = {};
   Future<Map<String, dynamic>> blockUserId(id) async {
+    // ignore: prefer_interpolation_to_compose_strings
     String path = ApiConfigration.baseUrl +
         ApiConfigration.admin +
         ApiConfigration.blockUser +
@@ -21,15 +20,17 @@ class BlockUserService {
 
       if (response.statusCode == 200) {
         users = response.data;
-        log('======blockuserresponse=======${users['result']}');
 
         return users;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return users;
   }
 
   Future<Map<String, dynamic>> unBlockUserId(id) async {
+    // ignore: prefer_interpolation_to_compose_strings
     String path = ApiConfigration.baseUrl +
         ApiConfigration.admin +
         ApiConfigration.unBlockUser +
@@ -42,11 +43,12 @@ class BlockUserService {
 
       if (response.statusCode == 200) {
         users = response.data;
-        log('======blockuser=======${users}');
 
         return users;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return users;
   }
 }

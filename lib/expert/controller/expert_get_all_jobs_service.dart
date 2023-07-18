@@ -19,11 +19,12 @@ class AllJobService {
 
       if (response.statusCode == 200) {
         job = response.data;
-        log('======expertjsondecode=======${job}');
 
         return job;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return job;
   }
 
@@ -37,11 +38,12 @@ class AllJobService {
 
       if (response.statusCode == 200) {
         selectedJob = response.data;
-        log('======result============${selectedJob}');
 
         return selectedJob;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return selectedJob;
   }
 }

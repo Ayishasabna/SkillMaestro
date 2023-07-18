@@ -121,7 +121,7 @@ class ExpertOtpScreen extends StatelessWidget {
                                         color: Colors.black, fontSize: 24),
                                   ),
                                 ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(

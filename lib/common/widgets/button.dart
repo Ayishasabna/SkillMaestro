@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skillmaestro/core/constants.dart';
+
 
 // ignore: camel_case_types, must_be_immutable
 class onBoradingButton extends StatelessWidget {
@@ -72,7 +72,7 @@ class loginSignupButton extends StatelessWidget {
         },
         child: Text(
           buttonName,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
       ),
     );

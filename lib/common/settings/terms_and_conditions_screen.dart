@@ -16,10 +16,10 @@ class TermsAndConditionsScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: const [
                 Text(
                   """
 Last updated: 19-07-2023

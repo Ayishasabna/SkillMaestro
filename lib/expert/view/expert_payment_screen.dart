@@ -1,8 +1,9 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/on_boarding/login_screen.dart';
-import '../../core/constants.dart';
 
+
+// ignore: must_be_immutable
 class ExpertPaymentScreen extends StatelessWidget {
   ExpertPaymentScreen({super.key});
 
@@ -12,13 +13,7 @@ class ExpertPaymentScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 223, 223, 221),
       bottomNavigationBar: null,
-      /* appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: mainColor,
-        title: Text(
-          'Payment',
-        ),
-      ), */
+      
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -26,9 +21,9 @@ class ExpertPaymentScreen extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BoardingLoginScreen()));
+                    builder: (context) => const BoardingLoginScreen()));
               },
-              child: Text(('data')))
+              child: const Text(('data')))
         ],
       ),
     );

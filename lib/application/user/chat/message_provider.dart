@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../core/api/api_configuration.dart';
 import '../../../core/theme/access_token/token.dart';
 import '../../../user/controller/message_service.dart';
 import '../../../user/model/chat/get_message_model.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../../user/model/chat/send_message_model.dart';
 
@@ -22,6 +22,7 @@ class MessagingUserProvider with ChangeNotifier {
     super.dispose();
     _socket.disconnect();
     _socket.emit('disconnect', userId);
+    notifyListeners();
   }
 
   void firstRunState({required String selectedId}) {
@@ -29,6 +30,7 @@ class MessagingUserProvider with ChangeNotifier {
     connect();
     // _connectSocket();
     getMessage();
+    notifyListeners();
   }
 
   void connect() async {
@@ -46,8 +48,10 @@ class MessagingUserProvider with ChangeNotifier {
       msgs!.add(model);
       notifyListeners();
     });
+    notifyListeners();
   }
 
+  // ignore: unused_element
   _connectSocket() async {
     String id = await getCurrentUserId();
     _socket = IO.io(
@@ -68,6 +72,7 @@ class MessagingUserProvider with ChangeNotifier {
       msgs!.add(model);
       notifyListeners();
     });
+    notifyListeners();
   }
 
   Future<void> getMessage() async {
@@ -75,9 +80,11 @@ class MessagingUserProvider with ChangeNotifier {
           msgs = value,
           notifyListeners(),
         });
+    notifyListeners();
   }
 
   Future sendMessage(String msg, String expertid) async {
+    // ignore: unused_local_variable
     DateTime now = DateTime.now();
     String userid = await getCurrentUserId();
 
@@ -98,7 +105,6 @@ class MessagingUserProvider with ChangeNotifier {
 
   dateChange(String date) {
     //DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
-    log("_______________date Change____________$date");
 
     return date;
   }

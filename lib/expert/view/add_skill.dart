@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/admin/add_job_provider.dart';
@@ -32,7 +30,7 @@ class _jobAddScreenState extends State<jobAddScreen> {
   final priceController = TextEditingController();
   final categoryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  //final cloudinary = CloudinaryPublic('dzeuipdky', 'ml_default', cache: false);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +73,7 @@ class _jobAddScreenState extends State<jobAddScreen> {
                             )),
                 ),
               ),
-              /* Image.file(
-                widget.imagePath!,
-                fit: BoxFit.cover,
-              ), */
+              
             ),
             Padding(
               padding: const EdgeInsets.all(14.0),
@@ -237,6 +232,7 @@ class _jobAddScreenState extends State<jobAddScreen> {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+      // ignore: unused_local_variable
       final imageTemp = File(
         image.path,
       );
@@ -267,38 +263,6 @@ class _jobAddScreenState extends State<jobAddScreen> {
   }
 
   void saveButtonPressed() async {
-    // var title = titleController.text.trim();
-    // var overView = overViewController.text.trim();
-    // var description = descriptionController.text.trim();
-    // var price = priceController.text.trim();
-    // FlutterSecureStorage storage = const FlutterSecureStorage();
-    // var vendorId = await storage.read(key: 'vendorId');
-    // if (!_formKey.currentState!.validate()) {
-    //   return;
-    // }
-    // // CloudinaryResponse response = await cloudinary.uploadFile(
-    // //     CloudinaryFile.fromFile(widget.imagePath!.path,
-    // //         resourceType: CloudinaryResourceType.Image));
-    // // final url = response.secureUrl;
-    // dynamic type;
-    // if (context.read<NewGIgCreateProvider>().addserviceCheckBoxValue) {
-    //   type = 'Service';
-
-    // } else if (context.read<NewGIgCreateProvider>().addproductCheckBoxValue) {
-    //   type = 'Product';
-    // }
-    // var gigCreateDatas = NewGigCreateModel(
-    //     title: title,
-    //     overview: overView,
-    //     image: url,
-    //     type: type,
-    //     description: description,
-    //     price: price,
-    //     category: context.read<NewGIgCreateProvider>().selectedCategoryId,
-    //     vendorId: vendorId.toString());
-    //   await context.read<NewGIgCreateProvider>().createNewGig(gigCreateDatas, context);
-    //   context.read<NewGIgCreateProvider>().getAllCategory(context);
-    //   await Provider.of<ShowAllGigsProvider>(context,listen: false).callApiServiceGigs(context);
-    //   Navigator.pop(context);
+    
   }
 }

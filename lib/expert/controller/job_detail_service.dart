@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../core/api/api_configuration.dart';
@@ -27,9 +26,7 @@ class JobDetailServioce {
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('__________responsedatasendestimate_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+       
       }
     } on DioException catch (e) {
       log(e.message.toString());
@@ -38,10 +35,12 @@ class JobDetailServioce {
     return null;
   }
 
+  // ignore: non_constant_identifier_names
   Future StartJob(
     String id,
   ) async {
-    String path = ApiConfigration.baseUrl + ApiConfigration.startJob + '/${id}';
+    // ignore: prefer_interpolation_to_compose_strings
+    String path = ApiConfigration.baseUrl + ApiConfigration.startJob + '/$id';
 
     try {
       String? token = await getExpertAccesToken();
@@ -49,9 +48,7 @@ class JobDetailServioce {
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('__________startjob_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+        
       }
     } on DioException catch (e) {
       log(e.message.toString());
@@ -60,6 +57,7 @@ class JobDetailServioce {
     return null;
   }
 
+  // ignore: non_constant_identifier_names
   Future EndJob(EndJobModel endJobModel) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.endJob;
     //log('____________--endjobCntroller_______________${endJobModel.hours}');
@@ -72,8 +70,7 @@ class JobDetailServioce {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         log('__________Endjob_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+        
       }
     } on DioException catch (e) {
       log(e.message.toString());

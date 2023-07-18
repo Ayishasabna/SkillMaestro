@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:skillmaestro/core/theme/access_token/token.dart';
 import 'package:skillmaestro/expert/model/expert_sign_in_resp_model.dart';
 import '../../core/api/api_configuration.dart';
 import '../model/expert_sign_in_req_model.dart';

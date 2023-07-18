@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../core/constants.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -15,9 +14,9 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: mainColor,
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: [
+          children: const [
             Card(
               child: Text(
                 """Welcome to SkillMaestro App , Our service provider application is the ultimate tool for connecting customers with the services they need, and service providers with the customers they want. Our platform simplifies the entire process, from scheduling to payment, to ensure a seamless and hassle-free experience for everyone involved. With advanced features like real-time chat, booking details, and detailed job histories, our application takes customer service to the next level. Whether you're a service provider looking to expand your business or a customer in need of reliable services, our application has you covered.""",

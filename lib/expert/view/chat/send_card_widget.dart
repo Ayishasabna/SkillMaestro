@@ -4,9 +4,10 @@ import 'package:skillmaestro/application/expert/expert_message_provider.dart';
 
 import '../../../core/widgets/textstyle.dart';
 
+// ignore: non_constant_identifier_names
 Widget ExpertsendCardWidget(
     context, String msg, String time, bool isSent, bool fromMe) {
-  //log("_________________--time__________________$time");
+ 
   return Column(
     children: [
       Align(

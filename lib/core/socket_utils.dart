@@ -1,5 +1,5 @@
-import 'dart:io';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+/* import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketUtils {
   static String serverIp = 'http://10.0.2.2';
@@ -16,4 +16,4 @@ class SocketUtils {
   static const int statusMessageSend = 10002;
 
   IO.Socket? socket;
-}
+} */

@@ -1,14 +1,16 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../../user/controller/get_contacts_service.dart';
 
+// ignore: must_be_immutable
 class YourWidget extends StatefulWidget {
   YourWidget({super.key, required this.list});
   List<dynamic> list;
   @override
+  // ignore: library_private_types_in_public_api
   _YourWidgetState createState() => _YourWidgetState();
 }
 
@@ -23,10 +25,10 @@ class _YourWidgetState extends State<YourWidget> {
     super.initState();
     currentUser = widget.list[0];
     // Initialize the socket connection
-    if (currentUser != null) {
-      socket = IO.io('http://10.4.1.200:4000');
-      socket.emit('add-user', currentUser);
-    }
+    // if (currentUser != null) {
+    //   socket = IO.io('http://10.4.1.200:4000');
+    //   socket.emit('add-user', currentUser);
+    // }
   }
 
   @override
@@ -53,13 +55,14 @@ class _YourWidgetState extends State<YourWidget> {
 
   @override
   Widget build(BuildContext context) {
-    log('_________your widget__________');
+   
     return Scaffold(
       body: FutureBuilder(
+        // ignore: unnecessary_null_comparison
         future: currentUser != null ? getExpertContacts() : getUserContacts(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {

@@ -18,7 +18,7 @@ class JobServicesScreen extends StatelessWidget {
           title: const Text("Services For You"),
           backgroundColor: Colors.teal[400]),
       body: Consumer<AlljobsListForUser>(builder: (context, value, child) {
-        //log('------insideconsumer------${value.usersMap}');
+        
         // ignore: prefer_is_empty
         return value.userJobs.length == 0 || value.userJobs.isEmpty
             ? const Text("No Jobs available")
@@ -76,7 +76,7 @@ class UserCard extends StatelessWidget {
           ),
           Text(
             name,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           )
         ],
       ),

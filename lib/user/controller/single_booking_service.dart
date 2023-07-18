@@ -1,20 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
-
 import '../../application/common/common_provider.dart';
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
-
-import '../model/single_booking_details_response_model.dart';
 
 class ShowSingleBookingService {
   Dio dio = Dio();
   Map<String, dynamic> singleBookingDetails = {};
   Future<Map<String, dynamic>> fetchBooking(bookingId, context) async {
     String path =
+        // ignore: prefer_interpolation_to_compose_strings
         ApiConfigration.baseUrl + ApiConfigration.singleBooking + '/$bookingId';
 
     String? token = await getUserAccesToken();
@@ -25,11 +21,9 @@ class ShowSingleBookingService {
         Provider.of<CommonProvider>(context, listen: false)
             .setShimmerLoading(false);
 
-        //var jsonResponse = jsonDecode(jsonEncode(response.data['result']));
-        // var singleBookingDetails =
-        //     ShowSingleBookingDetailsModel.fromJson(jsonResponse);
+        
         singleBookingDetails = response.data['result'];
-        //log("______________response.data.toString()____________${singleBookingDetails}");
+        
         return singleBookingDetails;
       }
     } on DioException catch (e) {

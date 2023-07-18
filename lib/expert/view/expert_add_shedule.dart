@@ -112,7 +112,7 @@ class _SchedulesState extends State<Schedules> {
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              Color.fromARGB(
+                                              const Color.fromARGB(
                                                   255, 202, 209, 2))),
                                   onPressed: () {
                                     dates.add(dateTime);
@@ -121,7 +121,7 @@ class _SchedulesState extends State<Schedules> {
                                         .AddExpertShedule(dates, context);
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('Add Shedule')),
+                                  child: const Text('Add Shedule')),
                             ],
                           ),
                           const SizedBox(
@@ -168,13 +168,13 @@ class _SchedulesState extends State<Schedules> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              padding: EdgeInsets.all(16.0),
+                                              padding: const EdgeInsets.all(16.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'Slots',
                                                     style: TextStyle(
                                                       fontWeight:
@@ -182,20 +182,20 @@ class _SchedulesState extends State<Schedules> {
                                                       fontSize: 18.0,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 8.0),
+                                                  const SizedBox(height: 8.0),
                                                   Text(
                                                     ' ${response['result']['slots']}',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 20.0),
                                                   ),
-                                                  SizedBox(height: 16.0),
+                                                  const SizedBox(height: 16.0),
                                                   Align(
                                                     alignment: Alignment.center,
                                                     child: TextButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Close',
                                                         style: TextStyle(
                                                             fontSize: 16.0),
@@ -233,13 +233,13 @@ class _SchedulesState extends State<Schedules> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              padding: EdgeInsets.all(16.0),
+                                              padding: const EdgeInsets.all(16.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'Slots',
                                                     style: TextStyle(
                                                       fontWeight:
@@ -247,20 +247,20 @@ class _SchedulesState extends State<Schedules> {
                                                       fontSize: 18.0,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 8.0),
+                                                  const SizedBox(height: 8.0),
                                                   Text(
                                                     ' ${response['result']['bookedSlots']}',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 20.0),
                                                   ),
-                                                  SizedBox(height: 16.0),
+                                                  const SizedBox(height: 16.0),
                                                   Align(
                                                     alignment: Alignment.center,
                                                     child: TextButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Close',
                                                         style: TextStyle(
                                                             fontSize: 16.0),

@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
 
@@ -21,11 +19,12 @@ class ChartDataService {
 
       if (response.statusCode == 201) {
         experts = response.data;
-        log('_______________getChartData________________${experts}');
 
         return experts;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return experts;
   }
 }

@@ -7,6 +7,7 @@ import 'package:skillmaestro/constants/utils.dart';
 //import 'package:dio/dio.dart';
 
 void dio = Dio();
+// ignore: non_constant_identifier_names
 void DioErrorHandle({
   required Response response,
   required BuildContext context,

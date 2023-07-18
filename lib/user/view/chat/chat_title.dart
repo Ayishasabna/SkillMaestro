@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/widgets.dart';
-import 'package:skillmaestro/expert/model/all_booking_model.dart';
 
+
+// ignore: camel_case_types
 enum expertOnlineStatus { connecting, online, offline }
 
 class ChatTitle extends StatelessWidget {
+  // ignore: prefer_const_constructors_in_immutables
   ChatTitle(
       {super.key, required this.chatUser, required this.expertonlineStatus});
 
@@ -23,7 +22,7 @@ class ChatTitle extends StatelessWidget {
           Text(chatUser),
           Text(
             getStatusText(),
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+            style: const TextStyle(fontSize: 14, color: Colors.white70),
           )
         ],
       ),

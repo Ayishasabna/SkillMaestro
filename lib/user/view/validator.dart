@@ -8,6 +8,7 @@ String checkUserName(String value) {
 }
 
 String checkEmail(String value) {
+  // ignore: unnecessary_null_comparison
   if (value == null || value.isEmpty) {
     return 'Email is required';
   } else {
@@ -27,8 +28,9 @@ String checkPass(String val) {
       return "Password too short";
     }
     return '';
-  } else
+  } else {
     return "Please enter Password ";
+  }
 }
 
 String confirmPassword(String value, String pass) {
@@ -36,9 +38,11 @@ String confirmPassword(String value, String pass) {
     if (value == pass) {
       return '';
     } else
+      // ignore: curly_braces_in_flow_control_structures
       return "Password Does Not Match";
-  } else
+  } else {
     return "Please confirm password";
+  }
 }
 
 String checkNumber(String val) {
@@ -46,25 +50,30 @@ String checkNumber(String val) {
     if (val.length < 10) {
       log('________ffff___________$val');
       return "Enter 10 digit Phone Number ";
-    } else
+    } else {
       return '';
-  } else
+    }
+  } else {
     return "Please Enter Phone Number";
+  }
 }
 
 String checkdescription(String val) {
   if (val.isNotEmpty) {
     if (val.length < 20) {
       return "Description Too Short";
-    } else
+    } else {
       return '';
-  } else
+    }
+  } else {
     return "Please Enter Description";
+  }
 }
 
 String checkLength(String val) {
-  if (val.isNotEmpty)
+  if (val.isNotEmpty) {
     return '';
-  else
+  } else {
     return "PLease Fill all the fields";
+  }
 }

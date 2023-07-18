@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/expert/get_jobs_provider.dart';
@@ -84,10 +83,7 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.network("${map['image']}"),
-                    /* */
-                    // Text('Base Rate: ${map['base_rate']}'),
-                    //Text('Additional Rate: ${map['ad_rate']}'),
-                    //Text('createdAt:  ${map['createdAt']}'),
+                    
                   ],
                 ),
               ),

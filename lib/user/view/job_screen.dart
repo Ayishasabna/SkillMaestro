@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +46,7 @@ class JobDetailScreen extends StatelessWidget {
           builder: (context, value, child) {
             if (value.jobDetail['result'] == null) {
               // If the 'result' key is null, handle the case when there are no reviews.
-              CircularProgressIndicator();
+              const Center(child: CircularProgressIndicator());
               showReviews = false;
             }
             if (value.jobDetail['result']['reviews'] == null ||
@@ -150,7 +149,7 @@ class JobDetailScreen extends StatelessWidget {
                                     const SizedBox(height: 8),
                                     Center(
                                         child: Text(
-                                      'Additional Rate: Rs. ${additionalRate}',
+                                      'Additional Rate: Rs. $additionalRate',
                                       style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
@@ -219,7 +218,7 @@ class JobDetailScreen extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.bottomRight,
                                       child: TextButton(
-                                        child: Text('Close'),
+                                        child: const Text('Close'),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
@@ -267,7 +266,7 @@ class JobDetailScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'After you book the service,  ${title} in your area will receive a notification coordinated by SkillWhiz customer service. Kindly wait for the confirmation message. Our service partner will call and note the details of the problem, to bring along the necessary tools and other equipment. Make sure all materials for service are kept ready before service starts. In case you want the Skillwhiz partner to purchase the materials, let them know beforehand. The time taken for purchase of materials will be added as part of service charges. Skillwhiz partner will give you a quotation if required for work that requires more than 4 hours. Work will be done only after your approval of the quote When the work is over, our agent will let you know the service charge. Please make the payment accordingly online on our platform or by cash to the service provider',
+                                      'After you book the service,  $title in your area will receive a notification coordinated by SkillWhiz customer service. Kindly wait for the confirmation message. Our service partner will call and note the details of the problem, to bring along the necessary tools and other equipment. Make sure all materials for service are kept ready before service starts. In case you want the Skillwhiz partner to purchase the materials, let them know beforehand. The time taken for purchase of materials will be added as part of service charges. Skillwhiz partner will give you a quotation if required for work that requires more than 4 hours. Work will be done only after your approval of the quote When the work is over, our agent will let you know the service charge. Please make the payment accordingly online on our platform or by cash to the service provider',
                                       style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
@@ -318,7 +317,7 @@ class JobDetailScreen extends StatelessWidget {
                           onPressed: () {
                             //functionName?.call();
                             //functionName;
-                            log("_______value.userSlots['result']_________${value.userSlots['result']}");
+
                             value.userSlots['result'] == null ||
                                     value.userSlots['result'].isEmpty
                                 ? showDialog(

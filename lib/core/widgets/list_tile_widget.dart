@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/core/widgets/textstyle.dart';
 import 'package:skillmaestro/user/view/chat/chat_screen.dart';
 
 Map<String, dynamic> map = {};
 
+// ignore: must_be_immutable
 class ListTileWidget extends StatelessWidget {
   ListTileWidget({super.key, required this.list});
   List<dynamic> list = [];
@@ -13,7 +12,7 @@ class ListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     map = list[0];
-    log('================inside list tile==+++================${map}');
+
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -33,7 +32,7 @@ class ListTileWidget extends StatelessWidget {
         ),
         subtitle: Text(
           'Email:${map['email']}\nMobile:${map['mobile']}',
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         trailing: const Text(
           '2:00 pm',

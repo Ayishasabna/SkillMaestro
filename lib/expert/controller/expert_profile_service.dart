@@ -12,6 +12,7 @@ import '../model/expert_edit_profile_model.dart';
 class ExpertProfileService {
   Dio dio = Dio();
 
+  // ignore: non_constant_identifier_names
   Future<ExpertProfileModel?> ExpertProfile() async {
     String path = ApiConfigration.baseUrl + ApiConfigration.expertAuth;
 
@@ -21,6 +22,7 @@ class ExpertProfileService {
           options: Options(headers: {"Authorization": "Bearer $token"}));
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(jsonEncode(response.data));
+        // ignore: non_constant_identifier_names
         var ExpertDetails = ExpertProfileModel.fromJson(jsonResponse);
         log(ExpertDetails.toString());
         return ExpertDetails;
@@ -35,14 +37,12 @@ class ExpertProfileService {
     String path = ApiConfigration.baseUrl + ApiConfigration.editProfile;
 
     String? token = await getExpertAccesToken();
-    log('___________________editing Page________________${editData.email}');
-    log('___________________editing Page________________${editData.name}');
-    log('------------------------inside edit controller-------${token}');
+
     try {
       Response response = await dio.post(path,
           data: jsonEncode(editData.toJson()),
           options: Options(headers: {"Authorization": "Bearer $token"}));
-      log('___________________editing Page________________${response.data}');
+
       if (response.statusCode == 200) {
         log('profile editing successful');
       }
@@ -58,10 +58,11 @@ class ExpertProfileService {
     Response response = await dio.get(path);
     if (response.statusCode == 200) {
       if (response.data is Map<String, dynamic>) {
+        // ignore: unused_local_variable
         final List<JobRoleModel> jobList = [
           JobRoleModel.fromJson(response.data)
         ];
-        log('------joblist----$jobList');
+        
       }
     } else {
       throw Exception("Invalid response data format");

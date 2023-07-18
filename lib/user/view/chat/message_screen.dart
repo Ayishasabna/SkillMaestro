@@ -1,12 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/common/widgets/bottom_nav_bar.dart';
 import 'package:skillmaestro/common/widgets/common_widget.dart';
 import 'package:skillmaestro/core/constants.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
-
 import '../../../application/user/chat/get_contacts_provider.dart';
 import '../../../core/widgets/list_tile_widget.dart';
 import '../../../core/widgets/textstyle.dart';
@@ -35,9 +30,9 @@ class MessageScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => UserBottomNavBar()));
+                    builder: (context) => const UserBottomNavBar()));
               },
-              icon: Icon(Icons.close)),
+              icon: const Icon(Icons.close)),
           //notificationBtnIcon(context),
         ],
       ),
@@ -49,8 +44,9 @@ class MessageScreen extends StatelessWidget {
             list = value.contacts['result'];
           }
 
+          // ignore: prefer_is_empty
           return list.length == 0 || list.isEmpty
-              ? CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.separated(

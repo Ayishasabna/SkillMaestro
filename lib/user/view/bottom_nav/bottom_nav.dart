@@ -16,10 +16,10 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
   int currentIndex = 0;
 
   List bottomNavScreens = [
-    UserHome(),
-    MessageScreen(),
-    ViewAllBookingScreen(),
-    SettingsScreen()
+    const UserHome(),
+    const MessageScreen(),
+    const ViewAllBookingScreen(),
+    const SettingsScreen()
   ];
 
   @override
@@ -58,11 +58,7 @@ class _UserBottomNavBarState extends State<UserBottomNavBar> {
                 Icons.settings,
               ),
               label: 'settings'),
-          /* BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-              ),
-              label: 'Profile'), */
+          
         ],
       ),
     );

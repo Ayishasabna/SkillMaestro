@@ -47,7 +47,7 @@ class _ExpertSignUpState extends State<ExpertSignUp> {
                                 onTap: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Icon(Icons.arrow_back)),
+                                child: const Icon(Icons.arrow_back)),
                           ],
                         ),
                         const Text(
@@ -139,10 +139,6 @@ class _ExpertSignUpState extends State<ExpertSignUp> {
     email = emailController.text;
     mobile = mobileController.text;
     password = passwordController.text;
-    //confrmpasswrd = confirmPasswordController.text;
-
-    //UserSignUpApiService().otpsend('+919746048135');
-
     Provider.of<ExpertProvider>(context, listen: false).signUPNewExpert(
       context: context,
       username: username,

@@ -15,7 +15,8 @@ class UserBookingDetailsService {
     String id,
   ) async {
     String path =
-        ApiConfigration.baseUrl + ApiConfigration.approveEstimate + '/${id}';
+        // ignore: prefer_interpolation_to_compose_strings
+        ApiConfigration.baseUrl + ApiConfigration.approveEstimate + '/$id';
 
     try {
       String? token = await getUserAccesToken();
@@ -23,9 +24,7 @@ class UserBookingDetailsService {
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('__________approveestimateresponse data_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+        
       }
     } on DioException catch (e) {
       log(e.message.toString());
@@ -44,9 +43,7 @@ class UserBookingDetailsService {
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('__________decline stimateresponse data_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+       
       }
     } on DioException catch (e) {
       log(e.message.toString());
@@ -65,9 +62,7 @@ class UserBookingDetailsService {
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('__________decline stimateresponse data_________${response.data}');
-        // final ExpertSignInResModel responseData =
-        //     ExpertSignInResModel.fromJson(response.data);
+        
       }
     } on DioException catch (e) {
       log(e.message.toString());

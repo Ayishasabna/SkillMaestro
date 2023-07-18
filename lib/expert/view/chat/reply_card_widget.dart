@@ -4,8 +4,9 @@ import 'package:skillmaestro/application/expert/expert_message_provider.dart';
 
 import '../../../core/widgets/textstyle.dart';
 
+// ignore: non_constant_identifier_names
 Widget ExpertreplayCardWidget(context, String msg, String time, bool fromMe) {
-  //log("_____________reply card widget______________");
+  
   return Column(
     children: [
       Align(

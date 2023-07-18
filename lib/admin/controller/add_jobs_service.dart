@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:skillmaestro/application/admin/add_job_provider.dart';
 import '../../common/widgets/bottom_nav_bar.dart';
 import '../../core/api/api_configuration.dart';
 import '../../core/theme/access_token/token.dart';
@@ -72,41 +69,11 @@ class AddJobService {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => BottomNavBar(),
+          builder: (context) => const BottomNavBar(),
         ),
         (route) => false);
   }
 }
 
-/*   Future<void> addJob(AddJobReqModel newJobName) async {
-    log('---------------------------');
-    String path = ApiConfigration.baseUrl +
-        ApiConfigration.admin +
-        ApiConfigration.addJobs;
 
-    String path1 = ApiConfigration.baseUrl +
-        ApiConfigration.admin +
-        ApiConfigration.adminAuth;
-
-    FlutterSecureStorage storage = const FlutterSecureStorage();
-    String? token = await getAdminAccesToken();
-    //String? token = await storage.read(key: 'admin_access_token');
-    log("admin token  :::::${token}");
-    //String? tokenData = token!.replaceAll('"', '');
-    //log(token);
-    try {
-      Response res = await dio.get(path1,
-          options: Options(headers: {"authorization": "Bearer $token"}));
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        print('inside add job service');
-        Response response = await dio.post(path,
-            data: jsonEncode(newJobName.toJson()),
-            options: Options(headers: {"authorization": "Bearer$token"}));
-
-        log(response.data.toString());
-      }
-    } on DioException catch (e) {
-      log(e.message.toString());
-    }
-  } */
 

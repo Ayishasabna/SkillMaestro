@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/on_boarding/login_screen.dart';
-import 'package:skillmaestro/expert/view/expert_selected_job.dart';
-import 'package:skillmaestro/user/view/login.dart';
-import 'all_booking_list.dart';
 import 'expert_add_shedule.dart';
 import 'expert_all_booking.dart';
 import 'expert_profile.dart';
@@ -43,15 +40,7 @@ class ExpertHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /* floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ExpertSkills()));
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.amber,
-        ), */
-        //floatingActionButtonLocation: _CustomFABLocation(),
+        
         body: SafeArea(
       child: Column(
         children: [
@@ -66,7 +55,7 @@ class ExpertHomeScreen extends StatelessWidget {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BoardingLoginScreen(),
+                          builder: (context) => const BoardingLoginScreen(),
                         ),
                         (route) => false);
                     const Text('logout');
@@ -166,6 +155,7 @@ class JobService {
       required this.assetname});
 }
 
+// ignore: unused_element
 class _CustomFABLocation extends FloatingActionButtonLocation {
   const _CustomFABLocation();
 

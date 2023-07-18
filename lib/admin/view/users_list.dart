@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillmaestro/application/admin/all_users_list_provider.dart';
@@ -12,12 +11,7 @@ class UsersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AllUsersListProvider>().fetchAllUsers();
-    /*  WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Map<String, dynamic> usersMap =
-          await context.read<AllUsersListProvider>().fetchAllUsers();
-      //String userStatus = usersMap['result'][2]['password'];
-      //log("====userstatus=====$userStatus");
-    }); */
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -61,7 +55,7 @@ class UserCard extends StatelessWidget {
       userStatus = "Verified";
       color = Colors.amber;
     }
-    //log("_____________________map inside card_____________${map['isBanned']}");
+   
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0), // Adjust the value as needed
@@ -95,9 +89,14 @@ class UserCard extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('Block User'),
+                        title: const Center(child: Text('Block User')),
                         content: Text(
-                            "Are You Sure You Want To BLock ${map['username']}"),
+                          "Are You Sure You Want To BLock ${map['username']}",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue),
+                        ),
                         actions: [
                           ElevatedButton(
                               onPressed: () {
@@ -135,16 +134,16 @@ class UserCard extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Center(
-                          child: const Text('UnBlock User',
+                        title: const Center(
+                          child: Text('UnBlock User',
                               style: TextStyle(fontSize: 19)),
                         ),
                         content: Text(
                           "Are You Sure You Want To UnBLock ${map['username']}",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue),
                         ),
                         actions: [
                           ElevatedButton(

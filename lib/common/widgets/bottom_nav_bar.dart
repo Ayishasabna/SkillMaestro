@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skillmaestro/common/settings/settings_screen.dart';
-import 'package:skillmaestro/user/view/user_home.dart';
 import '../../admin/view/add_jobs.dart';
 import '../../admin/view/admin_home.dart';
 import '../../core/constants.dart';
@@ -15,23 +14,13 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int indexColor = 0;
   // ignore: non_constant_identifier_names
-  List Screen = [AdminHome(), AddJobs(), SettingsScreen()];
+  List Screen = [const AdminHome(), const AddJobs(), const SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Screen[indexColor],
-        /* floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const AddJobs()));
-          },
-          // ignore: sort_child_properties_last
-          child: const Icon(Icons.add),
-          backgroundColor: mainColor,
-          // Colors.amber,
-        ), */
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(canvasColor: mainColor
               //Color(0xFF02D1AC)

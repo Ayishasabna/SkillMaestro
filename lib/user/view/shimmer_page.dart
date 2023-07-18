@@ -37,20 +37,6 @@ Shimmer getGridShimmer(width, height) {
               ],
             ),
             widgets().sizedboxHeight10(),
-            // Row(
-            //   children: const [
-            //     Icon(
-            //       Icons.star_rate_rounded,
-            //       color: Colors.yellow,
-            //       size: 23,
-            //     ),
-            //     Text(
-            //       '4.9(1.2k + reviews)',
-            //       style: TextStyle(
-            //           fontWeight: FontWeight.bold),
-            //     ),
-            //   ],
-            // ),
             Row(
               children: [
                 Container(

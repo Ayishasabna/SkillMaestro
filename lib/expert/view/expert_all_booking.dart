@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:skillmaestro/expert/model/expert_add_job_model.dart';
 import 'package:skillmaestro/expert/view/all_booking_list.dart';
-
 import '../../application/common/common_provider.dart';
 import '../../application/expert/expert_job_detail_provider.dart';
 import '../../application/expert/get_jobs_provider.dart';
@@ -23,6 +19,7 @@ TextEditingController endJobamountController = TextEditingController();
 TextEditingController endJobPriceController = TextEditingController();
 TextEditingController endjobpartController = TextEditingController();
 
+// ignore: must_be_immutable
 class ExpertAllBooking extends StatelessWidget {
   ExpertAllBooking({super.key});
   List<dynamic> results = [];
@@ -39,10 +36,7 @@ class ExpertAllBooking extends StatelessWidget {
     context.read<ExpertAllJobsProvider>().GetMyBookings();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    //List<jobProfile> allJobProfiles = [];
-    /* WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AllJobsListForAdmin>(context, listen: false).fetchAllJobs();
-    }); */
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -56,11 +50,10 @@ class ExpertAllBooking extends StatelessWidget {
           if (map['result'] != null) {
             results = map['result'];
           }
-          // ignore: prefer_is_empty
-          // return results.length == 0 || value.booking.isEmpty
-          //     ? const Text("No Booking Available")
+
+          // ignore: unnecessary_null_comparison
           return value.booking == null || value.booking.isEmpty
-              ? CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               //const Text("No Booking Available")
               : ListView.builder(
                   itemCount: results.length,
@@ -142,18 +135,7 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('___________________mappppp________${map['status']}');
     String buttonName = map['status'];
-    //String? newButtonName;
-    /*  if (buttonName == 'pending') {
-      newButtonName = 'started Job';
-    } else if (buttonName == 'startJob') {
-      newButtonName = 'End Job';
-    } else if (buttonName == 'endJob') {
-      newButtonName = 'started Job';
-    } else {
-      buttonName = 'kkk';
-    } */
 
     return GestureDetector(
       onTap: () {
@@ -185,30 +167,30 @@ class UserCard extends StatelessWidget {
                   Text('Base Rate: ${map['jobId']['base_rate']}'),
                   Text('Additional Rate: ${map['jobId']['ad_rate']}'),
                   //Text('createdAt:  ${map['jobId']['createdAt']}'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.location_on),
+                      const Icon(Icons.location_on),
                       Column(
                         children: [
                           Text(
                             'Name: ${map['address']['name']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'House: ${map['address']['house']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'Street: ${map['address']['street']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             'Pincode: ${map['address']['pincode']}',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       )
@@ -232,7 +214,7 @@ class UserCard extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  content: Text(
+                                  content: const Text(
                                     "Are you sure you want to Start the job",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -246,7 +228,7 @@ class UserCard extends StatelessWidget {
                                             showDialog(
                                                 context: context,
                                                 builder: (context) {
-                                                  return AlertDialog(
+                                                  return const AlertDialog(
                                                     content: Text(
                                                       "First, send the estimate from the booking details page, and once the user approves it, you can start your job",
                                                       style: TextStyle(
@@ -257,12 +239,12 @@ class UserCard extends StatelessWidget {
                                                 });
                                           }
                                         },
-                                        child: Text('yes')),
+                                        child: const Text('yes')),
                                     ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('No'))
+                                        child: const Text('No'))
                                   ],
                                 );
                               });
@@ -278,7 +260,7 @@ class UserCard extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  content: Text(
+                                  content: const Text(
                                     "Are you sure you want to end the job?",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -287,7 +269,6 @@ class UserCard extends StatelessWidget {
                                   actions: [
                                     ElevatedButton(
                                         onPressed: () {
-                                          log('___________________map[estimate][parts]_______________${map['estimate']['parts']}');
                                           if (map['estimate']['parts']
                                               .isEmpty) {
                                             Navigator.of(context).pop();
@@ -301,7 +282,7 @@ class UserCard extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               10.0),
                                                     ),
-                                                    content: Text(
+                                                    content: const Text(
                                                       "First, send the estimate from the booking details page, and once the user approves it, you can start your job",
                                                       style: TextStyle(
                                                           fontWeight:
@@ -326,12 +307,12 @@ class UserCard extends StatelessWidget {
                                           }
                                           //Navigator.of(context).pop();
                                         },
-                                        child: Text('yes')),
+                                        child: const Text('yes')),
                                     ElevatedButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('No'))
+                                        child: const Text('No'))
                                   ],
                                 );
                               });
@@ -340,7 +321,7 @@ class UserCard extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
+                                return const AlertDialog(
                                   content: Text(
                                     "You already cancelled the job",
                                     style: TextStyle(
@@ -355,7 +336,7 @@ class UserCard extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
+                                return const AlertDialog(
                                   content: Text(
                                     "Job Completed...Thank You",
                                     style: TextStyle(
@@ -370,45 +351,6 @@ class UserCard extends StatelessWidget {
                         // map['_id']
                       },
                       child: Text(buttonName)),
-                  /*   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.amber // Set the desired color here
-                        ),
-                    onPressed: () {
-                      if (map['estimate']['parts'] != null) {
-                        dynamicList = map['estimate']['parts'];
-                        mapList = dynamicList.map((item) {
-                          return Map<String, dynamic>.from(item);
-                        }).toList();
-                      }
-                      //List<dynamic> dynamicList = map['estimate']['parts'];
-                      //List<Map<String, dynamic>> maplist =
-                      /*  List<Map<String, dynamic>> mapList =
-                          dynamicList.map((item) {
-                        return Map<String, dynamic>.from(item);
-                      }).toList(); */
-
-                      log('______mapstringdynamic_____${mapList}');
-                      if (map['estimate']['parts'] == null) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(
-                                  "First send the estimate",
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                              );
-                            });
-                      } else {
-                        EndJob(context, map['_id'], map['estimate']['hours'],
-                            mapList, map['estimate']['amount']);
-                      }
-
-                    },
-                    child: const Text("End Job"),
-                  ), */
                 ],
               ),
             ],
@@ -419,6 +361,7 @@ class UserCard extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 Future EndJob(
   context,
   String id,
@@ -437,22 +380,6 @@ Future EndJob(
   //endJobpartsController.text = parts.toString();
   endJobpartsController.text = parts[0]['pName'];
   endJobPriceController.text = parts[0]['price'].toString();
-  //String partsText = parts.join(',');
-  // try {
-  //   Map<String, dynamic> partsMap = jsonDecode(partsText);
-  //   String pName = partsMap['pName'];
-  //   // Use the extracted pName value as needed
-  //   // ...
-  // } catch (e) {
-  //   // Handle the error
-  //   print('Error decoding partsText: $e');
-  // }
-
-  //endJobpartsController.text = partsText;
-  //Map<String, dynamic> partsMap = jsonDecode(partsText);
-  //String pName = partsMap['pName'];
-
-  // log('______________partstext __________${pName}');
 
   return showDialog(
     context: context,
@@ -462,8 +389,8 @@ Future EndJob(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: Center(
-          child: const Text(
+        title: const Center(
+          child: Text(
             'Details',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
@@ -473,7 +400,7 @@ Future EndJob(
           children: [
             TextField(
               controller: endJobbookingIdController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'BookingId',
                   labelStyle:
@@ -481,7 +408,7 @@ Future EndJob(
             ),
             TextField(
               controller: endJobhoursController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Hours',
                   labelStyle:
@@ -489,7 +416,7 @@ Future EndJob(
             ),
             TextField(
               controller: endJobpartsController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                   labelText: 'Parts',
                   labelStyle:
@@ -497,7 +424,7 @@ Future EndJob(
             ),
             TextField(
               controller: endJobPriceController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                 labelText: 'Price',
               ),
@@ -507,7 +434,7 @@ Future EndJob(
             // ),
             TextField(
               controller: endJobamountController,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                 labelText: 'Total Amount',
               ),
@@ -517,33 +444,8 @@ Future EndJob(
         actions: [
           ElevatedButton(
             onPressed: () async {
-              log('________newpartsList____________${endJobpartsController.text}');
-              log('________newprices____________${endJobPriceController.text}');
-
-              ///List<dynamic> _partsList = endJobpartsController.text;
+              // ignore: unused_local_variable
               String jsonString = endJobpartsController.text;
-
-              //Map<String, dynamic> partsMap = jsonDecode(jsonString[0]);
-              //log('_________jsonDecode____________${partsMap}');
-              //String pName = partsMap['pName'];
-              //log('_______________pName_________');
-              //num price = partsMap['price'].toDouble();
-              // if (_partsList.isNotEmpty) {
-              //   log('_______________pName_________');
-              //   Map<String, dynamic> firstPart = _partsList[0];
-              //   String pName = firstPart['pName'];
-              //   log('pName: $pName');
-              // }
-              //List<dynamic> partsList = endJobpartsController.text.split(',');
-
-              //num price = num.parse(endJobPriceController.text);
-
-              //log("_____________AmountController__________${price}");
-              //log("_____________HoursController__________${hoursController.text}");
-
-              //List<dynamic> partsList = partsController.text;
-
-              //log('_partsList____________$partsList');
 
               List<Part> partsList = endjobpartController.text
                   .split(',')
@@ -552,7 +454,7 @@ Future EndJob(
                       price: int.parse(endJobPriceController.text),
                       id: endJobbookingIdController.text))
                   .toList();
-              log('_________ListpartsList____________${partsList[0]}');
+
               EndJobModel newmodel = EndJobModel(
                   id: endJobbookingIdController.text,
                   hours: num.parse(endJobhoursController.text),
@@ -561,20 +463,9 @@ Future EndJob(
 
               await Provider.of<ExpertJobProvider>(context, listen: false)
                   .EndJob(newmodel);
-              log('_______________afterProvider');
+
+              // ignore: use_build_context_synchronously
               Navigator.pop(context);
-              // final model = BookJobRequestModel(
-              //     slots: selectedslot,
-              //     address: address1,
-              //     date: date.text,
-              //     jobId: jobId.text);
-              // await Provider.of<UserAddJobProvider>(context, listen: false)
-              //     .AddJob(model, context);
-              // Navigator.of(context).pop();
-              // Navigator.of(context).push(
-              //     MaterialPageRoute(builder: (context) => BookingStatus()));
-              //addAddress(context, id);
-              // Perform submit action
             },
             child: const Text('Confirm'),
           ),

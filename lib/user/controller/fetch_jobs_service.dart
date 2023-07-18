@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skillmaestro/user/model/book_job_response_model.dart';
 import 'package:skillmaestro/user/model/book_job_request_model.dart';
 import '../../application/common/common_provider.dart';
 import '../../core/api/api_configuration.dart';
@@ -17,27 +16,28 @@ class FetchJobs {
   Future<Map<String, dynamic>> fetch7Jobs() async {
     String path = ApiConfigration.baseUrl + ApiConfigration.get7Jobs;
 
-    //String? token = await getAdminAccesToken();
     try {
       Response response = await dio.get(
         path,
-        //options: Options(headers: {"authorization": "Bearer $token"})
       );
 
       if (response.statusCode == 200) {
         job = response.data;
-        //log('======usersjsondecode=======${users}');
 
         return job;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return job;
   }
 
+  // ignore: non_constant_identifier_names
   Future<Map<String, dynamic>> getJobDetail(String job_role) async {
     String path =
-        ApiConfigration.baseUrl + ApiConfigration.jobDetail + '/${job_role}';
-    log("_______________________$path");
+        // ignore: prefer_interpolation_to_compose_strings
+        ApiConfigration.baseUrl + ApiConfigration.jobDetail + '/$job_role';
+
     String? token = await getUserAccesToken();
     try {
       Response response = await dio.get(path,
@@ -45,35 +45,37 @@ class FetchJobs {
 
       if (response.statusCode == 200) {
         job = response.data;
-        log('________________________jobdetail_______________${response.data}');
 
         return job;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return job;
   }
 
   Future<Map<String, dynamic>> getSlots(String id) async {
+    // ignore: prefer_interpolation_to_compose_strings, unnecessary_string_interpolations
     String path = ApiConfigration.baseUrl + ApiConfigration.getSlots + '$id';
-    log('==========usertoken=======$path');
 
     String? token = await getUserAccesToken();
 
     try {
-      if (token != null) {}
       Response response = await dio.get(path,
           options: Options(headers: {"authorization": "Bearer $token"}));
 
       if (response.statusCode == 200) {
         job = response.data;
-        log('======getslotes==kkkkkk=====${job}');
 
         return job;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     return job;
   }
 
+  // ignore: non_constant_identifier_names
   Future<String> AddUserAddress(
       AddAddressModel addAddressModel, BuildContext context) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.addAddress;
@@ -83,28 +85,24 @@ class FetchJobs {
           data: jsonEncode(addAddressModel.toJson()),
           options: Options(headers: {"authorization": "Bearer $token"}));
 
-      log("======================================addaddressmodel======${addAddressModel.name}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         return 'Success';
       }
     } on DioException catch (e) {
+      // ignore: use_build_context_synchronously
       Provider.of<CommonProvider>(context, listen: false).loading = false;
       log(e.error.toString());
-      /*  Provider.of<CommonProvider>(context, listen: false)
-          .userAlreadyExist(context); */
     }
 
     return '';
   }
 
+  // ignore: non_constant_identifier_names
   Future<Map<String, dynamic>> BookJob(
       BookJobRequestModel jobModel, BuildContext context) async {
     String path = ApiConfigration.baseUrl + ApiConfigration.bookJob;
     String? token = await getUserAccesToken();
-    log("======================================addaddressmodel===address======${jobModel.address}");
-    log("======================================addaddressmodel==date===========${jobModel.date}");
-    log("======================================addaddressmodel===jobid========${jobModel.jobId}");
-    log("======================================addaddressmodel===slots=========${jobModel.slots}");
+
     try {
       Map<String, dynamic> requestData = {
         'jobId': jobModel.jobId,
@@ -118,22 +116,14 @@ class FetchJobs {
         data: requestData,
         options: Options(headers: {"authorization": "Bearer $token"}),
       );
-      log("======================================bookjobresponse======${response.data}");
-      /* Response response = await dio.post(path,
-          data: jsonEncode(jobModel.toJson()),
-          options: Options(headers: {"authorization": "Bearer $token"})); */
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log('_________________');
-        // BookJobModel newbooking = response.data;
-
         return booking;
       }
     } on DioException catch (e) {
+      // ignore: use_build_context_synchronously
       Provider.of<CommonProvider>(context, listen: false).loading = false;
       log(e.error.toString());
-      /*  Provider.of<CommonProvider>(context, listen: false)
-          .userAlreadyExist(context); */
     }
 
     return booking;

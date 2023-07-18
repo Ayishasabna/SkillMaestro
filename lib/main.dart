@@ -13,8 +13,7 @@ import 'package:skillmaestro/application/user/chat/get_contacts_provider.dart';
 import 'package:skillmaestro/application/user/get_slots_provider.dart';
 import 'package:skillmaestro/application/user/user_provider.dart';
 import 'package:skillmaestro/common/on_boarding/splash_screen.dart';
-import 'package:skillmaestro/user/controller/fetch_jobs_service.dart';
-import 'package:skillmaestro/user/view/login.dart';
+
 
 import 'application/admin/admin_provider.dart';
 import 'application/admin/all_users_list_provider.dart';
@@ -24,14 +23,13 @@ import 'application/expert/expert_job_detail_provider.dart';
 import 'application/expert/expert_profile_provider.dart';
 import 'application/expert/get_jobs_provider.dart';
 import 'application/expert/get_user_contacts_provider.dart';
-import 'application/user/chat/chat_provider.dart';
+
 import 'application/user/chat/message_provider.dart';
 import 'application/user/get_jobs_provider.dart';
 import 'application/user/job_detail_provider.dart';
 import 'application/user/single_job_details_provider.dart';
 import 'application/user/user_add_job_provider.dart';
-import 'common/on_boarding/first_screen.dart';
-//import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 
 //
 void main() {
@@ -39,6 +37,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  // ignore: prefer_const_constructors_in_immutables
   MyApp({super.key});
 
   //final razorpay = Razorpay();
@@ -82,7 +81,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
